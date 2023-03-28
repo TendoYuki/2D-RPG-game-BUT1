@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="PF Villard" />
+  <title>Le moteur de jeu</title>
+  <link rel="stylesheet" href="mvp.css" />
+<style type="text/css">
+  :root {
+  --color: #2096ba;
+  --color-secondary: #2096ba;
+  --color-accent: #f7f8fa;
+  --color-text: #222426;
+  --color-shadow: #c5d2db;
+  --width-content: 720px;
+  }
+  
+  code, samp {
+    font-size: 1.2em;
+  }
+
+  nav {
+    justify-content: space-evenly;
+  }
+  
+  a:hover {
+    filter: none;
+    color: #df6e21;
+  }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+  <nav id="TOC">
+      <a href="/"><img alt="Logo" src="iut.png" height="70"></a>
+        </nav>
+<h1 class="title">Le moteur de jeu</h1>
+<p class="author">PF Villard</p>
+</header>
+<main>
+<hr>
+<article>
+<!-- pandoc -s -f markdown -t html5 --template=template.html -c mvp.css  -o MoteurDeJeu.html MoteurDeJeu.md -->
+<h1 id="utilisation-de-la-bibliothèque-de-moteur-de-jeu">Utilisation de la bibliothèque de moteur de jeu <!-- omit in toc --></h1>
+<p>Avant de lire ce document, il faut déjà comprendre l’<a href="./archiMoteurDeJeu.pdf">architecture du Moteur de jeu</a>.</p>
+<figure>
+<img src="logo.png" alt="Example du jeu par défaut" /><figcaption aria-hidden="true">Example du jeu par défaut</figcaption>
+</figure>
+<h1 id="sommaire">Sommaire <!-- omit in toc --></h1>
+<ul>
+<li><a href="#utilisation-basique">Utilisation basique</a>
+<ul>
+<li><a href="#le-modèle">Le Modèle</a></li>
+<li><a href="#la-vue">La Vue</a></li>
+<li><a href="#le-contrôleur">Le Contrôleur</a></li>
+<li><a href="#la-méthode-principale">La méthode principale</a></li>
+</ul></li>
+<li><a href="#utilisation-avancée">Utilisation avancée</a>
+<ul>
+<li><a href="#création-de-décors">Création de décors</a></li>
+<li><a href="#changement-dimage">Changement d’image</a></li>
+<li><a href="#changement-dimage-pendant-une-collision">Changement d’image pendant une collision</a></li>
+<li><a href="#changement-de-gravité">Changement de gravité</a></li>
+<li><a href="#vue-subjective">Vue subjective</a></li>
+<li><a href="#boucle-de-jeu">Boucle de jeu</a></li>
+<li><a href="#changement-du-contrôleur">Changement du contrôleur</a></li>
+<li><a href="#ajouter-un-joueur">Ajouter un joueur</a></li>
+</ul></li>
+</ul>
+<h1 id="utilisation-basique">Utilisation basique</h1>
+<p>Pour utiliser la bibliothèque de moteur de jeu, il faut adopter une architecture du type Modèle-Vue-Contrôleur. Il faut donc commencer par définir ces trois entités.</p>
+<h2 id="le-modèle">Le Modèle</h2>
+<p>Il faut d’abord construire un <strong>Monde</strong> :</p>
+<pre><code>// Construction du monde
+monMonde= new Monde();</code></pre>
+<p>Pour peupler ce monde, on a le choix entre des éléments de décors (<code>addMur()</code>), des monstres (<code>addMonstre()</code>) ou des personnages jouables (<code>addHero()</code>). Tous ces éléments sont paramétrisables (position, image, comportement, etc.)</p>
+<p>Il faut alors rajouter un <strong>moteur physique</strong> pour gérer les règles du monde telles que les collisions, la gravité ou la façon de gérer la vitesse des éléments :</p>
+<pre><code>moteurPhys=new MoteurPhysique();
+//On ajoute le monde au moteur
+moteurPhys.monde=monMonde;</code></pre>
+<p>Là aussi, on peut changer les valeurs par défaut.</p>
+<h2 id="la-vue">La Vue</h2>
+<p>La vue correspond à l’affichage. C’est cette partie qui va gérer la fenêtre graphique :</p>
+<pre><code>affiche=new Afficheur(moteurPhys.monde);</code></pre>
+<h2 id="le-contrôleur">Le Contrôleur</h2>
+<p>Le contrôleur correspond dans notre cas à la gestion du clavier :</p>
+<pre><code>ControleurClavier cClavier=new ControleurClavier(true); </code></pre>
+<h2 id="la-méthode-principale">La méthode principale</h2>
+<p>La méthode principale comprend la boucle de jeu :</p>
+<pre><code>BouclePrincipale maBoucle= new BouclePrincipale();
+// Ajout du Contrôleur à le fenêtre
+maBoucle.cClavier=cClavier;
+// Ajout de la Vue au jeu
+maBoucle.jeuPhysique.affiche=affiche;
+// Ajout du Modèle à la boucle
+maBoucle.jeuPhysique.moteurPhys=moteurPhys;</code></pre>
+<p>Une fois que tous ces éléments ont été définis, le jeu pourra se lancer par :</p>
+<pre><code>maBoucle.lanceBouclePrincipale();</code></pre>
+<h1 id="utilisation-avancée">Utilisation avancée</h1>
+<h2 id="création-de-décors">Création de décors</h2>
+<p>Il y a deux façon de créer un décors : - Soit en utilisant un objet de la classe <code>ObjetMur</code> en le rajoutant au <strong>monde</strong> par <code>addMur(int x, int y, int dx, int dy)</code> avec <span class="math inline">(<em>x</em>, <em>y</em>)</span> la position du coin supérieur gauche du mur de dimension <span class="math inline"><em>d</em><em>x</em> × <em>d</em><em>y</em></span> - Soit en créant une classe héritant de <code>ObjetMur</code> et en l’ajoutant au <strong>monde</strong> par <code>addObjet(Objet monObjet)</code>.</p>
+<p>Les éléments de décors, comme toutes les classes héritant de <code>Objet</code> ont une méthode <code>update()</code> qui permet de rajouter un comportement dynamique (Cf <code>ObjetMurDynamique</code>).</p>
+<h2 id="changement-dimage">Changement d’image</h2>
+<p>Pour changer l’image associée aux monstres ou aux héros, il suffit d’appeler la méthode <code>assignNewImage(String fileName)</code> de l’attribut <code>sprites</code> de l’objet. Exemple :</p>
+<pre><code>monMonde.balle.sprites.assignNewImage(&quot;hero2.png&quot;);</code></pre>
+<figure>
+<img src="fig/img2.png" alt="Changement de l’image du hero" /><figcaption aria-hidden="true">Changement de l’image du hero</figcaption>
+</figure>
+<p>Il est également possible de changer l’image du decors.</p>
+<pre><code>affiche.decor.changeImage(&quot;background2.jpg&quot;);</code></pre>
+<figure>
+<img src="fig/img1.png" alt="Changement du background" /><figcaption aria-hidden="true">Changement du background</figcaption>
+</figure>
+<h2 id="changement-dimage-pendant-une-collision">Changement d’image pendant une collision</h2>
+<p>Pour changer l’aspect d’un héros, monstre ou mur lorsque une collision a lieu, il faut faire une classe fille (par exemple de <code>ObjetHeros</code>) et ré-écrire la méthode <code>public void draw(Graphics g)</code>en rajoutant quelque chose du type :</p>
+<pre><code>// si en collision affiche carre
+if (collision==1) {
+    g.setColor(Color.red);
+    g.fillRect(tab[0],tab[1],tab[2],tab[3]);
+}</code></pre>
+<p>Pour changer l’aspect du hero, il faut aussi créer une classe héritant de <code>Monde</code> afin de d’assigner à la construction la bonne classe pour <code>balle</code>.</p>
+<p>Exemple :</p>
+<pre><code>public class MonMondeCool extends Monde{
+        public MonMondeCool() throws IOException
+    {
+        balle=new HeroCarreQuandTouche();
+        //gere la vision subjective
+        Repere.h=balle; 
+    }
+}</code></pre>
+<figure>
+<img src="fig/img3.png" alt="Rectangle rouge lorsque collision" /><figcaption aria-hidden="true">Rectangle rouge lorsque collision</figcaption>
+</figure>
+<h2 id="changement-de-gravité">Changement de gravité</h2>
+<p>Pour changer la gravité, il faut changer la valeur de l’attribut <code>gravityValue</code> dans <code>MoteurPhysique</code>. Exemple :</p>
+<pre><code>moteurPhys.gravityValue=-0.08f;</code></pre>
+<p>Pour annuler la gravité et pouvoir se déplacer en <strong>X</strong> et en <strong>Y</strong> de la même façon, il faut mettre l’attribut <code>gravity</code> à <code>false</code>.</p>
+<h2 id="vue-subjective">Vue subjective</h2>
+<p>On parle de vue subjective lorsque l’on se place du point de vue du joueur. C’est-à-dire que si on se déplace, la géométrie du hero ne bouge pas, c’est le décors et les monstres qui bougent. Si la vu n’est pas subjective, le décors est fixe et ceux sont les monstres et le hero qui bougent. La vue subjective peut être activé en changeant la valeur du booléen <code>Repere.isSubjective</code>.</p>
+<h2 id="boucle-de-jeu">Boucle de jeu</h2>
+<p>La boucle de jeu est créée par défaut par la classe <code>BoucleDeJeu</code>. Pour gérer les événements du jeu, il est conseillé de créer une classe qui hérite de <code>BoucleDeJeu</code> en re-créant la méthode <code>public void lanceBouclePrincipale() throws Exception</code>.</p>
+<p>Exemple de code pour gérer les collisions en fonction du type</p>
+<pre><code>switch (jeuPhysique.moteurPhys.monde.balle.collision)
+{
+    case MONSTRE: System.out.println(&quot;Aie avec monstre numéro &quot;+jeuPhysique.moteurPhys.current_monster_index);break;
+    case HERO: System.out.println(&quot;Copain !&quot;);break;
+    case DECORS: System.out.println(&quot;Pas mal avec mur numéro &quot;+jeuPhysique.moteurPhys.current_wall_index);break;
+    default: break;
+}</code></pre>
+<h2 id="changement-du-contrôleur">Changement du contrôleur</h2>
+<p>Pour personnaliser son moyen de contrôler un joueur, plusieurs étapes sont nécessaires.</p>
+<ol type="1">
+<li>Il faut faire une classe fille de <code>ControleurClavier</code> afin d’attribuer d’autres valeurs pour les éléments de l’attribut <code>Controle c</code>.</li>
+</ol>
+<p>Exemple :</p>
+<pre><code>public class ControleurClavier2 extends ControleurClavier{
+    public ControleurClavier2(boolean affiche) {
+        super(affiche);
+    }
+    public void keyPressed(KeyEvent e) {
+        //touche gauche
+        if (e.getKeyCode()==KeyEvent.VK_A)
+        {
+            c.gauche=true;          
+        }
+        ...
+    }
+    public void keyReleased(KeyEvent e) {
+        //touche gauche
+        if (e.getKeyCode()==KeyEvent.VK_A)
+        {
+            c.gauche=false;
+        }
+        ...     
+    }
+}</code></pre>
+<ol start="2" type="1">
+<li>Il faut créer une classe fille de <code>Monde</code> pour rajouter l’attribut correspondant au nouveau contrôleur.</li>
+</ol>
+<p>Exemple :</p>
+<pre><code>public class MondePourDeux extends Monde{
+    public Controle c2;
+    ...
+}</code></pre>
+<ol start="3" type="1">
+<li>Il faut créer une classe qui hérite de <code>BouclePrincipale</code> afin de pouvoir rajouter le contrôleur au monde et écouter les nouveaux événements clavier.</li>
+</ol>
+<p>Exemple :</p>
+<pre><code>public void lanceBouclePrincipale() throws Exception {
+    ...
+    jeuPhysique.affiche.addKeyListener(cClavier2);
+    ...
+    MondePourDeux monMonde=(MondePourDeux jeuPhysique.moteurPhys.monde;
+    monMonde.c2=cClavier2.c;
+    ...         </code></pre>
+<ol start="4" type="1">
+<li>Il faut créer une classe fille de <code>MoteurPhysique</code> pour rajouter l’attribut correspondant au nouveau monde.</li>
+</ol>
+<pre><code>public class MoteurPourDeux extends MoteurPhysique{
+    public MondePourDeux monde;
+    ...</code></pre>
+<ol start="5" type="1">
+<li>Enfin, dans la méthode principale :</li>
+</ol>
+<pre><code>// Création d&#39;un contrôleur
+ControleurClavier2 cClavier2=new ControleurClavier2(true);
+// Ajout du contrôleur à la boucle
+maBoucle.cClavier2=cClavier2;</code></pre>
+<h2 id="ajouter-un-joueur">Ajouter un joueur</h2>
+<p>Pour ajouter un joueur, il faut déjà faire une nouveau contrôleur pour le second joueur (voir section <a href="#changement-du-contrôleur">Changement du contrôleur</a>).</p>
+<p>Il faut aussi faire les étapes suivantes :</p>
+<ol type="1">
+<li>Créer une classe fille de <code>Afficheur</code> pour rajouter l’affichage du second personnage et dans la méthode <code>render()</code> mettre :</li>
+</ol>
+<pre><code>decor.affiche((int)m.heros.get(0).px,g);
+decor.affiche((int)m.heros.get(1).px,g);
+...                
+ObjetHeros b1 = m.heros.get(0);
+b1.draw(g);
+ObjetHeros b2 = m.heros.get(1);
+b2.draw(g);
+...</code></pre>
+<ol start="2" type="1">
+<li>Compléter la classe que vous aviez créée dans <a href="#changement-du-contrôleur">Changement du contrôleur</a> en modifiant les actions suites aux événements clavier. Par exemple, pour contrôler le mouvement à gauche du second hero :</li>
+</ol>
+<pre><code>if (monde.c2.gauche)
+{
+    if (heros.get(1).ovx==0)
+    {
+        heros.get(1).sprites.changeEtape(&quot;course&quot;);
+    }
+    heros.get(1).ax = -0.1;
+    if (hheros.get(1).vx&lt;-2)
+            heros.get(1).vx=-2;
+}</code></pre>
+<ol start="3" type="1">
+<li>Enfin, dans la méthode principale, ajouter les héros :</li>
+</ol>
+<pre><code>monMonde.addHero(0,0,500,20);//hero 1
+monMonde.addHero(0,0,80,20);//hero 2
+// Changement d&#39;image pour hero 2
+monMonde.heros.get(1).sprites.assignNewImage(&quot;hero2.png&quot;);</code></pre>
+<figure>
+<img src="fig/img4.png" alt="Mode deux joueurs" /><figcaption aria-hidden="true">Mode deux joueurs</figcaption>
+</figure>
+<hr>
+</article>
+</main>
+</body>
+</html>
