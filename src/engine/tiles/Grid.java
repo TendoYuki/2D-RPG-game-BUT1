@@ -1,6 +1,7 @@
 package engine.tiles;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Grid of a certain scale with a determined x and y count 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Grid<T>{
     
-    ArrayList<ArrayList<T>> cells;
+    HashMap<Integer, T> cells;
 
     int xCount;
     int yCount;
@@ -22,10 +23,7 @@ public class Grid<T>{
     public Grid(int xCount, int yCount) {
         this.xCount = xCount;
         this.yCount = yCount;
-        cells = new ArrayList<ArrayList<T>>(yCount);
-        for(int i = 0; i < yCount; i++) {
-            cells.set(i, new ArrayList<T>(xCount));
-        }
+        cells = new HashMap<Integer, T>();
     }
 
 
@@ -45,7 +43,7 @@ public class Grid<T>{
      * @return Cell at the x and y coord
      */
     public T getCell(int x, int y) {
-        return cells.get(y).get(x);
+        return cells.get(y*x + x);
     }
 
     /**
@@ -55,7 +53,7 @@ public class Grid<T>{
      * @param cell New value
      */
     public void setCell(int x, int y, T cell) {
-        cells.get(y).set(x, cell);
+        cells.put(y*x + x, cell);
     }
 
     public int getxCount() {
@@ -64,13 +62,5 @@ public class Grid<T>{
 
     public int getyCount() {
         return yCount;
-    }
-
-    /**
-     * @return All cell contained in the grid
-     */
-    public ArrayList<ArrayList<T>> getCells() {
-        return cells;
-    }
-    
+    }    
 }

@@ -2,6 +2,7 @@ package engine.tiles;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.Console;
 import java.util.HashMap;
 
 /** Scaled grid */
@@ -21,24 +22,35 @@ public class TileMap {
      * @param tilesAtlasKey Matrix of keys of the tilemap's tiles
      * @param tileAtlas Atlas mapping a key to an image
      */
-    public TileMap(int scale, int[][]tilesAtlasKey, HashMap<Integer, BufferedImage> tileAtlas) {
+    public TileMap(
+            int scale,
+            int[][]tilesAtlasKey,
+            HashMap<Integer, BufferedImage> tileAtlas
+        ) {
+
         this.scale = scale;
         this.tilesAtlasKey = tilesAtlasKey;
-        tileGrid = new Grid<Tile>(tilesAtlasKey[0].length, tilesAtlasKey.length);
+        tileGrid = new Grid<Tile>(
+            tilesAtlasKey[0].length,
+            tilesAtlasKey.length
+        );
         for(int y = 0; y < tilesAtlasKey.length; y++) {
-            for(int x = 0; x < tilesAtlasKey.length; x++) {
+            for(int x = 0; x < tilesAtlasKey[0].length; x++) {
                 int key = tilesAtlasKey[y][x];
-                tileGrid.setCell(x, y, new Tile(tileAtlas.get(key), y*scale, x*scale));
+                tileGrid.setCell(x, y, new Tile(
+                    tileAtlas.get(key), y*scale, x*scale
+                ));
             }
         }
+        System.out.println("fe");
     }
 
-    /** Affiche la tilemap
-     * @param g Afficheur
+    /** Draws the tile map
+     * @param g Graphics object
      */
     public void draw(Graphics g) {
         for(int y = 0; y < tilesAtlasKey.length; y++) {
-            for(int x = 0; x < tilesAtlasKey.length; x++) {
+            for(int x = 0; x < tilesAtlasKey[0].length; x++) {
                 tileGrid.getCell(x, y).draw(g);
             }
         }
