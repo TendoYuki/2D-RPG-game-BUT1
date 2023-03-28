@@ -27,14 +27,14 @@ public class Grid<T>{
     }
 
 
-    public Grid(T[][] initArray) {
-        this(initArray[0].length, initArray.length);
-        for(int y = 0; y < initArray.length; y++) {
-            for(int x = 0; x < initArray[0].length; x++) {
-                setCell(x,y,initArray[y][x]);
-            }
-        }
-    }   
+    // public Grid(T[][] initArray) {
+    //     this(initArray[0].length, initArray.length);
+    //     for(int y = 0; y < initArray.length; y++) {
+    //         for(int x = 0; x < initArray[0].length; x++) {
+    //             setCell(x,y,initArray[y][x]);
+    //         }
+    //     }
+    // }   
 
     /**
      * Gets a cell at a given position
@@ -43,7 +43,7 @@ public class Grid<T>{
      * @return Cell at the x and y coord
      */
     public T getCell(int x, int y) {
-        return cells.get(y*x + x);
+        return cells.get(y*xCount + x);
     }
 
     /**
@@ -53,7 +53,7 @@ public class Grid<T>{
      * @param cell New value
      */
     public void setCell(int x, int y, T cell) {
-        cells.put(y*x + x, cell);
+        cells.put(y*xCount + x, cell);
     }
 
     public int getxCount() {

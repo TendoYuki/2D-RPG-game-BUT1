@@ -28,5 +28,6 @@ public class Tile {
      */
     public void draw(Graphics g) {
         g.drawImage(tileImage, y, x, null);
+        // g.drawString("Z", y, x);
     } 
 }
