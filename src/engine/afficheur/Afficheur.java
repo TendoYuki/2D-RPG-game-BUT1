@@ -46,7 +46,7 @@ public class Afficheur extends JPanel {
 	public Afficheur(Monde monde) {
 		JFrame f = new JFrame();
 		setPreferredSize(new Dimension(600, 400));
-		f.setDefaultCloseOperation(new JFrame().EXIT_ON_CLOSE);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
 		f.pack();
 		f.setVisible(true);
