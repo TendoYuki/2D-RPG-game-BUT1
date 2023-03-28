@@ -42,7 +42,6 @@ public class TileMap {
                 ));
             }
         }
-        System.out.println("fe");
     }
 
     /** Draws the tile map
