@@ -1,6 +1,5 @@
 package engine.tiles;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

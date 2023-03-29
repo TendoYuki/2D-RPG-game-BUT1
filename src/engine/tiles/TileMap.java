@@ -2,7 +2,6 @@ package engine.tiles;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.Console;
 import java.util.HashMap;
 
 /** Scaled grid */
@@ -18,17 +17,19 @@ public class TileMap {
     /**
      * Creates a tilemap of a given scale(ex 16 -> 16x16px) 
      * with an array of keys that maps to the provided tileAtlas
-     * @param scale Scale of the TileMap
+     * @param tileSize Scale of the TileMap
+     * @param scaleFactor Scaling multiplicator of the tiles
      * @param tilesAtlasKey Matrix of keys of the tilemap's tiles
      * @param tileAtlas Atlas mapping a key to an image
      */
     public TileMap(
-            int scale,
+            int tileSize,
+            int scaleFactor,
             int[][]tilesAtlasKey,
             HashMap<Integer, BufferedImage> tileAtlas
         ) {
 
-        this.scale = scale;
+        this.scale = tileSize;
         this.tilesAtlasKey = tilesAtlasKey;
         tileGrid = new Grid<Tile>(
             tilesAtlasKey[0].length,
@@ -38,10 +39,25 @@ public class TileMap {
             for(int x = 0; x < tilesAtlasKey[0].length; x++) {
                 int key = tilesAtlasKey[y][x];
                 tileGrid.setCell(x, y, new Tile(
-                    tileAtlas.get(key), y*scale, x*scale
+                    tileAtlas.get(key), y*tileSize, x*tileSize, scaleFactor
                 ));
             }
         }
+    }
+
+    /**
+     * Creates a tilemap of a given scale(ex 16 -> 16x16px) 
+     * with an array of keys that maps to the provided tileAtlas
+     * @param tileSize Scale of the TileMap
+     * @param tilesAtlasKey Matrix of keys of the tilemap's tiles
+     * @param tileAtlas Atlas mapping a key to an image
+     */
+    public TileMap(
+            int tileSize,
+            int[][]tilesAtlasKey,
+            HashMap<Integer, BufferedImage> tileAtlas
+        ) {
+        this(tileSize,1, tilesAtlasKey, tileAtlas);
     }
 
     /** Draws the tile map
