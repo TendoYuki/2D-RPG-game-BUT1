@@ -57,32 +57,34 @@ public class Game {
         // Les MURS
         /////////////////////
 
+        int BORDER_WIDTH = 2;
+
         // Top Border
         monMonde.addMur(
                 0,
                 imgHeight,
                 imgWidth,
-                2
+                BORDER_WIDTH
         );
         // Left Border
         monMonde.addMur(
+                0 - BORDER_WIDTH,
                 0,
-                0,
-                2,
+                BORDER_WIDTH,
                 imgHeight
         );
         // Bottom Border
         monMonde.addMur(
                 0,
-                0,
+                0 - BORDER_WIDTH,
                 imgWidth,
                 2
         );
         // Right Border
         monMonde.addMur(
-                imgWidth - 2,
+                imgWidth + BORDER_WIDTH,
                 0,
-                2,
+                BORDER_WIDTH,
                 imgHeight
         );
 

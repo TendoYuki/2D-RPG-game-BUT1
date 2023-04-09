@@ -44,9 +44,9 @@ public class Afficheur extends JPanel {
 	 */
 	public Afficheur(Monde monde) {
 		JFrame f = new JFrame();
-		// setPreferredSize(new Dimension(decor.getImage().getWidth(),
-		// decor.getImage().getHeight() - 39));
-		setPreferredSize(new Dimension(800, 800));
+		setPreferredSize(new Dimension(decor.getImage().getWidth(),
+		decor.getImage().getHeight()));
+		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
 		f.pack();
