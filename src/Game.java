@@ -1,14 +1,15 @@
 import engine.main.BouclePrincipale;
 import engine.afficheur.Afficheur;
 import engine.controle.ControleurClavier;
+import engine.hud.TestHud;
 import engine.main.JeuPhysique;
 import engine.physique.Monde;
 import engine.physique.MoteurPhysique;
 import engine.afficheur.Repere;
 import engine.physique.Monde;
 import engine.physique.MoteurPhysique;
-import engine.physique.ObjetHeros;
-import engine.physique.ObjetMonstre;
+import engine.physique.Heros;
+import engine.physique.Monstre;
 import engine.physique.ObjetMur;
 
 public class Game {
@@ -30,6 +31,7 @@ public class Game {
         moteurPhys = new MoteurPhysique();
         // On ajoute le monde au moteur
         moteurPhys.monde = monMonde;
+        monMonde.addHero(0, 0, 50, 20, 100, 10);
         // on creer l'afficheur du monde
         affiche = new Afficheur(moteurPhys.monde);
 
@@ -72,12 +74,8 @@ public class Game {
                 imgHeight
         );
 
-        //////////////////////
-        // Le Hero
-        /////////////////////
-        monMonde.addHero(0, 0, 50, 20);
-
-        monMonde.addHero(0, 0, 500, 20);
+        monMonde.addMonstre(1, 1, 100, 100);
+        
 
         // Gestion de la boucle principale
         BouclePrincipale maBoucle = new BouclePrincipale();

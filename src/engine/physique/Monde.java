@@ -33,7 +33,7 @@ public class Monde {
     /**
      * la balle pour une vue subjective
      */
-    public ObjetHeros balle;
+    public Heros balle;
 
     /**
      * les murs
@@ -45,14 +45,14 @@ public class Monde {
     /**
      * les monstres
      */
-    public ArrayList<ObjetMonstre> monstres = new ArrayList<ObjetMonstre>();
+    public ArrayList<Monstre> monstres = new ArrayList<Monstre>();
 
     public int nbHeros = 0;
 
     /**
      * les heros
      */
-    public ArrayList<ObjetHeros> heros = new ArrayList<ObjetHeros>();
+    public ArrayList<Heros> heros = new ArrayList<Heros>();
 
     public int nbMonstres = 0;
 
@@ -67,7 +67,7 @@ public class Monde {
      */
     public Monde() throws IOException {
         // getsion du controleur
-        balle = new ObjetHeros();
+        balle = new Heros();
 
         // gere la vision subjective
         Repere.h = balle;
@@ -99,7 +99,7 @@ public class Monde {
      * @throws java.io.IOException
      */
     public void addMonstre(double vx, double vy, int px, int py) throws IOException {
-        monstres.add(new ObjetMonstre());
+        monstres.add(new Monstre(20,10,5));
         // penser a le lier au monde
         monstres.get(nbMonstres).m = this;
         // propriétés du monstre
@@ -125,8 +125,8 @@ public class Monde {
      * @param py
      * @throws java.io.IOException
      */
-    public void addHero(double vx, double vy, int px, int py) throws IOException {
-        heros.add(new ObjetHeros(px, py));
+    public void addHero(double vx, double vy, int px, int py, int vie, int pieces) throws IOException {
+        heros.add(new Heros(px, py, vie, pieces));
         // propriétés du monstre
         heros.get(nbHeros).vx = vx;
         heros.get(nbHeros).vy = vy;

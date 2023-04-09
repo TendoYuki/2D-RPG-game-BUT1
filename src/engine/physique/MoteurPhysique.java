@@ -40,7 +40,7 @@ public class MoteurPhysique {
 	public int current_monster_index = 0;
 	public int current_wall_index = 0;
 
-	public static double SPEED = 1.5;
+	public static double SPEED = 2;
 
 	/**
 	 * Construit un moteur par defaut
@@ -65,7 +65,7 @@ public class MoteurPhysique {
 		}
 
 		// mise a jour des monstres
-		for (ObjetMonstre monstre : monde.monstres) {
+		for (Monstre monstre : monde.monstres) {
 			monstre.evolue();
 			if (Collision.typeOfCollision == MONSTRE) {
 				monde.balle.collision = MONSTRE;
@@ -165,38 +165,19 @@ public class MoteurPhysique {
 		for (Objet obj : monde.objets) {
 
 			if (Collision.collision(monde.balle, obj)) {
-				// si collision vient du haut
-				if (Collision.collisionHaut(monde.balle, obj)) {
-					monde.balle.py = monde.balle.py - monde.balle.vy;
-					monde.balle.vy = -1;
-					if (monde.c.enAir) {
-						monde.c.enAir = false;
-						if (monde.balle.vx == 0) {
-							monde.balle.sprites.changeEtape("fixe");
-						} else
-							monde.balle.sprites.changeEtape("course");
-					}
+				monde.balle.py = monde.balle.py - 1.1*monde.balle.vy;
+				monde.balle.vy = 0;
+				monde.balle.px = monde.balle.px - 1.1*monde.balle.vx;
+				monde.balle.vx = 0;
+			}
 
-				}
-
-				// si collision vient du Bas
-				if (Collision.collisionBas(monde.balle, obj)) {
-
-					monde.balle.py = monde.balle.py - monde.balle.vy;
-					monde.balle.vy = -monde.balle.vy;
-					;
-				}
-
-				// si collision vient de la gauche ou droite
-				if (Collision.collisionGauche(monde.balle, obj)
-						|| (Collision.collisionDroite(monde.balle, obj))) {
-					monde.balle.px = monde.balle.px - monde.balle.vx;
-					if (monde.balle.vx > 0)
-						monde.balle.vx = -monde.balle.vx * monde.balle.ax - 0.5;
-					else
-						monde.balle.vx = -monde.balle.vx * monde.balle.ax + 0.5;
-				}
-				current_wall_index = obj.index;
+		}
+		for (Monstre monstre : monde.monstres) {
+			if(Collision.collision(monstre, monde.balle)) {
+				monde.balle.py = monde.balle.py - 1.1*monde.balle.vy;
+				monde.balle.vy = 0;
+				monde.balle.px = monde.balle.px - 1.1*monde.balle.vx;
+				monde.balle.vx = 0;
 			}
 
 		}

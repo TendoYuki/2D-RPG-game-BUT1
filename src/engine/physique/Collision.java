@@ -51,10 +51,10 @@ public class Collision {
      */
     public static boolean collision(Objet o, Objet o2) {
         typeOfCollision = 0;
-        if (o2 instanceof ObjetMonstre) {
+        if (o2 instanceof Monstre) {
             typeOfCollision = MONSTRE;
         }
-        if (o2 instanceof ObjetHeros) {
+        if (o2 instanceof Heros) {
             typeOfCollision = HERO;
         }
         if (o2 instanceof ObjetMur) {
@@ -124,19 +124,19 @@ public class Collision {
      * @return
      */
     public static boolean collisionGauche(Objet o, Objet o2) {
-        return ((o.opx + o.width <= o2.opx));
+        return (o2.opx + o2.width >= o.opx);
     }
 
     // permet de savoir si la collision vient de la droite
 
     /**
      *
-     * @param o
-     * @param o2
+     * @param o Reference object
+     * @param o2 Object that collieds with the reference
      * @return
      */
     public static boolean collisionDroite(Objet o, Objet o2) {
-        return (o.opx >= o2.opx + o2.width);
+        return (o.opx + o.width <= o2.opx);
     }
 
     // permet de savoir si la collision vient du haut

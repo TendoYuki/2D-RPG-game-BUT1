@@ -16,8 +16,6 @@ import java.awt.Graphics;
 
 import engine.afficheur.Repere;
 
-// permet de mod�liser un objet
-
 /**
  *
  * @author Pierre-Frederic Villard

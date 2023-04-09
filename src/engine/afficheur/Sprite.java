@@ -28,8 +28,8 @@ public class Sprite {
      * @param image Image
      */
     public Sprite(int sizeX, int sizeY, int scaleFactor, BufferedImage image) {
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+        this.sizeX = sizeX*scaleFactor;
+        this.sizeY = sizeY*scaleFactor;
         this.scaleFactor = scaleFactor;
         this.image = image;
     }

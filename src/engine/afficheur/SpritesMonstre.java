@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
-
+import engine.controle.Controle;
+import engine.physique.Monstre;
+import engine.tiles.Atlas;
 //distributeur de sprites
 
 /**
@@ -27,7 +29,9 @@ import javax.imageio.ImageIO;
  */
 public class SpritesMonstre extends Sprites {
 
-	String imageFile = "assets/misc/monstre.png";
+	Monstre monstre;
+	String imageFile = "assets/char/February.png";
+	Atlas spriteAtlas;
 
 	// constructeur de table de sprites
 
@@ -35,64 +39,66 @@ public class SpritesMonstre extends Sprites {
 	 *
 	 * @throws IOException
 	 */
-	public SpritesMonstre() throws IOException {
-		// im = ImageIO.read(new File(imageFile));
-		// activite = "fixe";
+	public SpritesMonstre(Monstre b) throws IOException {
+		this.monstre = b;
+		spriteAtlas = new Atlas(imageFile, 16, 8, 15, 2);
+		activite = "down";
+		sprites = new HashMap<String, Sprite>();
+		sprites.put("fixe", spriteAtlas.get(73));
+		sprites.put("fixe0", spriteAtlas.get(73));
+		sprites.put("fixe1", spriteAtlas.get(73));
+		sprites.put("fixe2", spriteAtlas.get(73));
 
-		// sprites = new HashMap<String, Sprite>();
+		sprites.put("right0", spriteAtlas.get(103));
+		sprites.put("right1", spriteAtlas.get(104));
+		sprites.put("right2", spriteAtlas.get(105));
 
-		// sprites.put("fixe", new Sprite(im.getWidth(), im.getHeight(), 2,im));
+		sprites.put("left0", spriteAtlas.get(88));
+		sprites.put("left1", spriteAtlas.get(89));
+		sprites.put("left2", spriteAtlas.get(90));
 
+		sprites.put("down0", spriteAtlas.get(73));
+		sprites.put("down1", spriteAtlas.get(74));
+		sprites.put("down2", spriteAtlas.get(75));
+		
+		sprites.put("down-right0", spriteAtlas.get(73));
+		sprites.put("down-right1", spriteAtlas.get(74));
+		sprites.put("down-right2", spriteAtlas.get(75));
+		
+		sprites.put("down-left0", spriteAtlas.get(73));
+		sprites.put("down-left1", spriteAtlas.get(74));
+		sprites.put("down-left2", spriteAtlas.get(75));
+		
+		sprites.put("up0", spriteAtlas.get(118));
+		sprites.put("up1", spriteAtlas.get(119));
+		sprites.put("up2", spriteAtlas.get(120));
+
+		sprites.put("up-right0", spriteAtlas.get(118));
+		sprites.put("up-right1", spriteAtlas.get(119));
+		sprites.put("up-right2", spriteAtlas.get(120));
+
+		sprites.put("up-left0", spriteAtlas.get(118));
+		sprites.put("up-left1", spriteAtlas.get(119));
+		sprites.put("up-left2", spriteAtlas.get(120));
 	}
 
 	@Override
 	public void anime() {
 		iteration++;
 
-		if (activite.equals("fixe")) {
-
-		}
-
-		if (activite.equals("courseGauche")) {
-			if (iteration > 10) {
+		int itCount = 2;
+		if(monstre.vx != 0 || monstre.vy !=0) {
+			if (iteration > itCount) {
 				num++;
 				iteration = 0;
 			}
-
-			if (num > 7)
+	
+			if (num > itCount)
 				num = 0;
+		} else {
+			num = 0;
+			iteration = 0;
 		}
-
-		if (activite.equals("courseDroite")) {
-			if (iteration > 10) {
-				num++;
-				iteration = 0;
-			}
-
-			if (num > 7)
-				num = 0;
-		}
-
-		if (activite.equals("vold")) {
-			if (iteration > 10) {
-				num++;
-				iteration = 0;
-			}
-
-			if (num > 5)
-				num = 0;
-		}
-
-		if (activite.equals("volg")) {
-			if (iteration > 10) {
-				num++;
-				iteration = 0;
-			}
-
-			if (num > 5)
-				num = 0;
-		}
-
 	}
 
 }

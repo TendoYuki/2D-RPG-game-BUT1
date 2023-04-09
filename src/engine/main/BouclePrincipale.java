@@ -5,7 +5,7 @@ import engine.controle.ControleurClavier;
 public class BouclePrincipale {
 
 	public String nom = "Mon super Jeu";
-	public int fps = 100;
+	public int fps = 60;
 	public JeuPhysique jeuPhysique;
 	// creation du controleur
 	public ControleurClavier cClavier;
@@ -60,8 +60,12 @@ public class BouclePrincipale {
 			long timafter = System.nanoTime();
 
 			// sleep en millisecond
+			// System.out.println(dureeBoucle);
+			// System.out.println(beforeTime);
+			// Thread.sleep((dureeBoucle - (timafter/ 1000 - beforeTime/ 1000))/1000);
 			while (System.nanoTime() - beforeTime - dureeBoucle * 1000L < 0) {
 			}
+
 			beforeTime = System.nanoTime();
 
 		}

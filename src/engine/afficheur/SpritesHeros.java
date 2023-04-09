@@ -20,14 +20,14 @@ import java.util.HashMap;
 import javax.imageio.ImageIO;
 
 import engine.controle.Controle;
-import engine.physique.ObjetHeros;
+import engine.physique.Heros;
 import engine.tiles.Atlas;
 
 
 public class SpritesHeros extends Sprites {
 
-	ObjetHeros heros;
-	String imageFile = "assets/char/preview.png";
+	Heros heros;
+	String imageFile = "assets/char/February.png";
 	Atlas spriteAtlas;
 	// constructeur de table de sprites
 
@@ -36,47 +36,83 @@ public class SpritesHeros extends Sprites {
 	 * @param b
 	 * @throws IOException
 	 */
-	public SpritesHeros(ObjetHeros b) throws IOException {
+	public SpritesHeros(Heros b) throws IOException {
 		this.heros = b;
-		spriteAtlas = new Atlas(imageFile, 32, 3, 9, 1);
+		spriteAtlas = new Atlas(imageFile, 16, 8, 15, 2);
 		activite = "down";
 		sprites = new HashMap<String, Sprite>();
-		sprites.put("fixe", spriteAtlas.get(1));
-		sprites.put("fixe0", spriteAtlas.get(1));
-		sprites.put("fixe1", spriteAtlas.get(1));
-		sprites.put("fixe2", spriteAtlas.get(1));
+		sprites.put("fixe", spriteAtlas.get(73));
+		sprites.put("fixe0", spriteAtlas.get(73));
+		sprites.put("fixe1", spriteAtlas.get(73));
+		sprites.put("fixe2", spriteAtlas.get(73));
 
-		sprites.put("right0", spriteAtlas.get(1));
-		sprites.put("right1", spriteAtlas.get(1));
-		sprites.put("right2", spriteAtlas.get(1));
+		sprites.put("right0", spriteAtlas.get(103));
+		sprites.put("right1", spriteAtlas.get(104));
+		sprites.put("right2", spriteAtlas.get(105));
 
-		sprites.put("up-right0", spriteAtlas.get(1));
-		sprites.put("up-right1", spriteAtlas.get(1));
-		sprites.put("up-right2", spriteAtlas.get(1));
+		sprites.put("left0", spriteAtlas.get(88));
+		sprites.put("left1", spriteAtlas.get(89));
+		sprites.put("left2", spriteAtlas.get(90));
 
-		sprites.put("down0", spriteAtlas.get(1));
-		sprites.put("down1", spriteAtlas.get(4));
-		sprites.put("down2", spriteAtlas.get(7));
+		sprites.put("down0", spriteAtlas.get(73));
+		sprites.put("down1", spriteAtlas.get(74));
+		sprites.put("down2", spriteAtlas.get(75));
 		
-		sprites.put("down-right0", spriteAtlas.get(1));
-		sprites.put("down-right1", spriteAtlas.get(4));
-		sprites.put("down-right2", spriteAtlas.get(7));
+		sprites.put("down-right0", spriteAtlas.get(73));
+		sprites.put("down-right1", spriteAtlas.get(74));
+		sprites.put("down-right2", spriteAtlas.get(75));
 		
-		sprites.put("down-left0", spriteAtlas.get(1));
-		sprites.put("down-left1", spriteAtlas.get(4));
-		sprites.put("down-left2", spriteAtlas.get(7));
+		sprites.put("down-left0", spriteAtlas.get(73));
+		sprites.put("down-left1", spriteAtlas.get(74));
+		sprites.put("down-left2", spriteAtlas.get(75));
 		
-		sprites.put("up0", spriteAtlas.get(3));
-		sprites.put("up1", spriteAtlas.get(6));
-		sprites.put("up2", spriteAtlas.get(9));
+		sprites.put("up0", spriteAtlas.get(118));
+		sprites.put("up1", spriteAtlas.get(119));
+		sprites.put("up2", spriteAtlas.get(120));
 
-		sprites.put("left0", spriteAtlas.get(2));
-		sprites.put("left1", spriteAtlas.get(5));
-		sprites.put("left2", spriteAtlas.get(8));
+		sprites.put("up-right0", spriteAtlas.get(118));
+		sprites.put("up-right1", spriteAtlas.get(119));
+		sprites.put("up-right2", spriteAtlas.get(120));
 
-		sprites.put("up-left0", spriteAtlas.get(2));
-		sprites.put("up-left1", spriteAtlas.get(5));
-		sprites.put("up-left2", spriteAtlas.get(8));
+		sprites.put("up-left0", spriteAtlas.get(118));
+		sprites.put("up-left1", spriteAtlas.get(119));
+		sprites.put("up-left2", spriteAtlas.get(120));
+		// sprites.put("fixe", spriteAtlas.get(10));
+		// sprites.put("fixe0", spriteAtlas.get(10));
+		// sprites.put("fixe1", spriteAtlas.get(10));
+		// sprites.put("fixe2", spriteAtlas.get(10));
+
+		// sprites.put("right0", spriteAtlas.get(40));
+		// sprites.put("right1", spriteAtlas.get(41));
+		// sprites.put("right2", spriteAtlas.get(42));
+
+		// sprites.put("left0", spriteAtlas.get(25));
+		// sprites.put("left1", spriteAtlas.get(26));
+		// sprites.put("left2", spriteAtlas.get(27));
+
+		// sprites.put("down0", spriteAtlas.get(10));
+		// sprites.put("down1", spriteAtlas.get(11));
+		// sprites.put("down2", spriteAtlas.get(12));
+		
+		// sprites.put("down-right0", spriteAtlas.get(10));
+		// sprites.put("down-right1", spriteAtlas.get(11));
+		// sprites.put("down-right2", spriteAtlas.get(12));
+		
+		// sprites.put("down-left0", spriteAtlas.get(10));
+		// sprites.put("down-left1", spriteAtlas.get(11));
+		// sprites.put("down-left2", spriteAtlas.get(12));
+		
+		// sprites.put("up0", spriteAtlas.get(55));
+		// sprites.put("up1", spriteAtlas.get(56));
+		// sprites.put("up2", spriteAtlas.get(57));
+
+		// sprites.put("up-right0", spriteAtlas.get(55));
+		// sprites.put("up-right1", spriteAtlas.get(56));
+		// sprites.put("up-right2", spriteAtlas.get(57));
+
+		// sprites.put("up-left0", spriteAtlas.get(25));
+		// sprites.put("up-left1", spriteAtlas.get(26));
+		// sprites.put("up-left2", spriteAtlas.get(27));
 	}
 
 	// afficheur de sprite
@@ -85,7 +121,6 @@ public class SpritesHeros extends Sprites {
 		if (s == null)
 			s = sprites.get("erreur");
 		s = sprites.get(chaine());
-		// regarde la direction du personnage
 		s.draw(g, x, y);
 	}
 

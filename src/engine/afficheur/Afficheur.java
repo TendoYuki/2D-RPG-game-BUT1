@@ -16,6 +16,8 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.*;
 
+import engine.hud.TestHud;
+import engine.hud.player.PlayerHud;
 import engine.physique.*;
 import engine.tiles.Atlas;
 import engine.tiles.TileMap;
@@ -36,6 +38,7 @@ public class Afficheur extends JPanel {
 
 	// double buffering
 	public BufferStrategy bs;
+	PlayerHud hud;
 
 	// creation d'un afficheur
 
@@ -97,6 +100,8 @@ public class Afficheur extends JPanel {
 		this.setIgnoreRepaint(true);
 
 		this.m = monde;
+		hud = new PlayerHud(monde.heros.get(0));
+		this.addMouseListener(hud.getControleSouris());
 	}
 
 	// permet de faire un afficheg
@@ -123,14 +128,15 @@ public class Afficheur extends JPanel {
 		}
 
 		// affiche les monstres
-		for (ObjetMonstre monstre : m.monstres) {
+		for (Monstre monstre : m.monstres) {
 			monstre.draw(g);
 		}
 
 		// affiche la balle
-		ObjetHeros b = m.balle;
+		Heros b = m.balle;
 		b.draw(g);
 
+		hud.draw(g);
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
 		g.clearRect(0, 0, decor.size(), decor.size());

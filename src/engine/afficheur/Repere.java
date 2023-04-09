@@ -12,7 +12,7 @@
 package engine.afficheur;
 
 import engine.physique.Objet;
-import engine.physique.ObjetHeros;
+import engine.physique.Heros;
 
 /**
  *
@@ -29,7 +29,7 @@ public class Repere {
     /**
      *
      */
-    public static ObjetHeros h;
+    public static Heros h;
 
     /**
      *
