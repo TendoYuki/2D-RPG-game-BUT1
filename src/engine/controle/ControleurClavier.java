@@ -31,7 +31,6 @@ public class ControleurClavier implements KeyListener {
 
 	// afficheur
 	boolean affiche = false;
-	AfficheControle afficheur;
 
 	// la variable de controle
 
@@ -49,8 +48,6 @@ public class ControleurClavier implements KeyListener {
 	public ControleurClavier(boolean affiche) {
 		c = new Controle();
 		this.affiche = affiche;
-		if (affiche)
-			afficheur = new AfficheControle(c);
 	}
 
 	@Override
@@ -80,9 +77,6 @@ public class ControleurClavier implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
 			fin = true;
 		}
-
-		if (affiche)
-			afficheur.dessin();
 	}
 
 	@Override
@@ -103,8 +97,6 @@ public class ControleurClavier implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			c.bas = false;
 		}
-		if (affiche)
-			afficheur.dessin();
 
 	}
 

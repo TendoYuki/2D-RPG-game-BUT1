@@ -78,10 +78,6 @@ public class Game {
         monMonde.addHero(0, 0, 50, 20);
 
         monMonde.addHero(0, 0, 500, 20);
-        monMonde.heros.get(1).sprites.assignNewImage(
-            "assets/misc/hero.png"
-        );
-        // monMonde.heros.get(1).
 
         // Gestion de la boucle principale
         BouclePrincipale maBoucle = new BouclePrincipale();

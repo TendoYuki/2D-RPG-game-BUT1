@@ -7,12 +7,14 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import engine.afficheur.Sprite;
+
 /**
  * Atlas reading a spriteSheet and bining each sprite to an integer key
  */
 public class Atlas {
-    /** SriteAtlas */
-    private HashMap<Integer, BufferedImage> spriteAtlas = new HashMap<Integer, BufferedImage>();
+    /** SpriteAtlas */
+    private HashMap<Integer, Sprite> spriteAtlas = new HashMap<Integer, Sprite>();
     /** Size of a sprite in the spriteSheet */
     private int spriteSize;
     /** Number of sprite in a row */
@@ -27,8 +29,9 @@ public class Atlas {
      * @param spritesSize     Size of a sprite in the spriteSheet
      * @param rows            Number of sprite in a row
      * @param cols            Number of sprite in a column
+     * @param scaleFactor     Scale factor of the atlas's sprites
      */
-    public Atlas(String spriteSheetURL, int spriteSize, int rows, int cols) {
+    public Atlas(String spriteSheetURL, int spriteSize, int rows, int cols, int scaleFactor) {
         this.spriteSize = spriteSize;
         this.rows = rows;
         this.cols = cols;
@@ -36,18 +39,32 @@ public class Atlas {
             BufferedImage spritesSheet = ImageIO.read(new File(spriteSheetURL));
             for (int row = 0; row < rows; row++) {
                 for (int col = 0; col < cols; col++) {
-                    spriteAtlas.put(row * rows + col + 1,
-                            spritesSheet.getSubimage(
+                    spriteAtlas.put(row * cols + col + 1,
+                            new Sprite(spriteSize, spriteSize, scaleFactor,
+                                spritesSheet.getSubimage(
                                     col * spriteSize,
                                     row * spriteSize,
                                     spriteSize,
                                     spriteSize
+                                )
                             )
+                            
                     );
                 }
             }
         } catch (Exception e) {
         }
+    }
+    /**
+     * Creates an atlas that binds an integer to a sprite from a spriteSheet
+     * 
+     * @param spritesSheetURL Path to the sprite sheet
+     * @param spritesSize     Size of a sprite in the spriteSheet
+     * @param rows            Number of sprite in a row
+     * @param cols            Number of sprite in a column
+     */
+    public Atlas(String spriteSheetURL, int spriteSize, int rows, int cols) {
+        this(spriteSheetURL, spriteSize, rows, cols, 1);
     }
 
     /**
@@ -56,7 +73,7 @@ public class Atlas {
      * @param i Index of the sprite
      * @return Buffered image of the sprite
      */
-    public BufferedImage get(int i) {
+    public Sprite get(int i) {
         return spriteAtlas.get(i);
     }
 
@@ -67,10 +84,10 @@ public class Atlas {
      */
     public String toString() {
         String ret = "";
-        for (Map.Entry<Integer, BufferedImage> entry : spriteAtlas.entrySet()) {
+        for (Map.Entry<Integer, Sprite> entry : spriteAtlas.entrySet()) {
             int key = entry.getKey();
             ret += key + " - ";
-            BufferedImage value = entry.getValue();
+            Sprite value = entry.getValue();
             ret += value + "\n";
         }
         return ret;

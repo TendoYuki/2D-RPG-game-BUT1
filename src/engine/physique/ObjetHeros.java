@@ -40,13 +40,14 @@ public class ObjetHeros extends Objet {
 	 *
 	 * @throws IOException
 	 */
-	public ObjetHeros() throws IOException {
-
+	public ObjetHeros(int x, int y) throws IOException {
 		sprites = new SpritesHeros(this);
 		height = 10;
 		width = 10;
-		height = sprites.sprites.get("fixe").ty;
-		width = sprites.sprites.get("fixe").tx;
+		height = sprites.sprites.get("fixe").getSizeY();
+		width = sprites.sprites.get("fixe").getSizeX();
+		px = x;
+		py = y;
 		vx = 0;
 		vy = 0;
 		ax = 0;
@@ -57,19 +58,10 @@ public class ObjetHeros extends Objet {
 	 *
 	 * @throws IOException
 	 */
-	public ObjetHeros(int x, int y) throws IOException {
-		sprites = new SpritesHeros(this);
-		height = 10;
-		width = 10;
-		height = sprites.sprites.get("fixe").ty;
-		width = sprites.sprites.get("fixe").tx;
-		px = x;
-		py = y;
-		vx = 0;
-		vy = 0;
-		ax = 0;
-		ay = 0;
+	public ObjetHeros() throws IOException {
+		this(0,0);
 	}
+
 
 	/**
 	 *

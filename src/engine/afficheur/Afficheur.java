@@ -50,7 +50,8 @@ public class Afficheur extends JPanel {
             "assets/tiles/tilemap.png",
             16,
             1,
-            4
+            4,
+			2
         );
         TileMap tileMap = new TileMap(
             16,

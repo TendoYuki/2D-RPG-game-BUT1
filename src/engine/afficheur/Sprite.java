@@ -1,51 +1,65 @@
-/* ========================================================== */
-/*                  Bibliotheque MoteurDeJeu                  */
-/* --------------------------------------------               */
-/* Bibliotheque pour aider la création de jeu video comme :   */
-/* - Jeux de role                                             */
-/* - Jeux de plateforme                                       */
-/* - Jeux de combat                                           */
-/* - Jeux de course                                           */
-/* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
-/* ========================================================== */
-
 package engine.afficheur;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
 /**
- *
- * @author Pierre-Frederic Villard
+ * Class representing a sprite
  */
 public class Sprite {
 
-  int xmin, ymin;
-  int xmax, ymax;
+    /** Image of the sprite */
+    private BufferedImage image;
 
-  /**
-   *
-   */
-  public int tx;
+    /** Scaling factor of the sprite */
+    private int scaleFactor;
 
-  /**
-   *
-   */
-  public int ty;
+    /** Size X of the sprite in px */
+    private int sizeX;
 
-  /**
-   *
-   * @param xmin
-   * @param ymin
-   * @param xmax
-   * @param ymax
-   */
-  public Sprite(int xmin, int ymin, int xmax, int ymax) {
-    super();
-    this.xmin = xmin;
-    this.ymin = ymin;
-    this.xmax = xmax;
-    this.ymax = ymax;
-    this.tx = xmax - xmin;
-    this.ty = ymax - ymin;
+    /** Size Y of the sprite in px */
+    private int sizeY;
 
-  }
+    /**
+     * Creates a sprite
+     * @param scaleFactor Scaling factor of the sprite
+     * @param image Image
+     */
+    public Sprite(int sizeX, int sizeY, int scaleFactor, BufferedImage image) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        this.scaleFactor = scaleFactor;
+        this.image = image;
+    }
 
+    /**
+     * Draws the sprite on a canvas
+     * @param g Graphics
+     * @param x Xpos
+     * @param y Ypos
+     */
+    public void draw(Graphics g, int x, int y) {
+        AffineTransform at = AffineTransform.getTranslateInstance(x, y);
+        at.scale(scaleFactor, scaleFactor);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image, at, null);
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public int getScaleFactor() {
+        return scaleFactor;
+    }
+
+    public int getSizeX() {
+        return sizeX;
+    }
+
+    public int getSizeY() {
+        return sizeY;
+    }
 }

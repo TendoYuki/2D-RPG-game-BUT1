@@ -45,9 +45,6 @@ public abstract class Sprites {
      */
     public HashMap<String, Sprite> sprites;
 
-    // IMage
-    public BufferedImage im;
-
     // construit le sprite
 
     /**
@@ -71,7 +68,7 @@ public abstract class Sprites {
         Sprite s = sprites.get("fixe");
         if (s == null)
             s = sprites.get("erreur");
-        g.drawImage(im, x, y, x + s.tx, y + s.ty, s.xmin, s.ymin, s.xmax, s.ymax, null);
+        s.draw(g, x, y);
     }
 
     // permet de changer le type de sprite
@@ -81,18 +78,19 @@ public abstract class Sprites {
      * @param n
      */
     public void changeEtape(String n) {
-        activite = n;
-        iteration = 0;
-        num = 0;
+        if(!activite.equals(n)) {
+            activite = n;
+            iteration = 0;
+            num = 0;
+        }
+    }
+
+    public String getEtape() {
+        return activite;
     }
 
     /**
      *
-     */
+    */
     public abstract void anime();
-
-    public void assignNewImage(String fileName) throws IOException {
-        im = ImageIO.read(new File(fileName));
-    }
-
 }

@@ -27,7 +27,7 @@ import javax.imageio.ImageIO;
  */
 public class SpritesMonstre extends Sprites {
 
-	String imageFile = "monstre.png";
+	String imageFile = "assets/misc/monstre.png";
 
 	// constructeur de table de sprites
 
@@ -36,12 +36,12 @@ public class SpritesMonstre extends Sprites {
 	 * @throws IOException
 	 */
 	public SpritesMonstre() throws IOException {
-		im = ImageIO.read(new File(imageFile));
-		activite = "fixe";
+		// im = ImageIO.read(new File(imageFile));
+		// activite = "fixe";
 
-		sprites = new HashMap<String, Sprite>();
+		// sprites = new HashMap<String, Sprite>();
 
-		sprites.put("fixe", new Sprite(0, 0, im.getWidth(), im.getHeight()));
+		// sprites.put("fixe", new Sprite(im.getWidth(), im.getHeight(), 2,im));
 
 	}
 
