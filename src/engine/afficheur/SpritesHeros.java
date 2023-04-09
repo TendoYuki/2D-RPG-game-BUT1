@@ -31,15 +31,15 @@ import engine.physique.ObjetHeros;
 public class SpritesHeros extends Sprites {
 
 	ObjetHeros heros;
-        String imageFile="hero.png";
+	String imageFile = "assets/misc/hero.png";
 
 	// constructeur de table de sprites
 
-    /**
-     *
-     * @param b
-     * @throws IOException
-     */
+	/**
+	 *
+	 * @param b
+	 * @throws IOException
+	 */
 	public SpritesHeros(ObjetHeros b) throws IOException {
 		this.heros = b;
 
@@ -52,37 +52,36 @@ public class SpritesHeros extends Sprites {
 
 	// afficheur de sprite
 	public void affiche(int x, int y, Graphics g) {
-		//Sprite s = sprites.get(chaine());
-                Sprite s = sprites.get("fixe");
+		// Sprite s = sprites.get(chaine());
+		Sprite s = sprites.get("fixe");
 		if (s == null)
 			s = sprites.get("erreur");
 
 		// regarde la direction du personnage
 
 		if (heros.vx >= 0) {
-			//affichage normal
+			// affichage normal
 			g.drawImage(im, x, y, x + s.tx, y + s.ty, s.xmin, s.ymin, s.xmax,
 					s.ymax, null);
-		}
-		else {
-			//inverse gauche et droite
-			g.drawImage(im,  x + s.tx, y,x,y + s.ty,  s.xmin, s.ymin, s.xmax,
+		} else {
+			// inverse gauche et droite
+			g.drawImage(im, x + s.tx, y, x, y + s.ty, s.xmin, s.ymin, s.xmax,
 					s.ymax, null);
 		}
 
 	}
 
-    /**
-     *
-     */
-    @Override
+	/**
+	 *
+	 */
+	@Override
 	public void anime() {
 		iteration++;
 
 		if (activite.equals("fixe")) {
 
 		}
-		
+
 		if (activite.equals("saut")) {
 
 		}

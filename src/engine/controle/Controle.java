@@ -11,8 +11,6 @@
 
 package engine.controle;
 
-
-
 /**
  *
  * @author Pierre-Frederic Villard
@@ -26,25 +24,25 @@ public class Controle {
     /**
      *
      */
-     public boolean gauche;
+    public boolean gauche;
 
     /**
      *
      */
-     public boolean droite;
+    public boolean droite;
 
     /**
      *
      */
-     public boolean haut;
+    public boolean haut;
 
     /**
      *
      */
-     public boolean bas;
-    
+    public boolean bas;
+
     /**
      *
      */
-      public boolean enAir;
+    public boolean enAir;
 }

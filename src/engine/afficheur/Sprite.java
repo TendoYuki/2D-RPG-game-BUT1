@@ -17,36 +17,35 @@ package engine.afficheur;
  */
 public class Sprite {
 
-	
-	int xmin,ymin;
-	int xmax,ymax;
+  int xmin, ymin;
+  int xmax, ymax;
 
-    /**
-     *
-     */
-    public int tx;
+  /**
+   *
+   */
+  public int tx;
 
-    /**
-     *
-     */
-    public int ty;
-	
-    /**
-     *
-     * @param xmin
-     * @param ymin
-     * @param xmax
-     * @param ymax
-     */
-    public Sprite(int xmin, int ymin, int xmax, int ymax) {
-		super();
-		this.xmin = xmin;
-		this.ymin = ymin;
-		this.xmax = xmax;
-		this.ymax = ymax;
-		this.tx=xmax-xmin;
-		this.ty=ymax-ymin;
-		
-	}
+  /**
+   *
+   */
+  public int ty;
+
+  /**
+   *
+   * @param xmin
+   * @param ymin
+   * @param xmax
+   * @param ymax
+   */
+  public Sprite(int xmin, int ymin, int xmax, int ymax) {
+    super();
+    this.xmin = xmin;
+    this.ymin = ymin;
+    this.xmax = xmax;
+    this.ymax = ymax;
+    this.tx = xmax - xmin;
+    this.ty = ymax - ymin;
+
+  }
 
 }

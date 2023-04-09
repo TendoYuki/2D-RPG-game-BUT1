@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import engine.tiles.Atlas;
 import engine.tiles.TileMap;
 
 public class Main{
@@ -31,20 +32,17 @@ public class Main{
 class GUI extends JFrame {
     TM tm;
     TileMap tileMap;
-    HashMap<Integer, BufferedImage> atlas;
+    Atlas atlas;
     GUI() {
         super("");
         tm = new TM();
-        atlas = new HashMap<Integer, BufferedImage>();
-
-        try{
-            for(int i = 1; i <= 4; i++) {
-                atlas.put(i, ImageIO.read(
-                    new File("assets/tiles/" + i + ".png")
-                ));
-            }
-        }
-        catch(Exception e) {}
+        atlas = new Atlas(
+            "assets/tiles/tilemap.png",
+            16,
+            1,
+            4
+        );
+        System.out.println(atlas);
         tileMap = new TileMap(
             16,
             2,

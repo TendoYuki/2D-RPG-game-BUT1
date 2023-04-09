@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class TileMap {
     Grid<Tile> tileGrid;
 
-    HashMap<Integer, BufferedImage> tileAtlas;
+    Atlas tileAtlas;
 
     int[][] tilesAtlasKey;
 
@@ -26,7 +26,7 @@ public class TileMap {
             int tileSize,
             int scaleFactor,
             int[][]tilesAtlasKey,
-            HashMap<Integer, BufferedImage> tileAtlas
+            Atlas tileAtlas
         ) {
 
         this.scale = tileSize;
@@ -39,7 +39,8 @@ public class TileMap {
             for(int x = 0; x < tilesAtlasKey[0].length; x++) {
                 int key = tilesAtlasKey[y][x];
                 tileGrid.setCell(x, y, new Tile(
-                    tileAtlas.get(key), y*tileSize, x*tileSize, scaleFactor
+                    tileAtlas.get(key),
+                    y*tileSize, x*tileSize, scaleFactor
                 ));
             }
         }
@@ -55,7 +56,7 @@ public class TileMap {
     public TileMap(
             int tileSize,
             int[][]tilesAtlasKey,
-            HashMap<Integer, BufferedImage> tileAtlas
+            Atlas tileAtlas
         ) {
         this(tileSize,1, tilesAtlasKey, tileAtlas);
     }

@@ -33,10 +33,10 @@ public class AfficheControle {
 	// constructeur
 	// creer une JFrame
 
-    /**
-     *
-     * @param c
-     */
+	/**
+	 *
+	 * @param c
+	 */
 	public AfficheControle(Controle c) {
 		JFrame f = new JFrame("controleur");
 		f.setLocation(600, 00);
@@ -45,18 +45,17 @@ public class AfficheControle {
 
 		// lien vers le Controle
 		this.c = c;
-		
+
 		f.pack();
 		f.setVisible(true);
 		dessin();
 	}
-	
 
 	// permet de dessiner bourinnement
 
-    /**
-     *
-     */
+	/**
+	 *
+	 */
 	public void dessin() {
 		Graphics g = p.getGraphics();
 		g.setColor(Color.lightGray);
@@ -73,7 +72,7 @@ public class AfficheControle {
 			g.fillRect(70, 60, 20, 20);
 		else
 			g.drawRect(70, 60, 20, 20);
-		
+
 		if (c.haut)
 			g.fillRect(40, 20, 20, 20);
 		else

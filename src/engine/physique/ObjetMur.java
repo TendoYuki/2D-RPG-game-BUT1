@@ -24,10 +24,10 @@ import engine.afficheur.Repere;
  */
 public class ObjetMur extends Objet {
 
-    /**
-     *
-     */
-    public ObjetMur() {
+	/**
+	 *
+	 */
+	public ObjetMur() {
 		// taille de mur diff�rente
 		height = 50;
 		width = 50;
@@ -36,14 +36,14 @@ public class ObjetMur extends Objet {
 		sauveAnterieur();
 	}
 
-    /**
-     *
-     * @param x
-     * @param y
-     * @param w
-     * @param h
-     */
-    public ObjetMur(int x, int y, int w, int h) {
+	/**
+	 *
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 */
+	public ObjetMur(int x, int y, int w, int h) {
 		// taille de mur diff�rente
 		height = h;
 		width = w;
@@ -51,16 +51,16 @@ public class ObjetMur extends Objet {
 		py = y;
 	}
 
-    /**
-     *
-     * @param g
-     */
-    public void draw(Graphics g) {
-		if (collision==1)
+	/**
+	 *
+	 * @param g
+	 */
+	public void draw(Graphics g) {
+		if (collision == 1)
 			g.setColor(Color.red);
 		else
 			g.setColor(Color.gray);
-		int[] tab =Repere.changeRepere(this);
+		int[] tab = Repere.changeRepere(this);
 		g.fillRect(tab[0], tab[1], tab[2], tab[3]);
 	}
 

@@ -8,48 +8,48 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-
 //distributeur de sprites
 public class DecorFixe {
-	
-	//IMage
+
+	// IMage
 	BufferedImage im;
-	
-	//taille
-	int wx,wy;
-	
-	//construit le sprite
-	public DecorFixe() 
-	{
+
+	// taille
+	int wx, wy;
+
+	// construit le sprite
+	public DecorFixe() {
 		try {
-			im=ImageIO.read(new File("background.jpg"));
+			im = ImageIO.read(new File("assets/misc/donjon.jpeg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("erreur lecture background");
 		}
-		wx=im.getWidth();
-		wy=im.getHeight();
+		wx = im.getWidth();
+		wy = im.getHeight();
 	}
-	
-        public void changeImage(String image) 
-	{
+
+	public void changeImage(String image) {
 		try {
-			im=ImageIO.read(new File(image));
+			im = ImageIO.read(new File(image));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("erreur lecture background");
 		}
-		wx=im.getWidth();
-		wy=im.getHeight();
-	}	
-        
-	//afficheur de sprite
-	public void affiche(Graphics g)
-	{
-		g.drawImage(im,0 ,0 , wx, wy, 0, 0, wx, wy,null);
+		wx = im.getWidth();
+		wy = im.getHeight();
 	}
-	
-	
+
+	// Renvoie l'image
+	public BufferedImage getImage() {
+		return im;
+	}
+
+	// afficheur de sprite
+	public void affiche(Graphics g) {
+		g.drawImage(im, 0, 0, wx, wy, 0, 0, wx, wy, null);
+	}
+
 }

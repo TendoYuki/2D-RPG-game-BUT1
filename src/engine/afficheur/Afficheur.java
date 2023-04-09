@@ -28,79 +28,76 @@ public class Afficheur extends JPanel {
 
 	// le monde a affcher
 	public Monde m;
-	
-	//l'afficheur de Decor
-	//public DecorFixe decor=new DecorFixe();
-	public DecorVariable decor=new DecorVariable();
 
-        
-	//double buffering
+	// l'afficheur de Decor
+	// public DecorFixe decor=new DecorFixe();
+	public DecorFixe decor = new DecorFixe();
+
+	// double buffering
 	public BufferStrategy bs;
-	
+
 	// creation d'un afficheur
 
-    /**
-     *
-     * @param monde
-     */
+	/**
+	 *
+	 * @param monde
+	 */
 	public Afficheur(Monde monde) {
 		JFrame f = new JFrame();
-		setPreferredSize(new Dimension(600, 400));
+		// setPreferredSize(new Dimension(decor.getImage().getWidth(),
+		// decor.getImage().getHeight() - 39));
+		setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
 		f.pack();
 		f.setVisible(true);
-		
-		
-		//ajouter pour eviter les repaint
+
+		// ajouter pour eviter les repaint
 		f.setIgnoreRepaint(true);
-		
-		//double buffering
+
+		// double buffering
 		f.createBufferStrategy(2);
-	    bs = f.getBufferStrategy();
+		bs = f.getBufferStrategy();
 		this.setIgnoreRepaint(true);
-	    
-	    
-		
-	
 
 		this.m = monde;
 	}
 
 	// permet de faire un afficheg
 
-    /**
-     *
-     */
+	// Renvoie le decor
+	public DecorFixe getDecor() {
+		return decor;
+	}
+
+	/**
+	 *
+	 */
 	public void render() {
-		Graphics2D g = (Graphics2D)bs.getDrawGraphics();
+		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
 		g.setColor(Color.black);
 
-		//affiche le décor
-		//decor.affiche( g);
-                decor.affiche((int)m.balle.px, g);
+		// Affiche le decor
+		decor.affiche(g);
 
 		// affiche les objets
 		for (Objet obj : m.objets) {
 			obj.draw(g);
 		}
-		
-		//affiche les monstres
-		for (ObjetMonstre monstre : m.monstres)
-		{
+
+		// affiche les monstres
+		for (ObjetMonstre monstre : m.monstres) {
 			monstre.draw(g);
 		}
 
 		// affiche la balle
 		ObjetHeros b = m.balle;
 		b.draw(g);
-		
+
 		bs.show();
-        Toolkit.getDefaultToolkit().sync();
-        g.dispose();
-		
-		
+		Toolkit.getDefaultToolkit().sync();
+		g.dispose();
 
 	}
 

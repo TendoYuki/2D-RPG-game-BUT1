@@ -20,40 +20,31 @@ import engine.physique.ObjetHeros;
  */
 public class Repere {
 
-	
-    public static boolean isSubjective=true;
-    
-	//besoin d'un lien vers le heros
-	//vue subjective
+    private static int windowHeight;
+
+    public static void setWindowHeight(int windowHeight) {
+        Repere.windowHeight = windowHeight;
+    }
 
     /**
      *
      */
-	public static ObjetHeros h;
-	
-	// permet de chanegr le repere pour l'affichage
-	// retire 150 
+    public static ObjetHeros h;
 
     /**
      *
      * @param o
      * @return
      */
-	public static int[] changeRepere(Objet o)
-	{
-		
-            int res[]=new int[4];
-            res[1]= 370 - (int)o.py - (int)(o.height);
-            res[2]= (int)o.width;
-            res[3]= (int)o.height;	
-            if(isSubjective)
-            {
-		res[0]=100+ (int)o.px - (int)h.px;	
-            }
-            else{
- 		res[0]= (int)o.px;
-            }
-	    return(res);
-	}
-	
+    public static int[] changeRepere(Objet o) {
+        System.out.println(windowHeight);
+        int res[] = new int[4];
+        // res[1]= 370 - (int)o.py - (int)(o.height);
+        res[0] = (int) o.px;
+        res[1] = windowHeight - (int) o.py - (int) (o.height);
+        res[2] = (int) o.width;
+        res[3] = (int) o.height;
+        return (res);
+    }
+
 }

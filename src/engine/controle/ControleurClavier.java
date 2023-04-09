@@ -14,109 +14,98 @@ package engine.controle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
 //permet de faire un controleur de clavier
 
 /**
  *
  * @author Pierre-Frederic Villard
  */
-public class ControleurClavier implements KeyListener{
-	
-	//fin du jeu
+public class ControleurClavier implements KeyListener {
 
-    /**
-     *
-     */
-	public static boolean fin=false;
-	
-	//afficheur
-	boolean affiche=false;
+	// fin du jeu
+
+	/**
+	 *
+	 */
+	public static boolean fin = false;
+
+	// afficheur
+	boolean affiche = false;
 	AfficheControle afficheur;
-		
-	//la variable de controle
 
-    /**
-     *
-     */
+	// la variable de controle
+
+	/**
+	 *
+	 */
 	public Controle c;
-	
-	//constructeur avec affichage du controleur ou non.
 
-    /**
-     *
-     * @param affiche
-     */
-	public ControleurClavier(boolean affiche)
-	{
-		c=new Controle();
-		this.affiche=affiche;
-		if (affiche) 
-			afficheur=new AfficheControle(c);
+	// constructeur avec affichage du controleur ou non.
+
+	/**
+	 *
+	 * @param affiche
+	 */
+	public ControleurClavier(boolean affiche) {
+		c = new Controle();
+		this.affiche = affiche;
+		if (affiche)
+			afficheur = new AfficheControle(c);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		//vide		
+		// vide
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//touche gauche
-		if (e.getKeyCode()==KeyEvent.VK_LEFT)
-		{
-			c.gauche=true;			
+		// touche gauche
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			c.gauche = true;
 		}
-		//touche droite
-		if (e.getKeyCode()==KeyEvent.VK_RIGHT)
-		{
-			c.droite=true;
+		// touche droite
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			c.droite = true;
 		}
-		//touche up
-		if (e.getKeyCode()==KeyEvent.VK_UP)
-		{
-			c.haut=true;
+		// touche up
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			c.haut = true;
 		}
-		//touche down
-		if (e.getKeyCode()==KeyEvent.VK_DOWN)
-		{
-			c.bas=true;
-		}		
-		//touche up
-		if (e.getKeyCode()==KeyEvent.VK_Q)
-		{
-			fin=true;
+		// touche down
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			c.bas = true;
 		}
-		
-		if (affiche) afficheur.dessin();
+		// touche up
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
+			fin = true;
+		}
+
+		if (affiche)
+			afficheur.dessin();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//touche gauche
-		if (e.getKeyCode()==KeyEvent.VK_LEFT)
-		{
-			c.gauche=false;
+		// touche gauche
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			c.gauche = false;
 		}
-		//touche droite
-		if (e.getKeyCode()==KeyEvent.VK_RIGHT)
-		{
-			c.droite=false;
+		// touche droite
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			c.droite = false;
 		}
-		//touche up
-		if (e.getKeyCode()==KeyEvent.VK_UP)
-		{
-			c.haut=false;
+		// touche up
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			c.haut = false;
 		}
-                //touche down
-		if (e.getKeyCode()==KeyEvent.VK_DOWN)
-		{
-			c.bas=false;
+		// touche down
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			c.bas = false;
 		}
-		if (affiche) afficheur.dessin();
-		
+		if (affiche)
+			afficheur.dessin();
+
 	}
-	
-	
 
 }

@@ -19,7 +19,6 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-
 //distributeur de sprites
 
 /**
@@ -27,41 +26,39 @@ import javax.imageio.ImageIO;
  * @author Pierre-Frederic Villard
  */
 public abstract class Sprites {
-	
-	// l'activit�
-	String activite;
-	// compteur interne
-	int iteration;
-	// numero de la frame
+
+    // l'activit�
+    String activite;
+    // compteur interne
+    int iteration;
+    // numero de la frame
 
     /**
      *
      */
-	public int num;
-	
-	//lie chaine et sprite
+    public int num;
+
+    // lie chaine et sprite
 
     /**
      *
      */
-	public HashMap<String,Sprite> sprites;
-	
-	//IMage
-	public BufferedImage im;
-	
-	//construit le sprite
+    public HashMap<String, Sprite> sprites;
+
+    // IMage
+    public BufferedImage im;
+
+    // construit le sprite
 
     /**
      *
      * @return
      */
-	public String chaine()
-	{
-		return(activite+num);
-	}
-	
-	
-	//afficheur de sprite
+    public String chaine() {
+        return (activite + num);
+    }
+
+    // afficheur de sprite
 
     /**
      *
@@ -69,35 +66,33 @@ public abstract class Sprites {
      * @param y
      * @param g
      */
-	public void affiche(int x,int y,Graphics g)
-	{
-		//Sprite s=sprites.get(chaine());
-                Sprite s=sprites.get("fixe");
-		if (s==null) s=sprites.get("erreur");
-		g.drawImage(im, x, y, x+s.tx, y+s.ty, s.xmin, s.ymin, s.xmax, s.ymax,null);
-	}
-	
-	//permet de changer le type de sprite
+    public void affiche(int x, int y, Graphics g) {
+        // Sprite s=sprites.get(chaine());
+        Sprite s = sprites.get("fixe");
+        if (s == null)
+            s = sprites.get("erreur");
+        g.drawImage(im, x, y, x + s.tx, y + s.ty, s.xmin, s.ymin, s.xmax, s.ymax, null);
+    }
+
+    // permet de changer le type de sprite
 
     /**
      *
      * @param n
      */
-	public void changeEtape(String n)
-	{
-		activite=n;
-		iteration=0;
-		num=0;
-	}
-	
+    public void changeEtape(String n) {
+        activite = n;
+        iteration = 0;
+        num = 0;
+    }
+
     /**
      *
      */
     public abstract void anime();
-	
-    public void assignNewImage(String fileName) throws IOException
-    {
+
+    public void assignNewImage(String fileName) throws IOException {
         im = ImageIO.read(new File(fileName));
     }
-    
+
 }
