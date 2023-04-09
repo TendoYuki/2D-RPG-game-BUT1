@@ -47,10 +47,10 @@ public class ObjetHeros extends Objet {
 		width = 10;
 		height = sprites.sprites.get("fixe").ty;
 		width = sprites.sprites.get("fixe").tx;
-		vx = 1;
-		vy = 3;
+		vx = 0;
+		vy = 0;
 		ax = 0;
-		ay = -0.04;
+		ay = 0;
 	}
 
 	/**
@@ -65,10 +65,10 @@ public class ObjetHeros extends Objet {
 		width = sprites.sprites.get("fixe").tx;
 		px = x;
 		py = y;
-		vx = 1;
-		vy = 3;
+		vx = 0;
+		vy = 0;
 		ax = 0;
-		ay = -0.04;
+		ay = 0;
 	}
 
 	/**

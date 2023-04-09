@@ -14,11 +14,11 @@ public class Atlas {
     /** SriteAtlas */
     private HashMap<Integer, BufferedImage> spriteAtlas = new HashMap<Integer, BufferedImage>();
     /** Size of a sprite in the spriteSheet */
-    int spriteSize;
+    private int spriteSize;
     /** Number of sprite in a row */
-    int rows;
+    private int rows;
     /** Number of sprite in a column */
-    int cols;
+    private int cols;
 
     /**
      * Creates an atlas that binds an integer to a sprite from a spriteSheet
@@ -74,5 +74,21 @@ public class Atlas {
             ret += value + "\n";
         }
         return ret;
+    }
+    
+    public int getSpriteSize() {
+        return spriteSize;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+    
+    public int getSpriteCount() {
+        return spriteAtlas.size();
     }
 }

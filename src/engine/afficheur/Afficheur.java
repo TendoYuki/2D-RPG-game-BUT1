@@ -17,6 +17,8 @@ import java.awt.image.BufferStrategy;
 import javax.swing.*;
 
 import engine.physique.*;
+import engine.tiles.Atlas;
+import engine.tiles.TileMap;
 
 //permet d'affiche des objets
 
@@ -30,8 +32,7 @@ public class Afficheur extends JPanel {
 	public Monde m;
 
 	// l'afficheur de Decor
-	// public DecorFixe decor=new DecorFixe();
-	public DecorFixe decor = new DecorFixe();
+	public DecorFixe decor;
 
 	// double buffering
 	public BufferStrategy bs;
@@ -44,8 +45,42 @@ public class Afficheur extends JPanel {
 	 */
 	public Afficheur(Monde monde) {
 		JFrame f = new JFrame();
-		setPreferredSize(new Dimension(decor.getImage().getWidth(),
-		decor.getImage().getHeight()));
+
+		Atlas atlas = new Atlas(
+            "assets/tiles/tilemap.png",
+            16,
+            1,
+            4
+        );
+        TileMap tileMap = new TileMap(
+            16,
+            2,
+            new int[][] {
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
+                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
+                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
+                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
+                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
+                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
+                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
+                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
+                {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
+                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+            },
+            atlas
+        );
+
+		decor = new DecorFixe(tileMap);
+
+		setPreferredSize(new Dimension(decor.size(),decor.size()));
+
+		
 		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
@@ -97,6 +132,7 @@ public class Afficheur extends JPanel {
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
+		g.clearRect(0, 0, decor.size(), decor.size());
 		g.dispose();
 
 	}

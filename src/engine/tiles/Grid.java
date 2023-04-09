@@ -8,10 +8,10 @@ import java.util.HashMap;
  */
 public class Grid<T>{
     
-    HashMap<Integer, T> cells;
+    private HashMap<Integer, T> cells;
 
-    int xCount;
-    int yCount;
+    private int xCount;
+    private int yCount;
 
     /**
      * Creates a grid that holds cell that has y rows and x

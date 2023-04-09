@@ -14,6 +14,8 @@ public class TileMap {
 
     int scale;
 
+    int scaleFactor;
+
     /**
      * Creates a tilemap of a given scale(ex 16 -> 16x16px) 
      * with an array of keys that maps to the provided tileAtlas
@@ -30,6 +32,7 @@ public class TileMap {
         ) {
 
         this.scale = tileSize;
+        this.scaleFactor = scaleFactor;
         this.tilesAtlasKey = tilesAtlasKey;
         tileGrid = new Grid<Tile>(
             tilesAtlasKey[0].length,
@@ -44,6 +47,7 @@ public class TileMap {
                 ));
             }
         }
+        this.tileAtlas = tileAtlas;
     }
 
     /**
@@ -70,5 +74,13 @@ public class TileMap {
                 tileGrid.getCell(x, y).draw(g);
             }
         }
+    }
+
+    public int size() {
+        return tileGrid.getxCount() * tileAtlas.getSpriteSize() * scaleFactor;
+    }
+
+    public int tileCount() {
+        return tileAtlas.getSpriteCount();
     }
 }

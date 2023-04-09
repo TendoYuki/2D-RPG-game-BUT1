@@ -1,19 +1,3 @@
-/* ========================================================== */
-/*                  Bibliotheque MoteurDeJeu                  */
-/* --------------------------------------------               */
-/* Bibliotheque pour aider la création de jeu video comme :   */
-/* - Jeux de role                                             */
-/* - Jeux de plateforme                                       */
-/* - Jeux de combat                                           */
-/* - Jeux de course                                           */
-/* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
-/* ========================================================== */
-
-/**
- *
- * @author Pierre-Frederic Villard
- */
-
 import engine.main.BouclePrincipale;
 import engine.afficheur.Afficheur;
 import engine.controle.ControleurClavier;
@@ -49,8 +33,8 @@ public class Game {
         // on creer l'afficheur du monde
         affiche = new Afficheur(moteurPhys.monde);
 
-        int imgWidth = affiche.getDecor().getImage().getWidth();
-        int imgHeight = affiche.getDecor().getImage().getHeight();
+        int imgWidth = affiche.getDecor().size();
+        int imgHeight = affiche.getDecor().size();
         Repere.setWindowHeight(imgHeight);
 
         //////////////////////
@@ -94,7 +78,9 @@ public class Game {
         monMonde.addHero(0, 0, 50, 20);
 
         monMonde.addHero(0, 0, 500, 20);
-        monMonde.heros.get(1).sprites.assignNewImage("assets/misc/hero.png");
+        monMonde.heros.get(1).sprites.assignNewImage(
+            "assets/misc/hero.png"
+        );
         // monMonde.heros.get(1).
 
         // Gestion de la boucle principale

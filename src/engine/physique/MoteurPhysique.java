@@ -40,6 +40,8 @@ public class MoteurPhysique {
 	public int current_monster_index = 0;
 	public int current_wall_index = 0;
 
+	public static double SPEED = 1.5;
+
 	/**
 	 * Construit un moteur par defaut
 	 * 
@@ -72,25 +74,25 @@ public class MoteurPhysique {
 		}
 
 		// gestion du controleur
-		if (monde.c.gauche) {
+		if (monde.c.droite) {
 			if (monde.balle.ovx == 0) {
-				monde.balle.sprites.changeEtape("course");
-			}
-			monde.balle.ax = -0.1;
-			if (monde.balle.vx < -2)
-				monde.balle.vx = -2;
-
-		}
-
-		else if (monde.c.droite) {
-			if (monde.balle.ovx == 0) {
-				monde.balle.sprites.changeEtape("course");
+				monde.balle.sprites.changeEtape("right");
 			}
 			monde.balle.ax = 0.1;
-			if (monde.balle.vx > 2)
-				monde.balle.vx = 2;
+			if (monde.balle.vx > SPEED)
+				monde.balle.vx = SPEED;
 
-		} else {
+		} 
+		else if (monde.c.gauche) {
+			if (monde.balle.ovx == 0) {
+				monde.balle.sprites.changeEtape("left");
+			}
+			monde.balle.ax = -0.1;
+			if (monde.balle.vx < -SPEED)
+				monde.balle.vx = -SPEED;
+
+		}
+		else {
 			if ((monde.balle.vx < 0.2) && (monde.balle.vx > -0.2)) {
 				monde.balle.vx = 0;
 				monde.balle.ax = 0;
@@ -101,22 +103,39 @@ public class MoteurPhysique {
 				monde.balle.ax = +0.1;
 		}
 
-		// gestion des sauts
-		if (gravity) {
-			if ((monde.c.haut) && (!monde.c.enAir)) {
-				monde.balle.sprites.changeEtape("saut");
-				monde.balle.vy = 3;
-				monde.balle.ay = gravityValue;
-				monde.c.enAir = true;
+		// gestion des deplacement verticaux
+		monde.balle.ay = 0;
+		monde.balle.vy = 0;
+		if (monde.c.haut) {
+			if(monde.c.gauche) {
+				monde.balle.sprites.changeEtape("up-left");
+				monde.balle.vx = -SPEED*0.75;
+				monde.balle.vy = SPEED*0.75;
 			}
-		} else {
-			monde.balle.ay = 0;
-			monde.balle.vy = 0;
-			if (monde.c.haut) {
-				monde.balle.vy = 1;
+			else if(monde.c.droite) {
+				monde.balle.sprites.changeEtape("up-right");
+				monde.balle.vx = SPEED*0.75;
+				monde.balle.vy = SPEED*0.75;
 			}
-			if (monde.c.bas) {
-				monde.balle.vy = -1;
+			else {
+				monde.balle.sprites.changeEtape("up");
+				monde.balle.vy = SPEED;
+			}
+		}
+		if (monde.c.bas) {
+			if(monde.c.gauche) {
+				monde.balle.sprites.changeEtape("down-left");
+				monde.balle.vx = -SPEED*0.75;
+				monde.balle.vy = -SPEED*0.75;
+			}
+			else if(monde.c.droite) {
+				monde.balle.sprites.changeEtape("down-right");
+				monde.balle.vx = SPEED*0.75;
+				monde.balle.vy = -SPEED*0.75;
+			}
+			else {
+				monde.balle.sprites.changeEtape("down");
+				monde.balle.vy = -SPEED;
 			}
 		}
 

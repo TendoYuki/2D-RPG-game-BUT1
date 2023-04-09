@@ -37,7 +37,6 @@ public class Repere {
      * @return
      */
     public static int[] changeRepere(Objet o) {
-        System.out.println(windowHeight);
         int res[] = new int[4];
         // res[1]= 370 - (int)o.py - (int)(o.height);
         res[0] = (int) o.px;

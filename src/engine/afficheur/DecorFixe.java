@@ -8,26 +8,28 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import engine.tiles.Atlas;
+import engine.tiles.TileMap;
+
 //distributeur de sprites
 public class DecorFixe {
 
 	// IMage
 	BufferedImage im;
 
+	Atlas atlas;
+
+	TileMap tileMap;
+
+	private int spriteSize = 16;
+	private int spriteScale = 2;
+
 	// taille
 	int wx, wy;
 
 	// construit le sprite
-	public DecorFixe() {
-		try {
-			im = ImageIO.read(new File("assets/misc/donjon.jpeg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("erreur lecture background");
-		}
-		wx = im.getWidth();
-		wy = im.getHeight();
+	public DecorFixe(TileMap tileMap) {
+		this.tileMap = tileMap;
 	}
 
 	public void changeImage(String image) {
@@ -42,14 +44,14 @@ public class DecorFixe {
 		wy = im.getHeight();
 	}
 
-	// Renvoie l'image
-	public BufferedImage getImage() {
-		return im;
+	public int size() {
+		return tileMap.size();
 	}
 
 	// afficheur de sprite
 	public void affiche(Graphics g) {
-		g.drawImage(im, 0, 0, wx, wy, 0, 0, wx, wy, null);
+		tileMap.draw(g);
+		// g.drawImage(im, 0, 0, wx, wy, 0, 0, wx, wy, null);
 	}
 
 }
