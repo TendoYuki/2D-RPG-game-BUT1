@@ -18,6 +18,7 @@ import javax.swing.*;
 
 import engine.hud.TestHud;
 import engine.hud.player.PlayerHud;
+import engine.hud.shop.Shop;
 import engine.physique.*;
 import engine.tiles.Atlas;
 import engine.tiles.TileMap;
@@ -39,6 +40,7 @@ public class Afficheur extends JPanel {
 	// double buffering
 	public BufferStrategy bs;
 	PlayerHud hud;
+	Shop shop;
 
 	// creation d'un afficheur
 
@@ -101,7 +103,9 @@ public class Afficheur extends JPanel {
 
 		this.m = monde;
 		hud = new PlayerHud(monde.heros.get(0));
+		shop = new Shop(monde.heros.get(0), 0, 0, 512, 512);
 		this.addMouseListener(hud.getControleSouris());
+		this.addMouseListener(shop.getControleSouris());
 	}
 
 	// permet de faire un afficheg
@@ -137,6 +141,7 @@ public class Afficheur extends JPanel {
 		b.draw(g);
 
 		hud.draw(g);
+		shop.draw(g);
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
 		g.clearRect(0, 0, decor.size(), decor.size());

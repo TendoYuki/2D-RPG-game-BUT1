@@ -20,6 +20,7 @@ public class Heros extends Entity{
 	private final int STATS_VIE = 10;
 	private final int STATS_ATT = 5;
 	private final int STATS_DEF = 1;
+	private final int VIE_DEPART;
 	/** Multiplicator de la vie */
 	private int multiplicatorVie = 0;
 
@@ -38,6 +39,7 @@ public class Heros extends Entity{
 	 */
 	public Heros(int x, int y, int vie, int pieces) throws IOException {
 		super(vie, 5, 2);
+		VIE_DEPART = vie;
 		this.pieces = pieces;
 		sprites = new SpritesHeros(this);
 		height = 10;
@@ -84,6 +86,32 @@ public class Heros extends Entity{
 	/** Mort du heros */
 	public void handleDeath() {
 		System.out.println("Shawn il é mor");
+	}
+
+
+	
+	public int getMultiplicatorVie() {
+		return multiplicatorVie;
+	}
+
+	public void setMultiplicatorVie(int multiplicatorVie) {
+		this.multiplicatorVie = multiplicatorVie;
+	}
+
+	public int getMultiplicatorDef() {
+		return multiplicatorDef;
+	}
+
+	public void setMultiplicatorDef(int multiplicatorDef) {
+		this.multiplicatorDef = multiplicatorDef;
+	}
+
+	public int getMultiplicatorAtt() {
+		return multiplicatorAtt;
+	}
+
+	public void setMultiplicatorAtt(int multiplicatorAtt) {
+		this.multiplicatorAtt = multiplicatorAtt;
 	}
 
 	/**
