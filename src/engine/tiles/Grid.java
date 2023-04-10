@@ -1,6 +1,8 @@
 package engine.tiles;
 
+import java.util.Map.Entry;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Grid of a certain scale with a determined x and y count 
@@ -43,6 +45,51 @@ public class Grid<T>{
      */
     public T getCell(int x, int y) {
         return cells.get(y*xCount + x);
+    }
+    
+    public int[] getCellPos(T cell) {
+        int index = -1;
+        for (Entry<Integer, T> entry : cells.entrySet()) {
+            if (cell.equals(entry.getValue())) {
+                index = entry.getKey();
+            }
+        }
+        int x = index%xCount;
+        int y = index%yCount;
+        return new int[] {x,y};
+    }
+
+    /**
+     * Gets a hashmap of all the cells of the grid adjacent to the one passed
+     * as parameter
+     * @param x Xpos 
+     * @param y Ypos
+     * @return Hashmap of the possible directions
+     */
+    public HashMap<Directions, T> getAdjacentCells(int x, int y) {
+        HashMap<Directions, T> adjacentCells = new HashMap<Directions, T>();
+        adjacentCells.put(
+            Directions.UP,
+            cells.get(y*xCount + x - xCount)
+        );
+        adjacentCells.put(
+            Directions.DOWN,
+            cells.get(y*xCount + x + xCount)
+        );
+        adjacentCells.put(
+            Directions.RIGHT,
+            cells.get(y*xCount + x + 1)
+        );
+        adjacentCells.put(
+            Directions.RIGHT,
+            cells.get(y*xCount + x - 1)
+        );
+        return adjacentCells;
+    }
+
+    public HashMap<Directions, T> getAdjacentCells(T cell){
+        int[] pos = getCellPos(cell);
+        return getAdjacentCells(pos[0], pos[1]);
     }
 
     /**

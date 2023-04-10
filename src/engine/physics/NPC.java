@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import engine.dialog.Dialog;
+import engine.dialog.DialogController;
 import engine.view.CoordinateSystem;
 import engine.view.NPCSprites;
 
@@ -15,6 +16,8 @@ public class NPC extends Entity {
 
 	// lien vers le monde
 	World m;
+
+	public static boolean interacting = false;
 
 	private int triggerZoneWidth = 25;
 	private int triggerZoneHeight = 25;
@@ -75,14 +78,9 @@ public class NPC extends Entity {
 	public void interact() {
 		m.huds.get("npc").setIsShown(true);
 		m.huds.get("npc").setInteractable(true);
+		interacting = true;
+		DialogController.setCurrentDialog(activeDialog);
 	}
-
-	/** */
-	public void noInteract(){
-		m.huds.get("npc").setIsShown(false);
-		m.huds.get("npc").setInteractable(false);
-	}
-
 
 	@Override
 	public void handleDeath() {

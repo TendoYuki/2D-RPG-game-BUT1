@@ -95,24 +95,74 @@ public class Game {
         int imgWidth = display.getDecor().size();
         int imgHeight = display.getDecor().size();
         CoordinateSystem.setWindowHeight(imgHeight);
-        Dialog d = new Dialog();
-        d.addLine(new String[] {
+
+        // Dialogue du gardien
+        Dialog npc1 = new Dialog();
+        npc1.addLine(new String[] {
             "Bienvenue aventurier ! ",
             "J'espère que tu n'as pas eu de problème sur le chemin jusque ici",
             "Appuie sur «F» pour parler au gardien afin qu'il te donne ta première quête."
         });
-        d.addLine(new String[] {
+        npc1.addLine(new String[] {
             "C’est donc toi le redoutable aventurier dont on m’a parlé.",
             "Ça fait plaisir de rencontrer quelqu’un qui pourrait m’aider.",
-            "Voilà, j’ai  un problème depuis quelques semaines maintenant. Un objet qui m’est très chère est perdu dans ce donjon.",
+            "Voilà, j’ai  un problème depuis quelques semaines maintenant.",
+            "Un objet qui m’est très chère est perdu dans ce donjon.",
             "Ramène le moi et je te promet une récompense. "
         });
-        d.addLine(new String[] {
+        npc1.addLine(new String[] {
             "Pas si vite! ",
             "Tu n’as encore appris à te battre, tu ne peux donc pas rentrer pour le moment.",
             "Vient ici que je t’apprennes toutes mes techniques."
         });
-        DialogController.setCurrentDialog(d);
+        npc1.addLine(new String[] {
+            "Tu peux appuyer sur l'icone $ en bas a droite de ton ecran afin d'ameliorer ",
+            "tes competences a tout moment",
+            "Tu peux augmenter ta vie, ta defense et ton attaque",
+            "Si tu as des pieces d'or sur toi je te conseille d'ameliorer dans un premier temps,",
+            "bien entendu tu n'es pas oblige de m'ecouter mais tu sera le seul responsable",
+            "s'il t'arrive quelque chose.",
+        });
+        Dialog npc1End = new Dialog();
+        npc1End.addLine(new String[]{
+            "Oh tu es de retour, ça fait plaisir de te revoir, tu as bien mon objet hein ?"
+        });
+        npc1End.addLine(new String[]{
+            "Oh mon dieu tu as vraiment reussis a le recuperer, me voila bien surpris",
+            "Tiens donc la recompense que je t'ai promis"
+        });
+        npc1End.addLine(new String[]{
+            "Vous avez recu la competence DIEU DU DEV !!",
+            "Plus aucun programme ne vous sera impossible a faire !"
+        });
+
+        // dialogue des portes
+        Dialog porteFermee = new Dialog();
+        porteFermee.addLine(new String[]{
+            "La porte est fermee",
+            "Tuez tout les monstres afin qu'elle s'ouvre"
+        });
+        
+        Dialog porteOuverte = new Dialog();
+        porteOuverte.addLine(new String[] {
+            "Vous avez tuer tout les monstres de cette zone",
+            "Les portes s'ouvrent"
+        });
+
+        // Dialogue du boss
+        Dialog bossStart = new Dialog();
+        bossStart.addLine(new String[]{
+            "Oh tient tient... Un nouvel aventurier qui pense pouvroir me batre",
+            "MUAHAHAHAHAHHAHAHAHAHA"
+        });
+
+        Dialog bossMort = new Dialog();
+        bossMort.addLine(new String[]{
+            "AAAAAAAAAARRrrrrrrrrrrrrrghhhhhhhhhh"
+        });
+        bossMort.addLine(new String[] {
+            "Vous avez recupere le baton magique du gardien"
+        });
 
         // Adding huds
         shop = new Shop(
@@ -181,7 +231,16 @@ public class Game {
         // Adding enemies
         world.addEnemy(0, 0, 100, 100);
 
+        // Adding NPCs + link dialogs
         world.addNPC(0, 0, 200, 200);
+        world.npcs.get(0).addDialog("start", npc1);
+        world.npcs.get(0).addDialog("end", npc1End);
+        world.npcs.get(0).setActiveDialog("start");
+
+        world.addNPC(0,0,400,300);
+        world.npcs.get(1).addDialog("start", bossStart);
+        world.npcs.get(1).addDialog("end", bossMort);
+        world.npcs.get(1).setActiveDialog("end");
 
         // Gestion de la boucle principale
         BouclePrincipale maBoucle = new BouclePrincipale();

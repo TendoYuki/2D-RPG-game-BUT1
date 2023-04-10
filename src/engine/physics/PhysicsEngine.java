@@ -196,9 +196,18 @@ public class PhysicsEngine {
 		if (world.player.collision == 0)
 			world.player.collision = Collision.typeOfCollision;
 
+		boolean isPlayerInteracting = false;
 		for (NPC npc : world.npcs){
-			if (npc.isInTriggerZone()) npc.interact();
-			else npc.noInteract();
+			if (npc.isInTriggerZone()) {
+				npc.interact();
+				isPlayerInteracting = true;
+				break;
+			}
+			else isPlayerInteracting = false;
+		}
+		if(!isPlayerInteracting) {
+			world.huds.get("npc").setIsShown(false);
+			world.huds.get("npc").setInteractable(false);
 		}
 	}
 
