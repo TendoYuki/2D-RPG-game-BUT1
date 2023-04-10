@@ -8,20 +8,21 @@ import javax.imageio.ImageIO;
 
 import engine.afficheur.Sprite;
 import engine.hud.HudElement;
+import engine.hud.shop.Shop;
 import engine.physique.Heros;
 
-public class CoinsCount extends HudElement{
+public class OpenShop extends HudElement{
 
-    Sprite coin;
-    Heros player;
+    Sprite shopSprite;
+    Shop shop;
 
-    public CoinsCount(Heros player, int x, int y, int width, int height) {
+    public OpenShop(Shop shop, int x, int y, int width, int height) {
         super(x, y, width, height);
-        this.player = player;
+        this.shop = shop;
         try{
-            coin = new Sprite(16, 16, 2, ImageIO.read(
+            shopSprite = new Sprite(16, 16, 2, ImageIO.read(
                 new File(
-                    "assets/misc/coin.png"
+                    "assets/misc/shop.png"
                 )
             ));
         }
@@ -33,12 +34,15 @@ public class CoinsCount extends HudElement{
         Font temp = g.getFont();
         g.setFont(temp.deriveFont(Font.BOLD).deriveFont(20F));
 
-        coin.draw(g, getX(), getY());
-        g.drawString("" + player.getPieces(), getX() - coin.getSizeX(), getY() + (int)(coin.getSizeY()/1.3));
+        shopSprite.draw(g, getX(), getY());
+        g.drawString("Shop", getX() - shopSprite.getSizeX()*2, getY() + (int)(shopSprite.getSizeY()/1.3));
         g.setFont(temp);
     }
 
     @Override
-    public void onClick() {}
+    public void onClick() {
+        shop.setIsShown(true);
+        shop.setInteractable(true);
+    }
     
 }

@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 public class ControleSouris extends MouseAdapter{
 
     ArrayList<Clickable> interactiveElements = new ArrayList<Clickable>();
+    private boolean isListening = true;
 
     public void register(Clickable clickable) {
         interactiveElements.add(clickable);
@@ -16,21 +17,29 @@ public class ControleSouris extends MouseAdapter{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        interactiveElements.forEach(element -> {
-            if(
-                e.getX() > element.getX() &&
-                e.getX() < element.getX() +
-                element.getWidth()
-            ) {
+        if(isListening)
+            interactiveElements.forEach(element -> {
                 if(
-                    e.getY() > element.getY() &&
-                    e.getY() < element.getY() +
-                    element.getHeight()
+                    e.getX() > element.getX() &&
+                    e.getX() < element.getX() +
+                    element.getWidth()
                 ) {
-                    element.onClick();
+                    if(
+                        e.getY() > element.getY() &&
+                        e.getY() < element.getY() +
+                        element.getHeight()
+                    ) {
+                        element.onClick();
+                    }
                 }
-            }
-        });
+            });
     }
     
+    public void listen() {
+        isListening = true;
+    }
+
+    public void stopListening() {
+        isListening = false;
+    }
 }

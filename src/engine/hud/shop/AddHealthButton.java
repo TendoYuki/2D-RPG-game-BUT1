@@ -30,7 +30,10 @@ public class AddHealthButton extends ShopButton {
     @Override
     public void onClick() {
         int curr = player.getMultiplicatorVie()+1;
-        if(curr <= 10) 
+        if(curr <= 10 && player.getPieces() >= 5) {
             player.setMultiplicatorVie(curr);
+            player.setVie(player.getVie() + player.MUL_VIE_UNIT);
+            player.addPieces(-5);
+        }
     }
 }

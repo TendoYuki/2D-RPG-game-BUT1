@@ -29,9 +29,10 @@ public class AddAttackButton extends ShopButton {
 
     @Override
     public void onClick() {
-        System.out.println("sike");
         int curr = player.getMultiplicatorAtt()+1;
-        if(curr <= 10) 
+        if(curr <= 10 && player.getPieces() >= 5) {
             player.setMultiplicatorAtt(curr);
+            player.addPieces(-5);
+        }
     }
 }

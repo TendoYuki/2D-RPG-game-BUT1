@@ -102,8 +102,10 @@ public class Afficheur extends JPanel {
 		this.setIgnoreRepaint(true);
 
 		this.m = monde;
-		hud = new PlayerHud(monde.heros.get(0));
-		shop = new Shop(monde.heros.get(0), 0, 0, 512, 512);
+		shop = new Shop(monde.heros.get(0), f.getWidth()/2 - (int)(512/1.4)/2, f.getHeight()/2 - (int)(512/1.4)/2, (int)(512/1.4), (int)(512/1.4));
+        shop.setIsShown(false);
+        shop.setInteractable(false);
+		hud = new PlayerHud(monde.heros.get(0),shop);
 		this.addMouseListener(hud.getControleSouris());
 		this.addMouseListener(shop.getControleSouris());
 	}

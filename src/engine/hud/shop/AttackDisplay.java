@@ -9,6 +9,7 @@ public class AttackDisplay extends StatsDisplay {
     public AttackDisplay(Heros player, int x, int y, int width, int height) {
         super(10, x, y, width, height);
         this.player = player;
+        displayString = "Attack";
     }
 
     @Override

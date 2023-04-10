@@ -9,6 +9,7 @@ public class HealthDisplay extends StatsDisplay {
     public HealthDisplay(Heros player, int x, int y, int width, int height) {
         super(10, x, y, width, height);
         this.player = player;
+        displayString = "Health";
     }
 
     @Override

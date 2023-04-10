@@ -30,7 +30,9 @@ public class AddDefenceButton extends ShopButton {
     @Override
     public void onClick() {
         int curr = player.getMultiplicatorDef()+1;
-        if(curr <= 10) 
+        if(curr <= 10 && player.getPieces() >= 5) {
             player.setMultiplicatorDef(curr);
+            player.addPieces(-5);
+        }
     }
 }

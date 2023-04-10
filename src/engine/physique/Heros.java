@@ -17,10 +17,13 @@ public class Heros extends Entity{
 	// lien vers son controleur
 	Controle c;
 
-	private final int STATS_VIE = 10;
-	private final int STATS_ATT = 5;
-	private final int STATS_DEF = 1;
+	public final int MUL_VIE_UNIT = 10;
+	public final int MUL_ATT_UNIT = 5;
+	public final int MUL_DEF_UNIT = 1;
+
 	private final int VIE_DEPART;
+	private final int DEF_DEPART = 2;
+	private final int ATT_DEPART = 5;
 	/** Multiplicator de la vie */
 	private int multiplicatorVie = 0;
 
@@ -113,7 +116,18 @@ public class Heros extends Entity{
 	public void setMultiplicatorAtt(int multiplicatorAtt) {
 		this.multiplicatorAtt = multiplicatorAtt;
 	}
-
+	@Override
+	public int getMaxVie() {
+		return VIE_DEPART + MUL_VIE_UNIT * getMultiplicatorVie();
+	}
+	@Override
+	public int getDefense() {
+		return DEF_DEPART + MUL_DEF_UNIT * getMultiplicatorDef();
+	}
+	@Override
+	public int getAttaque() {
+		return ATT_DEPART + MUL_ATT_UNIT * getMultiplicatorAtt();
+	}
 	/**
 	 *
 	 * @param g
