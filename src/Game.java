@@ -13,7 +13,6 @@ import engine.tiles.TileMap;
 import engine.view.CoordinateSystem;
 import engine.view.Scene;
 import engine.view.Display;
-import engine.view.NPCSprites;
 
 public class Game {
     public static void main(String[] args) throws Exception {

@@ -18,7 +18,6 @@ import java.util.HashMap;
 import engine.controller.Control;
 import engine.hud.Hud;
 import engine.view.CoordinateSystem;
-import engine.view.NPCSprites;
 
 //gere les objets du monde
 
