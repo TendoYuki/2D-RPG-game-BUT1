@@ -1,20 +1,20 @@
-package engine.hud.shop;
+package engine.hud.menu;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import engine.hud.HudElement;
 
-public class ShopBackground extends HudElement{
+public class MenuBackground extends HudElement{
 
-    public ShopBackground(int x, int y, int width, int height) {
+    public MenuBackground(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
 
     @Override
     public void draw(Graphics g) {
         Color c = g.getColor();
-        g.setColor(Color.cyan);
+        g.setColor(Color.gray);
         g.fillRect(getY(), getX(), getWidth(), getHeight());
         g.setColor(c);
         

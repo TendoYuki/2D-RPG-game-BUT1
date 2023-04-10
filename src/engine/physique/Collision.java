@@ -49,15 +49,15 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collision(Objet o, Objet o2) {
+    public static boolean collision(Object o, Object o2) {
         typeOfCollision = 0;
-        if (o2 instanceof Monstre) {
+        if (o2 instanceof Enemy) {
             typeOfCollision = MONSTRE;
         }
-        if (o2 instanceof Heros) {
+        if (o2 instanceof Player) {
             typeOfCollision = HERO;
         }
-        if (o2 instanceof ObjetMur) {
+        if (o2 instanceof Wall) {
             typeOfCollision = DECORS;
         }
 
@@ -76,7 +76,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static int direction(Objet o, Objet o2) {
+    public static int direction(Object o, Object o2) {
 
         throw new AssertionError("deprecated");
         // on regarde simplement les anciennes positions
@@ -123,7 +123,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collisionGauche(Objet o, Objet o2) {
+    public static boolean collisionGauche(Object o, Object o2) {
         return (o2.opx + o2.width >= o.opx);
     }
 
@@ -135,7 +135,7 @@ public class Collision {
      * @param o2 Object that collieds with the reference
      * @return
      */
-    public static boolean collisionDroite(Objet o, Objet o2) {
+    public static boolean collisionDroite(Object o, Object o2) {
         return (o.opx + o.width <= o2.opx);
     }
 
@@ -147,7 +147,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collisionHaut(Objet o, Objet o2) {
+    public static boolean collisionHaut(Object o, Object o2) {
         return (o.opy >= o2.opy + o2.height);
     }
 
@@ -159,7 +159,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collisionBas(Objet o, Objet o2) {
+    public static boolean collisionBas(Object o, Object o2) {
         return (o.opy + o.height <= o2.opy);
     }
 

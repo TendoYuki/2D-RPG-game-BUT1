@@ -1,6 +1,6 @@
 package engine.physique;
 
-public abstract class Entity extends Objet {
+public abstract class Entity extends Object {
 
 	/** Entity's max health */
 	private int maxVie;

@@ -9,41 +9,56 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.afficheur;
+package engine.physique;
 
-import engine.physique.Objet;
-import engine.physique.Heros;
+//un objet de type mur
 
 /**
  *
  * @author Pierre-Frederic Villard
  */
-public class Repere {
+public class DynamicWall extends Wall {
 
-    private static int windowHeight;
+	int i = 0;
 
-    public static void setWindowHeight(int windowHeight) {
-        Repere.windowHeight = windowHeight;
-    }
+	/**
+	 *
+	 */
+	public DynamicWall() {
+		// taille de mur diff�rente
+		height = 50;
+		width = 50;
+		px = 100;
+		py = 20;
+	}
 
-    /**
-     *
-     */
-    public static Heros h;
+	/**
+	 *
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 */
+	public DynamicWall(int x, int y, int w, int h) {
+		// taille de mur diff�rente
+		height = h;
+		width = w;
+		px = x;
+		py = y;
+	}
 
-    /**
-     *
-     * @param o
-     * @return
-     */
-    public static int[] changeRepere(Objet o) {
-        int res[] = new int[4];
-        // res[1]= 370 - (int)o.py - (int)(o.height);
-        res[0] = (int) o.px;
-        res[1] = windowHeight - (int) o.py - (int) (o.height);
-        res[2] = (int) o.width;
-        res[3] = (int) o.height;
-        return (res);
-    }
+	// surcharge la mise � jour
+
+	/**
+	 *
+	 */
+	public void update() {
+		sauveAnterieur();
+		i++;
+		if ((i / 200) % 2 == 0) {
+			py = py + 0.5;
+		} else
+			py = py - 0.5;
+	}
 
 }

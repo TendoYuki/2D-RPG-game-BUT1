@@ -14,13 +14,13 @@ package engine.physique;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.afficheur.Repere;
+import engine.afficheur.CoordinateSystem;
 
 /**
  *
  * @author Pierre-Frederic Villard
  */
-public class Objet {
+public class Object {
 
     // modele de l'objet
     // position
@@ -137,7 +137,7 @@ public class Objet {
      */
     public void draw(Graphics g) {
         g.setColor(Color.green);
-        int[] tab = Repere.changeRepere(this);
+        int[] tab = CoordinateSystem.changeCS(this);
         g.fillRect(tab[0], tab[1], tab[2], tab[3]);
     }
 

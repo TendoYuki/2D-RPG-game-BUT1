@@ -9,56 +9,40 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.physique;
-
-//un objet de type mur
+package engine.controle;
 
 /**
  *
  * @author Pierre-Frederic Villard
  */
-public class ObjetMurDynamique extends ObjetMur {
 
-	int i = 0;
+/**
+ * Cette classe permet de gerer le controle.
+ */
+public class Control {
 
-	/**
-	 *
-	 */
-	public ObjetMurDynamique() {
-		// taille de mur diff�rente
-		height = 50;
-		width = 50;
-		px = 100;
-		py = 20;
-	}
+    /**
+     *
+     */
+    public boolean gauche;
 
-	/**
-	 *
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 */
-	public ObjetMurDynamique(int x, int y, int w, int h) {
-		// taille de mur diff�rente
-		height = h;
-		width = w;
-		px = x;
-		py = y;
-	}
+    /**
+     *
+     */
+    public boolean droite;
 
-	// surcharge la mise � jour
+    /**
+     *
+     */
+    public boolean haut;
 
-	/**
-	 *
-	 */
-	public void update() {
-		sauveAnterieur();
-		i++;
-		if ((i / 200) % 2 == 0) {
-			py = py + 0.5;
-		} else
-			py = py - 0.5;
-	}
+    /**
+     *
+     */
+    public boolean bas;
 
+    /**
+     *
+     */
+    public boolean enAir;
 }

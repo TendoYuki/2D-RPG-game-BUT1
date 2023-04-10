@@ -14,8 +14,8 @@ package engine.physique;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import engine.afficheur.Repere;
-import engine.controle.Controle;
+import engine.afficheur.CoordinateSystem;
+import engine.controle.Control;
 
 //gere les objets du monde
 
@@ -23,36 +23,29 @@ import engine.controle.Controle;
  *
  * @author Pierre-Frederic Villard
  */
-public class Monde {
+public class World {
 
     /**
      * le controleur
      */
-    public Controle c;
-
-    /**
-     * la balle pour une vue subjective
-     */
-    public Heros balle;
+    public Control c;
 
     /**
      * les murs
      */
-    public ArrayList<Objet> objets = new ArrayList<Objet>();
+    public ArrayList<Object> objects = new ArrayList<Object>();
 
-    public int nbMurs = 0;
+    public int wallCount = 0;
 
     /**
      * les monstres
      */
-    public ArrayList<Monstre> monstres = new ArrayList<Monstre>();
-
-    public int nbHeros = 0;
+    public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 
     /**
      * les heros
      */
-    public ArrayList<Heros> heros = new ArrayList<Heros>();
+    public Player player;
 
     public int nbMonstres = 0;
 
@@ -65,12 +58,12 @@ public class Monde {
      * 
      * @throws java.io.IOException
      */
-    public Monde() throws IOException {
+    public World() throws IOException {
         // getsion du controleur
-        balle = new Heros();
+        player = new Player();
 
         // gere la vision subjective
-        Repere.h = balle;
+        CoordinateSystem.h = player;
 
     }
 
@@ -83,9 +76,9 @@ public class Monde {
      * @param dy
      */
     public void addMur(int x, int y, int dx, int dy) {
-        objets.add(new ObjetMur(x, y, dx, dy));
-        objets.get(nbMurs).index = nbMurs;
-        nbMurs++;
+        objects.add(new Wall(x, y, dx, dy));
+        objects.get(wallCount).index = wallCount;
+        wallCount++;
 
     }
 
@@ -99,21 +92,21 @@ public class Monde {
      * @throws java.io.IOException
      */
     public void addMonstre(double vx, double vy, int px, int py) throws IOException {
-        monstres.add(new Monstre(20,10,5));
+        enemies.add(new Enemy(20,10,5));
         // penser a le lier au monde
-        monstres.get(nbMonstres).m = this;
+        enemies.get(nbMonstres).m = this;
         // propriétés du monstre
-        monstres.get(nbMonstres).vx = vx;
-        monstres.get(nbMonstres).vy = vy;
-        monstres.get(nbMonstres).px = px;
-        monstres.get(nbMonstres).py = py;
-        monstres.get(nbMonstres).index = nbMonstres;
+        enemies.get(nbMonstres).vx = vx;
+        enemies.get(nbMonstres).vy = vy;
+        enemies.get(nbMonstres).px = px;
+        enemies.get(nbMonstres).py = py;
+        enemies.get(nbMonstres).index = nbMonstres;
 
         nbMonstres++;
     }
 
-    public void addObjet(Objet monObjet) {
-        objets.add(monObjet);
+    public void addObjet(Object monObjet) {
+        objects.add(monObjet);
     }
 
     /**
@@ -125,15 +118,12 @@ public class Monde {
      * @param py
      * @throws java.io.IOException
      */
-    public void addHero(double vx, double vy, int px, int py, int vie, int pieces) throws IOException {
-        heros.add(new Heros(px, py, vie, pieces));
-        // propriétés du monstre
-        heros.get(nbHeros).vx = vx;
-        heros.get(nbHeros).vy = vy;
-        heros.get(nbHeros).px = px;
-        heros.get(nbHeros).py = py;
-        heros.get(nbHeros).index = nbHeros;
-
-        nbHeros++;
+    public void setHero(double vx, double vy, int px, int py, int vie, int pieces) throws IOException {
+        player = new Player(px, py, vie, pieces);
+        player.vx = vx;
+        player.vy = vy;
+        player.px = px;
+        player.py = py;
+        player.index = 1;
     }
 }

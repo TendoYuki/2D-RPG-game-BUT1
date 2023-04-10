@@ -28,7 +28,7 @@ import javax.imageio.ImageIO;
 public abstract class Sprites {
 
     // l'activit�
-    String activite;
+    String activity;
     // compteur interne
     int iteration;
     // numero de la frame
@@ -51,8 +51,8 @@ public abstract class Sprites {
      *
      * @return
      */
-    public String chaine() {
-        return (activite + num);
+    public String chain() {
+        return (activity + num);
     }
 
     // afficheur de sprite
@@ -63,7 +63,7 @@ public abstract class Sprites {
      * @param y
      * @param g
      */
-    public void affiche(int x, int y, Graphics g) {
+    public void draw(int x, int y, Graphics g) {
         // Sprite s=sprites.get(chaine());
         Sprite s = sprites.get("fixe");
         if (s == null)
@@ -77,20 +77,20 @@ public abstract class Sprites {
      *
      * @param n
      */
-    public void changeEtape(String n) {
-        if(!activite.equals(n)) {
-            activite = n;
+    public void changeActivity(String n) {
+        if(!activity.equals(n)) {
+            activity = n;
             iteration = 0;
             num = 0;
         }
     }
 
-    public String getEtape() {
-        return activite;
+    public String getActivity() {
+        return activity;
     }
 
     /**
      *
     */
-    public abstract void anime();
+    public abstract void animate();
 }

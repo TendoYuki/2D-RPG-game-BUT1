@@ -2,11 +2,11 @@ package engine.hud.player;
 
 import engine.hud.Hud;
 import engine.hud.shop.Shop;
-import engine.physique.Heros;
+import engine.physique.Player;
 
 public class PlayerHud extends Hud{
     
-    public PlayerHud(Heros player, Shop shop) {
+    public PlayerHud(Player player, Shop shop) {
         super();
         addElement(new HealthBar(player, 10, 10, 200, 20));
         addElement(new OpenShop(shop, 505-32, 505 - 32, 50, 50));

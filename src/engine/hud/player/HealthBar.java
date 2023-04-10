@@ -11,11 +11,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
-import engine.physique.Heros;
+import engine.physique.Player;
 
 public class HealthBar extends HudElement{
 
-    private Heros hero; 
+    private Player hero; 
 
     private BufferedImage leftPart;
 
@@ -25,7 +25,7 @@ public class HealthBar extends HudElement{
 
     private int offset;
 
-    public HealthBar(Heros hero, int x, int y, int width, int height) {
+    public HealthBar(Player hero, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.hero = hero;
         try{

@@ -6,7 +6,7 @@ import engine.hud.Clickable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class ControleSouris extends MouseAdapter{
+public class MouseController extends MouseAdapter{
 
     ArrayList<Clickable> interactiveElements = new ArrayList<Clickable>();
     private boolean isListening = true;

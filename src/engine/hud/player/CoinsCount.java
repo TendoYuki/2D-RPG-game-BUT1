@@ -8,14 +8,14 @@ import javax.imageio.ImageIO;
 
 import engine.afficheur.Sprite;
 import engine.hud.HudElement;
-import engine.physique.Heros;
+import engine.physique.Player;
 
 public class CoinsCount extends HudElement{
 
     Sprite coin;
-    Heros player;
+    Player player;
 
-    public CoinsCount(Heros player, int x, int y, int width, int height) {
+    public CoinsCount(Player player, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.player = player;
         try{

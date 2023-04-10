@@ -1,43 +1,43 @@
 import engine.main.BouclePrincipale;
 import engine.afficheur.Afficheur;
-import engine.controle.ControleurClavier;
+import engine.controle.KeyboardController;
 import engine.hud.TestHud;
 import engine.main.JeuPhysique;
-import engine.physique.Monde;
-import engine.physique.MoteurPhysique;
-import engine.afficheur.Repere;
-import engine.physique.Monde;
-import engine.physique.MoteurPhysique;
-import engine.physique.Heros;
-import engine.physique.Monstre;
-import engine.physique.ObjetMur;
+import engine.physique.World;
+import engine.physique.PhysicsEngine;
+import engine.afficheur.CoordinateSystem;
+import engine.physique.World;
+import engine.physique.PhysicsEngine;
+import engine.physique.Player;
+import engine.physique.Enemy;
+import engine.physique.Wall;
 
 public class Game {
     public static void main(String[] args) throws Exception {
 
         // le moteur physique
-        MoteurPhysique moteurPhys;
+        PhysicsEngine moteurPhys;
         // le rendu
         Afficheur affiche;
         // leS controlerS
-        ControleurClavier cClavier1 = new ControleurClavier(true);
+        KeyboardController cClavier1 = new KeyboardController(true);
         // Le monde
-        Monde monMonde;
+        World monMonde;
 
         // Construction du monde
-        monMonde = new Monde();
+        monMonde = new World();
 
         // on creer le moteur physique
-        moteurPhys = new MoteurPhysique();
+        moteurPhys = new PhysicsEngine();
         // On ajoute le monde au moteur
-        moteurPhys.monde = monMonde;
-        monMonde.addHero(0, 0, 50, 20, 100, 10);
+        moteurPhys.world = monMonde;
+        monMonde.setHero(0, 0, 50, 20, 100, 10);
         // on creer l'afficheur du monde
-        affiche = new Afficheur(moteurPhys.monde);
+        affiche = new Afficheur(moteurPhys.world);
 
         int imgWidth = affiche.getDecor().size();
         int imgHeight = affiche.getDecor().size();
-        Repere.setWindowHeight(imgHeight);
+        CoordinateSystem.setWindowHeight(imgHeight);
 
         //////////////////////
         // Les MURS
@@ -88,7 +88,7 @@ public class Game {
         maBoucle.jeuPhysique.affiche = affiche;
         // Ajout du jeu a la boucle
         maBoucle.jeuPhysique.moteurPhys = moteurPhys;
-        maBoucle.jeuPhysique.moteurPhys.monde = moteurPhys.monde;
+        maBoucle.jeuPhysique.moteurPhys.world = moteurPhys.world;
 
         maBoucle.lanceBouclePrincipale();
     }

@@ -3,33 +3,33 @@ package engine.hud;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import engine.controle.ControleSouris;
+import engine.controle.MouseController;
 
 public abstract class Hud{
-    ControleSouris cs;
+    MouseController mc;
     ArrayList<HudElement> elements = new ArrayList<HudElement>();
     boolean isInteractable = true;
 	private boolean isShown = true;
 
     public Hud() {
-        this.cs = new ControleSouris();
+        this.mc = new MouseController();
         changeListenerState();
     }
 
-    public ControleSouris getControleSouris() {
-        return cs;
+    public MouseController getMouseController() {
+        return mc;
     }
 
     public void addElement(HudElement el) {
         elements.add(el);
-        cs.register(el);
+        mc.register(el);
     }
     
     private void changeListenerState() {
         if(isInteractable) {
-            cs.listen();
+            mc.listen();
         }else {
-            cs.stopListening();
+            mc.stopListening();
         }
     }
 

@@ -14,7 +14,7 @@ package engine.physique;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.afficheur.Repere;
+import engine.afficheur.CoordinateSystem;
 
 //un objet de type mur
 
@@ -22,12 +22,12 @@ import engine.afficheur.Repere;
  *
  * @author Pierre-Frederic Villard
  */
-public class ObjetMur extends Objet {
+public class Wall extends Object {
 
 	/**
 	 *
 	 */
-	public ObjetMur() {
+	public Wall() {
 		// taille de mur diff�rente
 		height = 50;
 		width = 50;
@@ -43,7 +43,7 @@ public class ObjetMur extends Objet {
 	 * @param w
 	 * @param h
 	 */
-	public ObjetMur(int x, int y, int w, int h) {
+	public Wall(int x, int y, int w, int h) {
 		// taille de mur diff�rente
 		height = h;
 		width = w;
@@ -57,7 +57,7 @@ public class ObjetMur extends Objet {
 	 */
 	public void draw(Graphics g) {
 		g.setColor(new Color(0,0,0,0));
-		int[] tab = Repere.changeRepere(this);
+		int[] tab = CoordinateSystem.changeCS(this);
 		g.fillRect(tab[0], tab[1], tab[2], tab[3]);
 	}
 

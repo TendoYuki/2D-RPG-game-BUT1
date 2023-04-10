@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import engine.afficheur.Sprite;
 import engine.hud.HudElement;
 import engine.hud.shop.Shop;
-import engine.physique.Heros;
 
 public class OpenShop extends HudElement{
 

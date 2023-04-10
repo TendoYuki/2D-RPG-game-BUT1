@@ -1,12 +1,12 @@
 package engine.hud.shop;
 
-import engine.physique.Heros;
+import engine.physique.Player;
 
 public class HealthDisplay extends StatsDisplay {
 
-    Heros player;
+    Player player;
 
-    public HealthDisplay(Heros player, int x, int y, int width, int height) {
+    public HealthDisplay(Player player, int x, int y, int width, int height) {
         super(10, x, y, width, height);
         this.player = player;
         displayString = "Health";

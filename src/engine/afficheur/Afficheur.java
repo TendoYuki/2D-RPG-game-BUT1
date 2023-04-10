@@ -19,6 +19,7 @@ import javax.swing.*;
 import engine.hud.TestHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
+import engine.hud.menu.Menu;
 import engine.physique.*;
 import engine.tiles.Atlas;
 import engine.tiles.TileMap;
@@ -32,7 +33,7 @@ import engine.tiles.TileMap;
 public class Afficheur extends JPanel {
 
 	// le monde a affcher
-	public Monde m;
+	public World m;
 
 	// l'afficheur de Decor
 	public DecorFixe decor;
@@ -41,6 +42,7 @@ public class Afficheur extends JPanel {
 	public BufferStrategy bs;
 	PlayerHud hud;
 	Shop shop;
+	Menu menu;
 
 	// creation d'un afficheur
 
@@ -48,7 +50,7 @@ public class Afficheur extends JPanel {
 	 *
 	 * @param monde
 	 */
-	public Afficheur(Monde monde) {
+	public Afficheur(World monde) {
 		JFrame f = new JFrame();
 
 		Atlas atlas = new Atlas(
@@ -102,12 +104,20 @@ public class Afficheur extends JPanel {
 		this.setIgnoreRepaint(true);
 
 		this.m = monde;
-		shop = new Shop(monde.heros.get(0), f.getWidth()/2 - (int)(512/1.4)/2, f.getHeight()/2 - (int)(512/1.4)/2, (int)(512/1.4), (int)(512/1.4));
+		shop = new Shop(
+			monde.player,
+			f.getWidth()/2 - (int)(512/1.4)/2,
+			f.getHeight()/2 - (int)(512/1.4)/2,
+			(int)(512/1.4),
+			(int)(512/1.4)
+		);
         shop.setIsShown(false);
         shop.setInteractable(false);
-		hud = new PlayerHud(monde.heros.get(0),shop);
-		this.addMouseListener(hud.getControleSouris());
-		this.addMouseListener(shop.getControleSouris());
+		hud = new PlayerHud(monde.player,shop);
+		menu = new Menu(0,0,f.getWidth(),f.getHeight());
+		this.addMouseListener(menu.getMouseController());
+		this.addMouseListener(hud.getMouseController());
+		this.addMouseListener(shop.getMouseController());
 	}
 
 	// permet de faire un afficheg
@@ -129,21 +139,24 @@ public class Afficheur extends JPanel {
 		decor.affiche(g);
 
 		// affiche les objets
-		for (Objet obj : m.objets) {
+		for (Object obj : m.objects) {
 			obj.draw(g);
 		}
 
 		// affiche les monstres
-		for (Monstre monstre : m.monstres) {
+		for (Enemy monstre : m.enemies) {
 			monstre.draw(g);
 		}
 
 		// affiche la balle
-		Heros b = m.balle;
+		Player b = m.player;
 		b.draw(g);
 
+		// Draws HUDs
 		hud.draw(g);
 		shop.draw(g);
+		menu.draw(g);
+
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
 		g.clearRect(0, 0, decor.size(), decor.size());

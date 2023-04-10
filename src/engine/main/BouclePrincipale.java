@@ -1,6 +1,6 @@
 package engine.main;
 
-import engine.controle.ControleurClavier;
+import engine.controle.KeyboardController;
 
 public class BouclePrincipale {
 
@@ -8,7 +8,7 @@ public class BouclePrincipale {
 	public int fps = 60;
 	public JeuPhysique jeuPhysique;
 	// creation du controleur
-	public ControleurClavier cClavier;
+	public KeyboardController cClavier;
 
 	public void setName(String nom) {
 		this.nom = nom;
@@ -28,7 +28,7 @@ public class BouclePrincipale {
 		// ControleurClavier cClavier=new ControleurClavier(true);
 		jeuPhysique.affiche.addKeyListener(cClavier);
 		// mettre l'acces au controleur dans monde
-		jeuPhysique.moteurPhys.monde.c = cClavier.c;
+		jeuPhysique.moteurPhys.world.c = cClavier.c;
 
 		// afficher
 		System.out.println("\n\n**************************************************");
@@ -51,7 +51,7 @@ public class BouclePrincipale {
 		long l = System.currentTimeMillis();
 		// nombre iterations
 		int n = 0;
-		while (!ControleurClavier.fin) {
+		while (!KeyboardController.fin) {
 			n++;
 			jeuPhysique.update();
 			jeuPhysique.render();

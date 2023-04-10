@@ -1,10 +1,10 @@
 package engine.hud.shop;
 
 import engine.hud.Hud;
-import engine.physique.Heros;
+import engine.physique.Player;
 
 public class Shop extends Hud{
-	public Shop(Heros player, int x, int y, int width, int height) {
+	public Shop(Player player, int x, int y, int width, int height) {
 		super();
 		try{
 			addElement(new ShopBackground(x, y, width, height));

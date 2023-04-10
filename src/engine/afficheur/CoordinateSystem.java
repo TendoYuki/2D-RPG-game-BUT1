@@ -9,40 +9,41 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.controle;
+package engine.afficheur;
+
+import engine.physique.Object;
+import engine.physique.Player;
 
 /**
  *
  * @author Pierre-Frederic Villard
  */
+public class CoordinateSystem {
 
-/**
- * Cette classe permet de gerer le controle.
- */
-public class Controle {
+    private static int windowHeight;
 
-    /**
-     *
-     */
-    public boolean gauche;
+    public static void setWindowHeight(int windowHeight) {
+        CoordinateSystem.windowHeight = windowHeight;
+    }
 
     /**
      *
      */
-    public boolean droite;
+    public static Player h;
 
     /**
      *
+     * @param o
+     * @return
      */
-    public boolean haut;
+    public static int[] changeCS(Object o) {
+        int res[] = new int[4];
+        // res[1]= 370 - (int)o.py - (int)(o.height);
+        res[0] = (int) o.px;
+        res[1] = windowHeight - (int) o.py - (int) (o.height);
+        res[2] = (int) o.width;
+        res[3] = (int) o.height;
+        return (res);
+    }
 
-    /**
-     *
-     */
-    public boolean bas;
-
-    /**
-     *
-     */
-    public boolean enAir;
 }

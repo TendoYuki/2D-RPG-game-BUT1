@@ -1,4 +1,4 @@
-package engine.hud.shop;
+package engine.hud.menu;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,28 +7,28 @@ import javax.imageio.ImageIO;
 
 import engine.afficheur.Sprite;
 
-public class CloseButton extends ShopButton {
+public class StartButton extends MenuButton {
 
-    Shop shop;
+    private Menu menu;
 
-    public CloseButton(Shop shop, int x, int y, int width, int height) throws IOException{
+    public StartButton(Menu menu, int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(
                 x,
                 y,
                 2,
                 ImageIO.read(
-                    new File("assets/misc/Back.png")
+                    new File("assets/misc/Play.png")
                 )
                 
             ), x, y, width, height
         );
-        this.shop = shop;
+        this.menu = menu;
     }
 
     @Override
     public void onClick() {
-        shop.setInteractable(false);   
-        shop.setIsShown(false);
+        menu.setInteractable(false);   
+        menu.setIsShown(false);
     }
 }

@@ -6,13 +6,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import engine.afficheur.Sprite;
-import engine.physique.Heros;
+import engine.physique.Player;
 
 public class AddAttackButton extends ShopButton {
 
-    Heros player;
+    Player player;
 
-    public AddAttackButton(Heros player, int x, int y, int width, int height) throws IOException{
+    public AddAttackButton(Player player, int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(
                 x,

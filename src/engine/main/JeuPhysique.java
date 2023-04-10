@@ -3,12 +3,12 @@ package engine.main;
 import java.io.IOException;
 
 import engine.afficheur.Afficheur;
-import engine.physique.MoteurPhysique;
+import engine.physique.PhysicsEngine;
 
 public class JeuPhysique {
 
 	// le moteur physique
-	public MoteurPhysique moteurPhys;
+	public PhysicsEngine moteurPhys;
 
 	// le rendu
 	public Afficheur affiche;

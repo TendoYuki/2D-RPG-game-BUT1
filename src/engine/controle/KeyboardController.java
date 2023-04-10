@@ -20,7 +20,7 @@ import java.awt.event.KeyListener;
  *
  * @author Pierre-Frederic Villard
  */
-public class ControleurClavier implements KeyListener {
+public class KeyboardController implements KeyListener {
 
 	// fin du jeu
 
@@ -37,7 +37,7 @@ public class ControleurClavier implements KeyListener {
 	/**
 	 *
 	 */
-	public Controle c;
+	public Control c;
 
 	// constructeur avec affichage du controleur ou non.
 
@@ -45,8 +45,8 @@ public class ControleurClavier implements KeyListener {
 	 *
 	 * @param affiche
 	 */
-	public ControleurClavier(boolean affiche) {
-		c = new Controle();
+	public KeyboardController(boolean affiche) {
+		c = new Control();
 		this.affiche = affiche;
 	}
 

@@ -4,18 +4,18 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
 
-import engine.afficheur.Repere;
+import engine.afficheur.CoordinateSystem;
 import engine.afficheur.Sprites;
-import engine.afficheur.SpritesHeros;
-import engine.controle.Controle;
+import engine.afficheur.PlayerSprites;
+import engine.controle.Control;
 
-public class Heros extends Entity{
+public class Player extends Entity{
 
 	// distributeur de sprite
 	public Sprites sprites;
 
 	// lien vers son controleur
-	Controle c;
+	Control c;
 
 	public final int MUL_VIE_UNIT = 10;
 	public final int MUL_ATT_UNIT = 5;
@@ -40,11 +40,11 @@ public class Heros extends Entity{
 	 *
 	 * @throws IOException
 	 */
-	public Heros(int x, int y, int vie, int pieces) throws IOException {
+	public Player(int x, int y, int vie, int pieces) throws IOException {
 		super(vie, 5, 2);
 		VIE_DEPART = vie;
 		this.pieces = pieces;
-		sprites = new SpritesHeros(this);
+		sprites = new PlayerSprites(this);
 		height = 10;
 		width = 10;
 		height = sprites.sprites.get("fixe").getSizeY();
@@ -61,7 +61,7 @@ public class Heros extends Entity{
 	 *
 	 * @throws IOException
 	 */
-	public Heros() throws IOException {
+	public Player() throws IOException {
 		this(0,0,100,10);
 	}
 
@@ -137,8 +137,8 @@ public class Heros extends Entity{
 		g.setColor(Color.black);
 
 		// change de repere
-		int[] tab = Repere.changeRepere(this);
-		sprites.affiche(tab[0], tab[1], g);
-		sprites.anime();
+		int[] tab = CoordinateSystem.changeCS(this);
+		sprites.draw(tab[0], tab[1], g);
+		sprites.animate();
 	}
 }

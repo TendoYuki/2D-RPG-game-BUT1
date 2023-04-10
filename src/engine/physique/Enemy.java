@@ -4,29 +4,29 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
 
-import engine.afficheur.Repere;
-import engine.afficheur.SpritesMonstre;
+import engine.afficheur.CoordinateSystem;
+import engine.afficheur.EnemySprites;
 
-public class Monstre extends Entity {
+public class Enemy extends Entity {
 
 	// etat interne
-	enum Etat {
-		PROMENE, ATTAQUE, COLLISION;
+	enum State {
+		ROAMING, ATTACKING, COLLIDING;
 	}
 
-	SpritesMonstre sprite;
+	EnemySprites sprite;
 
 	// son etat
-	Etat etat = Etat.PROMENE;
+	State state = State.ROAMING;
 
 	// lien vers le monde
-	Monde m;
+	World m;
 
 	/**
 	 *
 	 * @throws IOException
 	 */
-	public Monstre(int vie,int attaque,int defense) throws IOException {
+	public Enemy(int vie,int attaque,int defense) throws IOException {
 		super(vie, attaque, defense);
 		ax = 0;
 		ay = 0;
@@ -37,7 +37,7 @@ public class Monstre extends Entity {
 		height = 30;
 		width = 20;
 
-		sprite = new SpritesMonstre(this);
+		sprite = new EnemySprites(this);
 	}
 
 	/**
@@ -47,13 +47,13 @@ public class Monstre extends Entity {
 	public void draw(Graphics g) {
 
 		// change de repere
-		int[] tab = Repere.changeRepere(this);
+		int[] tab = CoordinateSystem.changeCS(this);
 
-		if (etat == Etat.ATTAQUE)
+		if (state == State.ATTACKING)
 			g.setColor(Color.red);
-		if (etat == Etat.PROMENE)
+		if (state == State.ROAMING)
 			g.setColor(Color.green);
-		if (etat == Etat.COLLISION)
+		if (state == State.COLLIDING)
 			g.setColor(Color.blue);
 
 		// g.fillOval(tab[0], tab[1], tab[2], tab[3]);
@@ -62,8 +62,8 @@ public class Monstre extends Entity {
 		// g.fillOval(tab[0]+12, 5+tab[1], 5, 5);
 		// g.drawLine(tab[0]+ 8, 15 + tab[1], tab[0]+12, 15 + tab[1]);
 
-		sprite.affiche(tab[0], tab[1], g);
-		sprite.anime();
+		sprite.draw(tab[0], tab[1], g);
+		sprite.animate();
 	}
 
 	/**
