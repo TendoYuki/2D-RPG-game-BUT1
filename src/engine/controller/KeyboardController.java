@@ -32,6 +32,9 @@ public class KeyboardController implements KeyListener {
 	// afficheur
 	boolean affiche = false;
 
+	/** the player can move or not */
+	public static boolean canMove = true;
+
 	// la variable de controle
 
 	/**
@@ -57,25 +60,27 @@ public class KeyboardController implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// touche gauche
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			c.gauche = true;
-		}
-		// touche droite
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			c.droite = true;
-		}
-		// touche up
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			c.haut = true;
-		}
-		// touche down
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			c.bas = true;
-		}
-		// touche up
-		if (e.getKeyCode() == KeyEvent.VK_Q) {
-			fin = true;
+		if(canMove){
+			// touche gauche
+			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+				c.gauche = true;
+			}
+			// touche droite
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				c.droite = true;
+			}
+			// touche up
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
+				c.haut = true;
+			}
+			// touche down
+			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+				c.bas = true;
+			}
+			// touche up
+			if (e.getKeyCode() == KeyEvent.VK_Q) {
+				fin = true;
+			}
 		}
 	}
 

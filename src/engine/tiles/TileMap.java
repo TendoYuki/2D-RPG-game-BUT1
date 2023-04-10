@@ -1,8 +1,6 @@
 package engine.tiles;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
 /** Scaled grid */
 public class TileMap {

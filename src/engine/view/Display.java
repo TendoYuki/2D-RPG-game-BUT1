@@ -1,14 +1,3 @@
-/* ========================================================== */
-/*                  Bibliotheque MoteurDeJeu                  */
-/* --------------------------------------------               */
-/* Bibliotheque pour aider la création de jeu video comme :   */
-/* - Jeux de role                                             */
-/* - Jeux de plateforme                                       */
-/* - Jeux de combat                                           */
-/* - Jeux de course                                           */
-/* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
-/* ========================================================== */
-
 package engine.view;
 
 import java.awt.*;
@@ -16,33 +5,19 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.*;
 
-import engine.hud.TestHud;
-import engine.hud.player.PlayerHud;
-import engine.hud.shop.Shop;
 import engine.physics.*;
-import engine.hud.menu.Menu;
-import engine.tiles.Atlas;
-import engine.tiles.TileMap;
+import engine.hud.Hud;
 
-//permet d'affiche des objets
-
-/**
- *
- * @author Pierre-Frederic Villard
- */
 public class Display extends JPanel {
 
 	// le monde a affcher
 	public World m;
 
 	// l'afficheur de Decor
-	public DecorFixe decor;
+	public Scene decor;
 
 	// double buffering
 	public BufferStrategy bs;
-	PlayerHud hud;
-	Shop shop;
-	Menu menu;
 
 	// creation d'un afficheur
 
@@ -50,45 +25,13 @@ public class Display extends JPanel {
 	 *
 	 * @param monde
 	 */
-	public Display(World monde) {
+	public Display(World monde, Scene decor) {
 		JFrame f = new JFrame();
 
-		Atlas atlas = new Atlas(
-            "assets/tiles/tilemap.png",
-            16,
-            1,
-            4,
-			2
-        );
-        TileMap tileMap = new TileMap(
-            16,
-            2,
-            new int[][] {
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-            },
-            atlas
-        );
-
-		decor = new DecorFixe(tileMap);
+		this.decor = decor;
 
 		setPreferredSize(new Dimension(decor.size(),decor.size()));
 
-		
 		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setContentPane(this);
@@ -104,27 +47,17 @@ public class Display extends JPanel {
 		this.setIgnoreRepaint(true);
 
 		this.m = monde;
-		shop = new Shop(
-			monde.player,
-			f.getWidth()/2 - (int)(512/1.4)/2,
-			f.getHeight()/2 - (int)(512/1.4)/2,
-			(int)(512/1.4),
-			(int)(512/1.4)
-		);
-        shop.setIsShown(false);
-        shop.setInteractable(false);
-		hud = new PlayerHud(monde.player,shop);
-		menu = new Menu(0,0,f.getWidth(),f.getHeight());
-		this.addMouseListener(menu.getMouseController());
-		this.addMouseListener(hud.getMouseController());
-		this.addMouseListener(shop.getMouseController());
 	}
 
-	// permet de faire un afficheg
+	// permet de faire un affichage
 
 	// Renvoie le decor
-	public DecorFixe getDecor() {
+	public Scene getDecor() {
 		return decor;
+	}
+
+	public void setDecor(Scene decor) {
+		this.decor = decor;
 	}
 
 	/**
@@ -136,7 +69,7 @@ public class Display extends JPanel {
 		g.setColor(Color.black);
 
 		// Affiche le decor
-		decor.affiche(g);
+		decor.draw(g);
 
 		// affiche les objets
 		for (PhysicalObject obj : m.objects) {
@@ -148,14 +81,18 @@ public class Display extends JPanel {
 			enemy.draw(g);
 		}
 
+		// draws npcs
+		for (NPC npc : m.npcs) {
+			npc.draw(g);
+		}
+
 		// affiche la balle
 		Player b = m.player;
 		b.draw(g);
 
-		// Draws HUDs
-		hud.draw(g);
-		shop.draw(g);
-		menu.draw(g);
+		for (Hud hud : m.huds.values()) {
+			hud.draw(g);
+		}
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();

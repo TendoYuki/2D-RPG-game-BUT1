@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import engine.controller.KeyboardController;
 import engine.hud.HudElement;
 import engine.hud.shop.Shop;
 import engine.view.Sprite;
@@ -42,6 +43,7 @@ public class OpenShop extends HudElement{
     public void onClick() {
         shop.setIsShown(true);
         shop.setInteractable(true);
+        KeyboardController.canMove = false;
     }
     
 }

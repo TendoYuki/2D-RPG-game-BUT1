@@ -5,9 +5,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import engine.controller.KeyboardController;
+import engine.hud.Button;
 import engine.view.Sprite;
 
-public class CloseButton extends ShopButton {
+public class CloseButton extends Button {
 
     Shop shop;
 
@@ -21,6 +23,15 @@ public class CloseButton extends ShopButton {
                     new File("assets/misc/Back.png")
                 )
                 
+            ),
+            new Sprite(
+                x,
+                y,
+                2,
+                ImageIO.read(
+                    new File("assets/misc/Back_active.png")
+                )
+                
             ), x, y, width, height
         );
         this.shop = shop;
@@ -30,5 +41,6 @@ public class CloseButton extends ShopButton {
     public void onClick() {
         shop.setInteractable(false);   
         shop.setIsShown(false);
+        KeyboardController.canMove = true;
     }
 }

@@ -15,6 +15,7 @@ public abstract class Entity extends PhysicalObject {
 	private int defence;
 
 	public Entity(int health, int attack, int defence){
+		super();
 		this.health = health;
 		this.maxHealth = health;
 		this.attack = attack;

@@ -6,9 +6,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import engine.controller.KeyboardController;
+import engine.hud.Button;
 import engine.view.Sprite;
 
-public class QuitButton extends MenuButton {
+public class QuitButton extends Button {
 
 
     public QuitButton(int x, int y, int width, int height) throws IOException{
@@ -19,6 +20,15 @@ public class QuitButton extends MenuButton {
                 2,
                 ImageIO.read(
                     new File("assets/misc/Exit.png")
+                )
+                
+            ),
+            new Sprite(
+                x,
+                y,
+                2,
+                ImageIO.read(
+                    new File("assets/misc/Exit_active.png")
                 )
                 
             ), x, y, width, height

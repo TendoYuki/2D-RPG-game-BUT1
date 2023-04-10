@@ -5,6 +5,7 @@ public abstract class Clickable {
     private int y;
     private int width;
     private int height;
+    private boolean isPressed = false;
 
     public Clickable(int x, int y, int width, int height) {
         this.x = x;
@@ -29,5 +30,15 @@ public abstract class Clickable {
         return height;
     }
 
+    public boolean isPressed() {
+        return isPressed;
+    }
+
+    public void setPressed(boolean isPressed) {
+        this.isPressed = isPressed;
+    }
+
     public abstract void onClick();
+
+    public void onPressed() {};
 }

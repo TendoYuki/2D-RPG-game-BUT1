@@ -5,15 +5,25 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import engine.hud.Button;
 import engine.physics.Player;
 import engine.view.Sprite;
 
-public class HealButton extends ShopButton {
+public class HealButton extends Button {
 
     Player player;
 
     public HealButton(Player player, int x, int y, int width, int height) throws IOException{
         super(
+            new Sprite(
+                x,
+                y,
+                2,
+                ImageIO.read(
+                    new File("assets/misc/HealthVial.png")
+                )
+                
+            ),
             new Sprite(
                 x,
                 y,

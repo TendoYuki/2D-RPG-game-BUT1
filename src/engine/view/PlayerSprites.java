@@ -12,14 +12,9 @@
 package engine.view;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import javax.imageio.ImageIO;
-
-import engine.controller.Control;
 import engine.physics.Player;
 import engine.tiles.Atlas;
 

@@ -13,9 +13,12 @@ package engine.physics;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import engine.controller.Control;
+import engine.hud.Hud;
 import engine.view.CoordinateSystem;
+import engine.view.NPCSprites;
 
 //gere les objets du monde
 
@@ -38,9 +41,17 @@ public class World {
     public int wallCount = 0;
 
     /**
-     * les monstres
+     * Enemies
      */
     public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+
+    /**
+     * NPCs
+     */
+    public ArrayList<NPC> npcs = new ArrayList<NPC>();
+
+    
+    public HashMap<String, Hud> huds = new HashMap<String, Hud>();
 
     /**
      * les heros
@@ -60,7 +71,7 @@ public class World {
      */
     public World() throws IOException {
         // getsion du controleur
-        player = new Player();
+        player = new Player(this, 0, 0 ,100, 10);
 
         // gere la vision subjective
         CoordinateSystem.h = player;
@@ -92,23 +103,47 @@ public class World {
      * @throws java.io.IOException
      */
     public void addEnemy(double vx, double vy, int px, int py) throws IOException {
-        enemies.add(new Enemy(20,10,5));
-        // penser a le lier au monde
-        enemies.get(enemiesCount).m = this;
-        // propriétés du monstre
-        enemies.get(enemiesCount).vx = vx;
-        enemies.get(enemiesCount).vy = vy;
-        enemies.get(enemiesCount).px = px;
-        enemies.get(enemiesCount).py = py;
-        enemies.get(enemiesCount).index = enemiesCount;
+        Enemy enemy = new Enemy(20,10,5);
 
-        enemiesCount++;
+        enemy.m = this;
+
+        enemy.vx = vx;
+        enemy.vy = vy;
+        enemy.px = px;
+        enemy.py = py;
+        enemy.index = enemies.size();
+
+        enemies.add(enemy);
+    }
+    /**
+     * ajouter monstre
+     * 
+     * @param vx
+     * @param vy
+     * @param px
+     * @param py
+     * @throws java.io.IOException
+     */
+    public void addNPC(double vx, double vy, int px, int py) throws IOException {
+        NPC npc = new NPC(20,10,5);
+
+        npc.m = this;
+        npc.vx = vx;
+        npc.vy = vy;
+        npc.px = px;
+        npc.py = py;
+        npc.index = npcs.size();
+
+        npcs.add(npc);
     }
 
     public void addObject(PhysicalObject o) {
         objects.add(o);
     }
 
+    public void addHud(String hudName, Hud hud) {
+        huds.put(hudName, hud);
+    }
     /**
      * ajouter heros
      * 
@@ -119,7 +154,7 @@ public class World {
      * @throws java.io.IOException
      */
     public void setPlayer(double vx, double vy, int px, int py, int health, int coins) throws IOException {
-        player = new Player(px, py, health, coins);
+        player = new Player(this, px, py, health, coins);
         player.vx = vx;
         player.vy = vy;
         player.px = px;

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 
 import engine.controller.Control;
+import engine.hud.Hud;
 import engine.view.CoordinateSystem;
 import engine.view.PlayerSprites;
 import engine.view.Sprites;
@@ -36,12 +37,15 @@ public class Player extends Entity{
 	// pieces du heros
 	private int coins;
 
+	private World world;
+
 	/**
 	 *
 	 * @throws IOException
 	 */
-	public Player(int x, int y, int health, int coins) throws IOException {
+	public Player(World world, int x, int y, int health, int coins) throws IOException {
 		super(health, 5, 2);
+		this.world = world;
 		START_HEALTH = health;
 		this.coins = coins;
 		sprites = new PlayerSprites(this);
@@ -55,14 +59,6 @@ public class Player extends Entity{
 		vy = 0;
 		ax = 0;
 		ay = 0;
-	}
-
-	/**
-	 *
-	 * @throws IOException
-	 */
-	public Player() throws IOException {
-		this(0,0,100,10);
 	}
 
 	/**  ajoute des pieces au heros
@@ -88,7 +84,15 @@ public class Player extends Entity{
 
 	/** Mort du heros */
 	public void handleDeath() {
-		System.out.println("Shawn he ded");
+		world.huds.values().forEach(hud -> {
+			hud.setInteractable(false);
+			hud.setIsShown(false);
+		});;
+
+		Hud gO = world.huds.get("gameOver");
+
+		gO.setInteractable(true);
+		gO.setIsShown(true);
 	}
 
 

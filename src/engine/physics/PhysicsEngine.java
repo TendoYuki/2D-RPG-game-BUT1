@@ -14,9 +14,6 @@ package engine.physics;
 import static engine.main.GamePhysics.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import engine.controller.Control;
 
 //permet de g�rer la physique
 
@@ -174,6 +171,15 @@ public class PhysicsEngine {
 		}
 		for (Enemy monstre : world.enemies) {
 			if(Collision.collision(monstre, world.player)) {
+				world.player.py = world.player.py - 1.1*world.player.vy;
+				world.player.vy = 0;
+				world.player.px = world.player.px - 1.1*world.player.vx;
+				world.player.vx = 0;
+			}
+
+		}
+		for (NPC npc : world.npcs) {
+			if(Collision.collision(npc, world.player)) {
 				world.player.py = world.player.py - 1.1*world.player.vy;
 				world.player.vy = 0;
 				world.player.px = world.player.px - 1.1*world.player.vx;

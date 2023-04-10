@@ -57,7 +57,7 @@ public class BouclePrincipale {
 			jeuPhysique.render();
 
 			// apres le render en nanos
-			long timafter = System.nanoTime();
+			// long timafter = System.nanoTime();
 
 			// sleep en millisecond
 			// System.out.println(dureeBoucle);
