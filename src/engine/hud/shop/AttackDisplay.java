@@ -1,6 +1,6 @@
 package engine.hud.shop;
 
-import engine.physique.Player;
+import engine.physics.Player;
 
 public class AttackDisplay extends StatsDisplay {
 
@@ -14,7 +14,7 @@ public class AttackDisplay extends StatsDisplay {
 
     @Override
     public int getCurrentValue() {
-        return player.getMultiplicatorAtt();
+        return player.getAttackMultiplicator();
     }
     
 }

@@ -6,9 +6,9 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
 import engine.hud.HudElement;
-import engine.physique.Player;
+import engine.physics.Player;
+import engine.view.Sprite;
 
 public class CoinsCount extends HudElement{
 
@@ -34,7 +34,7 @@ public class CoinsCount extends HudElement{
         g.setFont(temp.deriveFont(Font.BOLD).deriveFont(20F));
 
         coin.draw(g, getX(), getY());
-        g.drawString("" + player.getPieces(), getX() - coin.getSizeX(), getY() + (int)(coin.getSizeY()/1.3));
+        g.drawString("" + player.getCoins(), getX() - coin.getSizeX(), getY() + (int)(coin.getSizeY()/1.3));
         g.setFont(temp);
     }
 

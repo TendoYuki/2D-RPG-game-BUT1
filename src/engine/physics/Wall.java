@@ -9,12 +9,12 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.physique;
+package engine.physics;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.afficheur.CoordinateSystem;
+import engine.view.CoordinateSystem;
 
 //un objet de type mur
 
@@ -22,7 +22,7 @@ import engine.afficheur.CoordinateSystem;
  *
  * @author Pierre-Frederic Villard
  */
-public class Wall extends Object {
+public class Wall extends PhysicalObject {
 
 	/**
 	 *

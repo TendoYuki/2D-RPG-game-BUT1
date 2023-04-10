@@ -9,9 +9,9 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.physique;
+package engine.physics;
 
-import static engine.main.JeuPhysique.*;
+import static engine.main.GamePhysics.*;
 
 /**
  *
@@ -24,22 +24,22 @@ public class Collision {
     /**
      *
      */
-    public static int GAUCHE = 0;
+    public static int LEFT = 0;
 
     /**
      *
      */
-    public static int DROITE = 1;
+    public static int RIGHT = 1;
 
     /**
      *
      */
-    public static int HAUT = 2;
+    public static int UP = 2;
 
     /**
      *
      */
-    public static int BAS = 3;
+    public static int DOWN = 3;
 
     // test de collision
 
@@ -49,13 +49,13 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collision(Object o, Object o2) {
+    public static boolean collision(PhysicalObject o, PhysicalObject o2) {
         typeOfCollision = 0;
         if (o2 instanceof Enemy) {
-            typeOfCollision = MONSTRE;
+            typeOfCollision = ENEMY;
         }
         if (o2 instanceof Player) {
-            typeOfCollision = HERO;
+            typeOfCollision = PLAYER;
         }
         if (o2 instanceof Wall) {
             typeOfCollision = DECORS;
@@ -76,7 +76,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static int direction(Object o, Object o2) {
+    public static int direction(PhysicalObject o, PhysicalObject o2) {
 
         throw new AssertionError("deprecated");
         // on regarde simplement les anciennes positions
@@ -123,7 +123,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collisionGauche(Object o, Object o2) {
+    public static boolean collisionLeft(PhysicalObject o, PhysicalObject o2) {
         return (o2.opx + o2.width >= o.opx);
     }
 
@@ -135,7 +135,7 @@ public class Collision {
      * @param o2 Object that collieds with the reference
      * @return
      */
-    public static boolean collisionDroite(Object o, Object o2) {
+    public static boolean collisionRight(PhysicalObject o, PhysicalObject o2) {
         return (o.opx + o.width <= o2.opx);
     }
 
@@ -147,7 +147,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collisionHaut(Object o, Object o2) {
+    public static boolean collisionUp(PhysicalObject o, PhysicalObject o2) {
         return (o.opy >= o2.opy + o2.height);
     }
 
@@ -159,7 +159,7 @@ public class Collision {
      * @param o2
      * @return
      */
-    public static boolean collisionBas(Object o, Object o2) {
+    public static boolean collisionDown(PhysicalObject o, PhysicalObject o2) {
         return (o.opy + o.height <= o2.opy);
     }
 

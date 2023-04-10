@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
-import engine.physique.Player;
+import engine.physics.Player;
+import engine.view.Sprite;
 
 public class AddAttackButton extends ShopButton {
 
@@ -29,10 +29,10 @@ public class AddAttackButton extends ShopButton {
 
     @Override
     public void onClick() {
-        int curr = player.getMultiplicatorAtt()+1;
-        if(curr <= 10 && player.getPieces() >= 5) {
-            player.setMultiplicatorAtt(curr);
-            player.addPieces(-5);
+        int curr = player.getAttackMultiplicator()+1;
+        if(curr <= 10 && player.getCoins() >= 5) {
+            player.setAttackMultiplicator(curr);
+            player.addCoins(-5);
         }
     }
 }

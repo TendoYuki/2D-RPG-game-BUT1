@@ -1,6 +1,6 @@
 package engine.hud.shop;
 
-import engine.physique.Player;
+import engine.physics.Player;
 
 public class HealthDisplay extends StatsDisplay {
 
@@ -14,7 +14,7 @@ public class HealthDisplay extends StatsDisplay {
 
     @Override
     public int getCurrentValue() {
-        return player.getMultiplicatorVie();
+        return player.getHealthMultiplicator();
     }
     
 }

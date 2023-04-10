@@ -2,25 +2,25 @@ package engine.main;
 
 import java.io.IOException;
 
-import engine.afficheur.Afficheur;
-import engine.physique.PhysicsEngine;
+import engine.physics.PhysicsEngine;
+import engine.view.Display;
 
-public class JeuPhysique {
+public class GamePhysics {
 
 	// le moteur physique
-	public PhysicsEngine moteurPhys;
+	public PhysicsEngine physicsEngine;
 
 	// le rendu
-	public Afficheur affiche;
+	public Display display;
 
-	public final static short MONSTRE = 1;
-	public final static short HERO = 2;
+	public final static short ENEMY = 1;
+	public final static short PLAYER = 2;
 	public final static short DECORS = 3;
 
 	int i = 0;
 
 	// separation vue affichage
-	public JeuPhysique() throws IOException {
+	public GamePhysics() throws IOException {
 		// on creer le moteur physique
 		// moteurPhys=new MoteurPhysique();
 		// on creer l'afficheur du monde
@@ -29,11 +29,11 @@ public class JeuPhysique {
 	}
 
 	public void update() {
-		moteurPhys.update();
+		physicsEngine.update();
 	}
 
 	public void render() {
-		affiche.render();
+		display.render();
 
 	}
 }

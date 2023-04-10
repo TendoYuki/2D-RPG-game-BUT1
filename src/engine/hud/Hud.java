@@ -3,7 +3,7 @@ package engine.hud;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import engine.controle.MouseController;
+import engine.controller.MouseController;
 
 public abstract class Hud{
     MouseController mc;

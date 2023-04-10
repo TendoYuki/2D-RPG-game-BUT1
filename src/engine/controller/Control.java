@@ -9,7 +9,7 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.controle;
+package engine.controller;
 
 /**
  *

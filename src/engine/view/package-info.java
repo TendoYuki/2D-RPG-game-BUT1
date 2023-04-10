@@ -9,20 +9,21 @@
  /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
  /* ========================================================== */
 
-
 /**
  *
  * @author Pierre-Frederic Villard
  */
 
 /**
- * Ce package contient tout ce qui sert au controle du jeu :
+ * Ce package contient tout ce qui sert à l'affichage :
  * 
  *  <ul>
- *   <li>Contrôle avec souris</li>
- *   <li>Contrôle avec clavier</li>
- *   <li>Contrôle avec joystick</li>
+ *   <li>Affichage du hero</li>
+ *   <li>Affichage des monstres</li>
+ *   <li>Gestions de sprites</li>
  *  </ul>
  * 
  */
-package engine.controle;
+package engine.view;
+
+

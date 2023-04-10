@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
-import engine.physique.Player;
+import engine.physics.Player;
+import engine.view.Sprite;
 
 public class AddHealthButton extends ShopButton {
 
@@ -29,11 +29,11 @@ public class AddHealthButton extends ShopButton {
 
     @Override
     public void onClick() {
-        int curr = player.getMultiplicatorVie()+1;
-        if(curr <= 10 && player.getPieces() >= 5) {
-            player.setMultiplicatorVie(curr);
-            player.setVie(player.getVie() + player.MUL_VIE_UNIT);
-            player.addPieces(-5);
+        int curr = player.getHealthMultiplicator()+1;
+        if(curr <= 10 && player.getCoins() >= 5) {
+            player.setHealthMultiplicator(curr);
+            player.setHealth(player.getHealth() + player.HEALTH_MUL_UNIT);
+            player.addCoins(-5);
         }
     }
 }

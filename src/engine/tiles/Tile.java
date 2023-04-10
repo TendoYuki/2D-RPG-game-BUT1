@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import engine.afficheur.Sprite;
+import engine.view.Sprite;
 
 /** Tile place on a tilemap */
 public class Tile {

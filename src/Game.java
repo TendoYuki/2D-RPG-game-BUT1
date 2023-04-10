@@ -1,42 +1,40 @@
 import engine.main.BouclePrincipale;
-import engine.afficheur.Afficheur;
-import engine.controle.KeyboardController;
+import engine.controller.KeyboardController;
 import engine.hud.TestHud;
-import engine.main.JeuPhysique;
-import engine.physique.World;
-import engine.physique.PhysicsEngine;
-import engine.afficheur.CoordinateSystem;
-import engine.physique.World;
-import engine.physique.PhysicsEngine;
-import engine.physique.Player;
-import engine.physique.Enemy;
-import engine.physique.Wall;
+import engine.main.GamePhysics;
+import engine.physics.Enemy;
+import engine.physics.PhysicsEngine;
+import engine.physics.Player;
+import engine.physics.Wall;
+import engine.physics.World;
+import engine.view.CoordinateSystem;
+import engine.view.Display;
 
 public class Game {
     public static void main(String[] args) throws Exception {
 
         // le moteur physique
-        PhysicsEngine moteurPhys;
+        PhysicsEngine physicsEngine;
         // le rendu
-        Afficheur affiche;
+        Display display;
         // leS controlerS
-        KeyboardController cClavier1 = new KeyboardController(true);
+        KeyboardController keyboardController = new KeyboardController(true);
         // Le monde
-        World monMonde;
+        World world;
 
         // Construction du monde
-        monMonde = new World();
+        world = new World();
 
         // on creer le moteur physique
-        moteurPhys = new PhysicsEngine();
+        physicsEngine = new PhysicsEngine();
         // On ajoute le monde au moteur
-        moteurPhys.world = monMonde;
-        monMonde.setHero(0, 0, 50, 20, 100, 10);
+        physicsEngine.world = world;
+        world.setPlayer(0, 0, 50, 20, 100, 10);
         // on creer l'afficheur du monde
-        affiche = new Afficheur(moteurPhys.world);
+        display = new Display(physicsEngine.world);
 
-        int imgWidth = affiche.getDecor().size();
-        int imgHeight = affiche.getDecor().size();
+        int imgWidth = display.getDecor().size();
+        int imgHeight = display.getDecor().size();
         CoordinateSystem.setWindowHeight(imgHeight);
 
         //////////////////////
@@ -46,49 +44,49 @@ public class Game {
         int BORDER_WIDTH = 2;
 
         // Top Border
-        monMonde.addMur(
+        world.addWall(
                 0,
                 imgHeight,
                 imgWidth,
                 BORDER_WIDTH
         );
         // Left Border
-        monMonde.addMur(
+        world.addWall(
                 0 - BORDER_WIDTH,
                 0,
                 BORDER_WIDTH,
                 imgHeight
         );
         // Bottom Border
-        monMonde.addMur(
+        world.addWall(
                 0,
                 0 - BORDER_WIDTH,
                 imgWidth,
                 2
         );
         // Right Border
-        monMonde.addMur(
+        world.addWall(
                 imgWidth + BORDER_WIDTH,
                 0,
                 BORDER_WIDTH,
                 imgHeight
         );
 
-        monMonde.addMonstre(1, 1, 100, 100);
+        world.addEnemy(1, 1, 100, 100);
         
 
         // Gestion de la boucle principale
         BouclePrincipale maBoucle = new BouclePrincipale();
         // Ajout du jeu physique
-        JeuPhysique MonJeuPhysique = new JeuPhysique();
+        GamePhysics MonJeuPhysique = new GamePhysics();
         maBoucle.jeuPhysique = MonJeuPhysique;
         // Ajout du controler a le fenetre
-        maBoucle.cClavier = cClavier1;
+        maBoucle.cClavier = keyboardController;
         // Ajout de la vue au jeu
-        maBoucle.jeuPhysique.affiche = affiche;
+        maBoucle.jeuPhysique.display = display;
         // Ajout du jeu a la boucle
-        maBoucle.jeuPhysique.moteurPhys = moteurPhys;
-        maBoucle.jeuPhysique.moteurPhys.world = moteurPhys.world;
+        maBoucle.jeuPhysique.physicsEngine = physicsEngine;
+        maBoucle.jeuPhysique.physicsEngine.world = physicsEngine.world;
 
         maBoucle.lanceBouclePrincipale();
     }

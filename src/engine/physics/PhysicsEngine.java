@@ -9,14 +9,14 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.physique;
+package engine.physics;
 
-import static engine.main.JeuPhysique.*;
+import static engine.main.GamePhysics.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import engine.controle.Control;
+import engine.controller.Control;
 
 //permet de g�rer la physique
 
@@ -59,7 +59,7 @@ public class PhysicsEngine {
 
 		world.player.collision = 0;
 		// mise a jour des objets
-		for (Object o : world.objects) {
+		for (PhysicalObject o : world.objects) {
 			o.update();
 			o.collision = 0;
 		}
@@ -67,8 +67,8 @@ public class PhysicsEngine {
 		// mise a jour des monstres
 		for (Enemy enemy : world.enemies) {
 			enemy.evolue();
-			if (Collision.typeOfCollision == MONSTRE) {
-				world.player.collision = MONSTRE;
+			if (Collision.typeOfCollision == ENEMY) {
+				world.player.collision = ENEMY;
 				current_monster_index = enemy.index;
 			}
 		}
@@ -162,7 +162,7 @@ public class PhysicsEngine {
 		world.player.update();
 
 		// test de collision pour chaque mur
-		for (Object obj : world.objects) {
+		for (PhysicalObject obj : world.objects) {
 
 			if (Collision.collision(world.player, obj)) {
 				world.player.py = world.player.py - 1.1*world.player.vy;

@@ -11,7 +11,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
-import engine.physique.Player;
+import engine.physics.Player;
 
 public class HealthBar extends HudElement{
 
@@ -48,7 +48,7 @@ public class HealthBar extends HudElement{
      * @return
      */
     private int calcFill() {
-        return hero.getVie() * (offset-7) / hero.getMaxVie();
+        return hero.getHealth() * (offset-7) / hero.getMaxHealth();
     }
 
     @Override
@@ -90,13 +90,13 @@ public class HealthBar extends HudElement{
         
         Font tempFont = g.getFont();
         g.setFont(tempFont.deriveFont(Font.BOLD).deriveFont(14F));
-        g.drawString("" + hero.getVie() + " / " + hero.getMaxVie(), getX() + leftPart.getWidth(), getY() + (int)(leftPart.getHeight()*1.3));
+        g.drawString("" + hero.getHealth() + " / " + hero.getMaxHealth(), getX() + leftPart.getWidth(), getY() + (int)(leftPart.getHeight()*1.3));
         g.setFont(tempFont);
     }
 
     @Override
     public void onClick() { 
-        hero.setVie(hero.getVie() - 10/hero.getDefense());
+        hero.setHealth(hero.getHealth() - 10/hero.getDefence());
     }
     
 }

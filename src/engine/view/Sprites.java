@@ -9,7 +9,7 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.afficheur;
+package engine.view;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

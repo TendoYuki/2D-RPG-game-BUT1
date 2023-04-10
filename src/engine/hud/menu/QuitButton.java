@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
-import engine.controle.KeyboardController;
+import engine.controller.KeyboardController;
+import engine.view.Sprite;
 
 public class QuitButton extends MenuButton {
 

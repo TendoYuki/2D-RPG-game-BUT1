@@ -1,7 +1,7 @@
 package engine.hud.shop;
 
 import engine.hud.Hud;
-import engine.physique.Player;
+import engine.physics.Player;
 
 public class Shop extends Hud{
 	public Shop(Player player, int x, int y, int width, int height) {

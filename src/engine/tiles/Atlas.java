@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
+import engine.view.Sprite;
 
 /**
  * Atlas reading a spriteSheet and bining each sprite to an integer key

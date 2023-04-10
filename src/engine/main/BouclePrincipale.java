@@ -1,12 +1,12 @@
 package engine.main;
 
-import engine.controle.KeyboardController;
+import engine.controller.KeyboardController;
 
 public class BouclePrincipale {
 
 	public String nom = "Mon super Jeu";
 	public int fps = 60;
-	public JeuPhysique jeuPhysique;
+	public GamePhysics jeuPhysique;
 	// creation du controleur
 	public KeyboardController cClavier;
 
@@ -26,9 +26,9 @@ public class BouclePrincipale {
 	public void lanceBouclePrincipale() throws Exception {
 
 		// ControleurClavier cClavier=new ControleurClavier(true);
-		jeuPhysique.affiche.addKeyListener(cClavier);
+		jeuPhysique.display.addKeyListener(cClavier);
 		// mettre l'acces au controleur dans monde
-		jeuPhysique.moteurPhys.world.c = cClavier.c;
+		jeuPhysique.physicsEngine.world.c = cClavier.c;
 
 		// afficher
 		System.out.println("\n\n**************************************************");
@@ -44,7 +44,7 @@ public class BouclePrincipale {
 
 		// lancement
 		Thread.sleep(1000);
-		jeuPhysique.affiche.requestFocusInWindow();
+		jeuPhysique.display.requestFocusInWindow();
 
 		// boucle
 		long beforeTime = System.nanoTime();

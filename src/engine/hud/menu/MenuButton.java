@@ -2,8 +2,8 @@ package engine.hud.menu;
 
 import java.awt.Graphics;
 
-import engine.afficheur.Sprite;
 import engine.hud.HudElement;
+import engine.view.Sprite;
 
 public abstract class MenuButton extends HudElement{
 

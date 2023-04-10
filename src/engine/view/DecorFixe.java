@@ -1,4 +1,4 @@
-package engine.afficheur;
+package engine.view;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

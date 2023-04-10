@@ -5,8 +5,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
-import engine.physique.Player;
+import engine.physics.Player;
+import engine.view.Sprite;
 
 public class HealButton extends ShopButton {
 
@@ -29,16 +29,16 @@ public class HealButton extends ShopButton {
 
     @Override
     public void onClick() {
-        int vie = player.getVie();
-        int maxVie = player.getMaxVie();
-        if (player.getPieces() >= 5){
+        int vie = player.getHealth();
+        int maxVie = player.getMaxHealth();
+        if (player.getCoins() >= 5){
             if(vie +15 <= maxVie) {
-                player.setVie(vie + 15);
-                player.addPieces(-5);
+                player.setHealth(vie + 15);
+                player.addCoins(-5);
             }
             else if(vie+15 < maxVie + 15){
-                player.setVie(maxVie);
-                player.addPieces(-5);
+                player.setHealth(maxVie);
+                player.addCoins(-5);
             }
         }
     }

@@ -9,7 +9,7 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.afficheur;
+package engine.view;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -19,8 +19,8 @@ import javax.swing.*;
 import engine.hud.TestHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
+import engine.physics.*;
 import engine.hud.menu.Menu;
-import engine.physique.*;
 import engine.tiles.Atlas;
 import engine.tiles.TileMap;
 
@@ -30,7 +30,7 @@ import engine.tiles.TileMap;
  *
  * @author Pierre-Frederic Villard
  */
-public class Afficheur extends JPanel {
+public class Display extends JPanel {
 
 	// le monde a affcher
 	public World m;
@@ -50,7 +50,7 @@ public class Afficheur extends JPanel {
 	 *
 	 * @param monde
 	 */
-	public Afficheur(World monde) {
+	public Display(World monde) {
 		JFrame f = new JFrame();
 
 		Atlas atlas = new Atlas(
@@ -139,13 +139,13 @@ public class Afficheur extends JPanel {
 		decor.affiche(g);
 
 		// affiche les objets
-		for (Object obj : m.objects) {
+		for (PhysicalObject obj : m.objects) {
 			obj.draw(g);
 		}
 
 		// affiche les monstres
-		for (Enemy monstre : m.enemies) {
-			monstre.draw(g);
+		for (Enemy enemy : m.enemies) {
+			enemy.draw(g);
 		}
 
 		// affiche la balle

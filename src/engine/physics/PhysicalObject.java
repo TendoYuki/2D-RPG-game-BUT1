@@ -9,18 +9,18 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.physique;
+package engine.physics;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.afficheur.CoordinateSystem;
+import engine.view.CoordinateSystem;
 
 /**
  *
  * @author Pierre-Frederic Villard
  */
-public class Object {
+public class PhysicalObject {
 
     // modele de l'objet
     // position

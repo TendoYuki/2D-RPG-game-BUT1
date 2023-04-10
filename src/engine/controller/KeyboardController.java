@@ -9,7 +9,7 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.controle;
+package engine.controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

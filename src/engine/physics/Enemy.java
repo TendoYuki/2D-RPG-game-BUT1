@@ -1,11 +1,11 @@
-package engine.physique;
+package engine.physics;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
 
-import engine.afficheur.CoordinateSystem;
-import engine.afficheur.EnemySprites;
+import engine.view.CoordinateSystem;
+import engine.view.EnemySprites;
 
 public class Enemy extends Entity {
 

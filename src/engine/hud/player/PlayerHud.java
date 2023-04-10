@@ -2,7 +2,7 @@ package engine.hud.player;
 
 import engine.hud.Hud;
 import engine.hud.shop.Shop;
-import engine.physique.Player;
+import engine.physics.Player;
 
 public class PlayerHud extends Hud{
     

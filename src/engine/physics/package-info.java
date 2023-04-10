@@ -26,4 +26,4 @@
  *  </ul>
  * 
  */
-package engine.physique;
+package engine.physics;

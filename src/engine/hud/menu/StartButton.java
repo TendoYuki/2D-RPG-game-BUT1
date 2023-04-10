@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
+import engine.view.Sprite;
 
 public class StartButton extends MenuButton {
 

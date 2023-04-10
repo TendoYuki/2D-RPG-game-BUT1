@@ -6,8 +6,8 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import engine.afficheur.Sprite;
 import engine.hud.HudElement;
+import engine.view.Sprite;
 
 public class HealLabel extends HudElement{
 

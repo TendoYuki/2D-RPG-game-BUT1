@@ -9,13 +9,13 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.physique;
+package engine.physics;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import engine.afficheur.CoordinateSystem;
-import engine.controle.Control;
+import engine.controller.Control;
+import engine.view.CoordinateSystem;
 
 //gere les objets du monde
 
@@ -33,7 +33,7 @@ public class World {
     /**
      * les murs
      */
-    public ArrayList<Object> objects = new ArrayList<Object>();
+    public ArrayList<PhysicalObject> objects = new ArrayList<PhysicalObject>();
 
     public int wallCount = 0;
 
@@ -47,7 +47,7 @@ public class World {
      */
     public Player player;
 
-    public int nbMonstres = 0;
+    public int enemiesCount = 0;
 
     /**
      *
@@ -75,7 +75,7 @@ public class World {
      * @param dx
      * @param dy
      */
-    public void addMur(int x, int y, int dx, int dy) {
+    public void addWall(int x, int y, int dx, int dy) {
         objects.add(new Wall(x, y, dx, dy));
         objects.get(wallCount).index = wallCount;
         wallCount++;
@@ -91,22 +91,22 @@ public class World {
      * @param py
      * @throws java.io.IOException
      */
-    public void addMonstre(double vx, double vy, int px, int py) throws IOException {
+    public void addEnemy(double vx, double vy, int px, int py) throws IOException {
         enemies.add(new Enemy(20,10,5));
         // penser a le lier au monde
-        enemies.get(nbMonstres).m = this;
+        enemies.get(enemiesCount).m = this;
         // propriétés du monstre
-        enemies.get(nbMonstres).vx = vx;
-        enemies.get(nbMonstres).vy = vy;
-        enemies.get(nbMonstres).px = px;
-        enemies.get(nbMonstres).py = py;
-        enemies.get(nbMonstres).index = nbMonstres;
+        enemies.get(enemiesCount).vx = vx;
+        enemies.get(enemiesCount).vy = vy;
+        enemies.get(enemiesCount).px = px;
+        enemies.get(enemiesCount).py = py;
+        enemies.get(enemiesCount).index = enemiesCount;
 
-        nbMonstres++;
+        enemiesCount++;
     }
 
-    public void addObjet(Object monObjet) {
-        objects.add(monObjet);
+    public void addObject(PhysicalObject o) {
+        objects.add(o);
     }
 
     /**
@@ -118,8 +118,8 @@ public class World {
      * @param py
      * @throws java.io.IOException
      */
-    public void setHero(double vx, double vy, int px, int py, int vie, int pieces) throws IOException {
-        player = new Player(px, py, vie, pieces);
+    public void setPlayer(double vx, double vy, int px, int py, int health, int coins) throws IOException {
+        player = new Player(px, py, health, coins);
         player.vx = vx;
         player.vy = vy;
         player.px = px;

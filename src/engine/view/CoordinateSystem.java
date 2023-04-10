@@ -9,10 +9,10 @@
 /* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
 /* ========================================================== */
 
-package engine.afficheur;
+package engine.view;
 
-import engine.physique.Object;
-import engine.physique.Player;
+import engine.physics.PhysicalObject;
+import engine.physics.Player;
 
 /**
  *
@@ -36,7 +36,7 @@ public class CoordinateSystem {
      * @param o
      * @return
      */
-    public static int[] changeCS(Object o) {
+    public static int[] changeCS(PhysicalObject o) {
         int res[] = new int[4];
         // res[1]= 370 - (int)o.py - (int)(o.height);
         res[0] = (int) o.px;
