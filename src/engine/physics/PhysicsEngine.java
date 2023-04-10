@@ -15,6 +15,8 @@ import static engine.main.GamePhysics.*;
 
 import java.io.IOException;
 
+import engine.trigger.TriggerMap;
+
 //permet de g�rer la physique
 
 /**
@@ -187,10 +189,17 @@ public class PhysicsEngine {
 			}
 
 		}
+		for (TriggerMap triggerMap : world.triggerMaps) {
+			triggerMap.update();
+		}
 		// Assign the last collision type if not a monster
 		if (world.player.collision == 0)
 			world.player.collision = Collision.typeOfCollision;
 
+		for (NPC npc : world.npcs){
+			if (npc.isInTriggerZone()) npc.interact();
+			else npc.noInteract();
+		}
 	}
 
 }

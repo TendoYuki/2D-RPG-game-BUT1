@@ -8,6 +8,7 @@ public class GameOver extends Hud{
         try{
             addElement(new GameOverBackground(x, y, width, height));
             addElement(new GOQuitButton(width/2 - 32, height - 100, 64, 50));
+
         }
         catch(Exception e) {}
     }

@@ -12,8 +12,8 @@ public class Menu extends Hud{
 		this.pHud = pHud;
 		try{
 			addElement(new MenuBackground(x, y, width, height));
-            addElement(new StartButton(this, width/2 - 32, height/2 - 25, 64,50 ));
-            addElement(new QuitButton(width/2 - 32, height/2 - 100, 64, 50));
+            addElement(new StartButton(this, width/2 - 32, height/2 +50, 64,50 ));
+            addElement(new QuitButton(width/2 - 32, height/2 + 125, 64, 50));
 		}
 		catch(Exception e) {}
 	}

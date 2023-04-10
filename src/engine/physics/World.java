@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import engine.controller.Control;
 import engine.hud.Hud;
+import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 
 //gere les objets du monde
@@ -48,6 +49,10 @@ public class World {
      * NPCs
      */
     public ArrayList<NPC> npcs = new ArrayList<NPC>();
+    /**
+     * NPCs
+     */
+    public ArrayList<TriggerMap> triggerMaps = new ArrayList<TriggerMap>();
 
     
     public HashMap<String, Hud> huds = new HashMap<String, Hud>();
@@ -142,6 +147,10 @@ public class World {
 
     public void addHud(String hudName, Hud hud) {
         huds.put(hudName, hud);
+    }
+
+    public void addTriggerMap(TriggerMap triggerMap) {
+        this.triggerMaps.add(triggerMap);
     }
     /**
      * ajouter heros

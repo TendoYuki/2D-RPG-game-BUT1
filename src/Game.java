@@ -1,8 +1,11 @@
 import engine.main.BouclePrincipale;
 import engine.controller.KeyboardController;
+import engine.dialog.Dialog;
+import engine.dialog.DialogController;
 import engine.hud.Hud;
 import engine.hud.gameover.GameOver;
 import engine.hud.menu.Menu;
+import engine.hud.npc.NPCHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
 import engine.main.GamePhysics;
@@ -10,6 +13,8 @@ import engine.physics.PhysicsEngine;
 import engine.physics.World;
 import engine.tiles.Atlas;
 import engine.tiles.TileMap;
+import engine.trigger.Trigger;
+import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 import engine.view.Scene;
 import engine.view.Display;
@@ -30,6 +35,7 @@ public class Game {
         Shop shop;
         Menu menu;
         GameOver gameOver;
+        NPCHud npcHud;
 
         // Construction du monde
         world = new World();
@@ -74,10 +80,39 @@ public class Game {
             atlas
         );
         display = new Display(physicsEngine.world, new Scene(tileMap));
+        TriggerMap triggerMap = new TriggerMap(world.player, tileMap);
+        triggerMap.addTrigger(4, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                System.out.println("triggered !");
+                
+            }
+            
+        });
+        world.addTriggerMap(triggerMap);
 
         int imgWidth = display.getDecor().size();
         int imgHeight = display.getDecor().size();
         CoordinateSystem.setWindowHeight(imgHeight);
+        Dialog d = new Dialog();
+        d.addLine(new String[] {
+            "Bienvenue aventurier ! ",
+            "J'espère que tu n'as pas eu de problème sur le chemin jusque ici",
+            "Appuie sur «F» pour parler au gardien afin qu'il te donne ta première quête."
+        });
+        d.addLine(new String[] {
+            "C’est donc toi le redoutable aventurier dont on m’a parlé.",
+            "Ça fait plaisir de rencontrer quelqu’un qui pourrait m’aider.",
+            "Voilà, j’ai  un problème depuis quelques semaines maintenant. Un objet qui m’est très chère est perdu dans ce donjon.",
+            "Ramène le moi et je te promet une récompense. "
+        });
+        d.addLine(new String[] {
+            "Pas si vite! ",
+            "Tu n’as encore appris à te battre, tu ne peux donc pas rentrer pour le moment.",
+            "Vient ici que je t’apprennes toutes mes techniques."
+        });
+        DialogController.setCurrentDialog(d);
 
         // Adding huds
         shop = new Shop(
@@ -99,10 +134,16 @@ public class Game {
         menu = new Menu(playerHud,0, 0, display.getWidth(), display.getHeight());
         world.addHud("menu", menu);
 
+        
         gameOver = new GameOver(0, 0, display.getWidth(), display.getHeight());
         gameOver.setIsShown(false);
         gameOver.setInteractable(false);
         world.addHud("gameOver", gameOver);
+
+        npcHud = new NPCHud(0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
+        npcHud.setInteractable(false);
+        npcHud.setIsShown(false);
+        world.addHud("npc", npcHud);
 
         //Adding huds listeners
         for (Hud hud : world.huds.values()) {

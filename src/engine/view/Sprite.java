@@ -14,7 +14,7 @@ public class Sprite {
     private BufferedImage image;
 
     /** Scaling factor of the sprite */
-    private int scaleFactor;
+    private double scaleFactor;
 
     /** Size X of the sprite in px */
     private int sizeX;
@@ -27,9 +27,9 @@ public class Sprite {
      * @param scaleFactor Scaling factor of the sprite
      * @param image Image
      */
-    public Sprite(int sizeX, int sizeY, int scaleFactor, BufferedImage image) {
-        this.sizeX = sizeX*scaleFactor;
-        this.sizeY = sizeY*scaleFactor;
+    public Sprite(int sizeX, int sizeY, double scaleFactor, BufferedImage image) {
+        this.sizeX = (int)(sizeX *scaleFactor);
+        this.sizeY = (int)(sizeY*scaleFactor);
         this.scaleFactor = scaleFactor;
         this.image = image;
     }
@@ -51,7 +51,7 @@ public class Sprite {
         return image;
     }
 
-    public int getScaleFactor() {
+    public double getScaleFactor() {
         return scaleFactor;
     }
 

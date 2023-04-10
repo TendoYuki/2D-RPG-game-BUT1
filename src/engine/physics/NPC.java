@@ -16,6 +16,9 @@ public class NPC extends Entity {
 	// lien vers le monde
 	World m;
 
+	private int triggerZoneWidth = 25;
+	private int triggerZoneHeight = 25;
+
 	private HashMap<String, Dialog> dialogs = new HashMap<String, Dialog>();
 
 	private Dialog activeDialog;
@@ -29,7 +32,7 @@ public class NPC extends Entity {
 		activeDialog = new Dialog();
 		activeDialog.addLine("");
 		sprite = new NPCSprites(this);
-		height  = sprite.sprites.get("fixe").getSizeY();
+		height = sprite.sprites.get("fixe").getSizeY();
 		width  = sprite.sprites.get("fixe").getSizeX();
 	}
 
@@ -55,12 +58,31 @@ public class NPC extends Entity {
 		sprite.animate();
 	}
 
+	/** the player is near the NPC */
+	public boolean isInTriggerZone(){
+		return (
+			m.player.px+m.player.width > this.px- triggerZoneWidth/2 &&
+			m.player.px < this.px + width + triggerZoneWidth/2
+		) &&
+		( 
+			m.player.py+m.player.height > this.py - triggerZoneHeight/2 &&
+			m.player.py < this.py + height + triggerZoneHeight/2
+		);
+	}
 	/**
 	 *
 	 */
 	public void interact() {
-        
+		m.huds.get("npc").setIsShown(true);
+		m.huds.get("npc").setInteractable(true);
 	}
+
+	/** */
+	public void noInteract(){
+		m.huds.get("npc").setIsShown(false);
+		m.huds.get("npc").setInteractable(false);
+	}
+
 
 	@Override
 	public void handleDeath() {

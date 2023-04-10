@@ -41,7 +41,7 @@ public class TileMap {
                 int key = tilesAtlasKey[y][x];
                 tileGrid.setCell(x, y, new Tile(
                     tileAtlas.get(key),
-                    y*tileSize, x*tileSize, scaleFactor
+                    key, y*tileSize, x*tileSize, scaleFactor
                 ));
             }
         }
@@ -80,5 +80,17 @@ public class TileMap {
 
     public int tileCount() {
         return tileAtlas.getSpriteCount();
+    }
+
+    /**
+     * Gets the tile at a given x and y coordinates
+     * @param x X coord
+     * @param y Y coord
+     * @return id of the tile
+     */
+    public int getTileID(int x, int y) {
+        int colNum = x/(size()/scale);
+        int rowNum = y/(size()/scale);
+        return tileGrid.getCell(colNum, rowNum).getId();
     }
 }
