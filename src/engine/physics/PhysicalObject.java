@@ -28,7 +28,7 @@ public class PhysicalObject {
     /**
      *
      */
-    public double px = 15;
+    public double px = 0;
 
     /**
      *
@@ -83,12 +83,12 @@ public class PhysicalObject {
     /**
      *
      */
-    public double width = 10;
+    public double width = 0;
 
     /**
      *
      */
-    public double height = 10;
+    public double height = 0;
 
     // collision
     // permet de savoir si un objet est en collision
@@ -103,6 +103,20 @@ public class PhysicalObject {
 
     // Index de l'élément parmis son type (Monstre , Mur, etc...)
     public int index;
+
+    private World world;
+
+    public PhysicalObject(World w) {
+        world = w;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
 
     /**
      *
@@ -137,7 +151,7 @@ public class PhysicalObject {
      */
     public void draw(Graphics g) {
         g.setColor(Color.green);
-        int[] tab = CoordinateSystem.changeCS(this);
+        int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
         g.fillRect(tab[0], tab[1], tab[2], tab[3]);
     }
 

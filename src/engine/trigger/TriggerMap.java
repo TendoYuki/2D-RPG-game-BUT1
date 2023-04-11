@@ -34,8 +34,9 @@ public class TriggerMap {
             (int)(entity.px + entity.width/2),
             (int)(entity.py + entity.height/2)
         );
-        triggers.get(currentTile).forEach(trigger -> {
-           trigger.onTriggered();
-        });
+        if(currentTile != -1)
+            triggers.get(currentTile).forEach(trigger -> {
+            trigger.onTriggered();
+            });
     }
 }

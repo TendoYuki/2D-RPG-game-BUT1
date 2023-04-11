@@ -26,8 +26,9 @@ public class Enemy extends Entity {
 	 *
 	 * @throws IOException
 	 */
-	public Enemy(int vie,int attaque,int defense) throws IOException {
-		super(vie, attaque, defense);
+	public Enemy(World w, int vie,int attaque,int defense) throws IOException {
+		super(w,vie, attaque, defense);
+		m = w;
 		ax = 0;
 		ay = 0;
 		px = 0;
@@ -47,7 +48,7 @@ public class Enemy extends Entity {
 	public void draw(Graphics g) {
 
 		// change de repere
-		int[] tab = CoordinateSystem.changeCS(this);
+		int[] tab = CoordinateSystem.changeCS(this, m.map.getPosX(), m.map.getPosY());
 
 		if (state == State.ATTACKING)
 			g.setColor(Color.red);

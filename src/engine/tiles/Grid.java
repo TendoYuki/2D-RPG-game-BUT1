@@ -47,7 +47,9 @@ public class Grid<T>{
      * @return Cell at the x and y coord
      */
     public T getCellContent(int x, int y) {
-        return cells.get(y*xCount + x).getContent();
+        if(cells.get(y*xCount + x) != null)
+            return cells.get(y*xCount + x).getContent();
+        return null;
     }
 
     /**

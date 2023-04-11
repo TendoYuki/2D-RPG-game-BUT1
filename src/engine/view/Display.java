@@ -2,10 +2,12 @@ package engine.view;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.Map.Entry;
 
 import javax.swing.*;
 
 import engine.physics.*;
+import engine.tiles.Directions;
 import engine.generation.Map;
 import engine.hud.Hud;
 
@@ -78,8 +80,13 @@ public class Display extends JPanel {
 		map.draw(g);
 
 		// affiche les objets
-		for (PhysicalObject obj : m.objects) {
-			obj.draw(g);
+		// for (PhysicalObject obj : m.objects) {
+		// 	obj.draw(g);
+		// }
+
+		// Draws walls
+		for(Entry<Directions, Wall> wall: m.getWorldBorder().getBorderWalls().entrySet()){
+			wall.getValue().draw(g);
 		}
 
 		// affiche les monstres
@@ -102,7 +109,7 @@ public class Display extends JPanel {
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
-		g.clearRect(0, 0, map.size(), map.size());
+		g.clearRect(0, 0, this.getWidth(), this.getHeight());
 		g.dispose();
 
 	}

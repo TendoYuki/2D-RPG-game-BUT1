@@ -36,11 +36,10 @@ public class CoordinateSystem {
      * @param o
      * @return
      */
-    public static int[] changeCS(PhysicalObject o) {
+    public static int[] changeCS(PhysicalObject o, int x0, int y0) {
         int res[] = new int[4];
-        // res[1]= 370 - (int)o.py - (int)(o.height);
-        res[0] = (int) o.px;
-        res[1] = windowHeight - (int) o.py - (int) (o.height);
+        res[0] = (int) o.px + x0;
+        res[1] = (windowHeight - (int) o.py - (int) (o.height)) + y0;
         res[2] = (int) o.width;
         res[3] = (int) o.height;
         return (res);

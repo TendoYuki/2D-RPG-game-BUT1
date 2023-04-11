@@ -14,6 +14,28 @@ public class TileMap {
 
     int scaleFactor;
 
+
+    private int posX = 0;
+    private int posY = 0; 
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+        updateTilesPositons();
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+        updateTilesPositons();
+    }
+
     /**
      * Creates a tilemap of a given scale(ex 16 -> 16x16px) 
      * with an array of keys that maps to the provided tileAtlas
@@ -41,11 +63,22 @@ public class TileMap {
                 int key = tilesAtlasKey[y][x];
                 tileGrid.setCell(x, y, new Tile(
                     tileAtlas.get(key),
-                    key, x*tileSize, y*tileSize, scaleFactor
+                    key, posX+x*tileSize, posY+y*tileSize, scaleFactor
                 ));
             }
         }
         this.tileAtlas = tileAtlas;
+    }
+
+    public void updateTilesPositons() {
+        for(int y = 0; y < tilesAtlasKey.length; y++) {
+            for(int x = 0; x < tilesAtlasKey[0].length; x++) {
+                GridCell<Tile> tile = tileGrid.getCell(x, y);
+                tile.getContent().setX(posX+x*scale*scaleFactor);
+                tile.getContent().setY(posY+y*scale*scaleFactor);
+                tileGrid.setCell(tile.getIndex(), tile.getContent());
+            }
+        }
     }
 
     /**
@@ -89,8 +122,13 @@ public class TileMap {
      * @return id of the tile
      */
     public int getTileID(int x, int y) {
-        int colNum = x/(size()/scale);
-        int rowNum = scale-(y/(size()/scale))-1;
-        return tileGrid.getCellContent(colNum, rowNum).getId();
+        int colNum = (x)/(size()/scale);
+        int rowNum = scale-((y)/(size()/scale))-1;
+        System.out.println("---------------");
+        System.out.println(colNum + "-" + rowNum);
+        System.out.println("---------------");
+        if(tileGrid.getCellContent(colNum, rowNum) != null)
+            return tileGrid.getCellContent(colNum, rowNum).getId();
+        return -1;
     }
 }

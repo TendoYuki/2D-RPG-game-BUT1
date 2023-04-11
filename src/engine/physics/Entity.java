@@ -14,8 +14,8 @@ public abstract class Entity extends PhysicalObject {
 	/** Entity's defense points */
 	private int defence;
 
-	public Entity(int health, int attack, int defence){
-		super();
+	public Entity(World w, int health, int attack, int defence){
+		super(w);
 		this.health = health;
 		this.maxHealth = health;
 		this.attack = attack;

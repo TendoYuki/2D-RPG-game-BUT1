@@ -99,6 +99,13 @@ public class MapGenerator {
         return tileMap;
     }
 
+    /** 
+     * @param startRoom
+     * @param endRoom
+     * @param totalRoomCount
+     * @param countX
+     * @param countY
+    */
     public static Map GenerateMap(Room startRoom, Room endRoom,int totalRoomCount, int countX, int countY) {
         ArrayList<GridCell<Room>> rooms = new ArrayList<GridCell<Room>>();
         Grid<Room> roomsGrid = new Grid<Room>(countX, countY);

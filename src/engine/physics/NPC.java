@@ -30,8 +30,8 @@ public class NPC extends Entity {
 	 *
 	 * @throws IOException
 	 */
-	public NPC(int vie,int attaque,int defense) throws IOException {
-		super(vie, attaque, defense);
+	public NPC(World w, int vie,int attaque,int defense) throws IOException {
+		super(w, vie, attaque, defense);
 		activeDialog = new Dialog();
 		activeDialog.addLine("");
 		sprite = new NPCSprites(this);
@@ -55,7 +55,7 @@ public class NPC extends Entity {
 
 		// change de repere
 		g.setColor(Color.black);
-		int[] tab = CoordinateSystem.changeCS(this);
+		int[] tab = CoordinateSystem.changeCS(this, m.map.getPosX(), m.map.getPosY());
 
 		sprite.draw(tab[0], tab[1], g);
 		sprite.animate();

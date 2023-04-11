@@ -24,17 +24,7 @@ import engine.view.CoordinateSystem;
  */
 public class Wall extends PhysicalObject {
 
-	/**
-	 *
-	 */
-	public Wall() {
-		// taille de mur diff�rente
-		height = 50;
-		width = 50;
-		px = 100;
-		py = 20;
-		sauveAnterieur();
-	}
+
 
 	/**
 	 *
@@ -43,8 +33,8 @@ public class Wall extends PhysicalObject {
 	 * @param w
 	 * @param h
 	 */
-	public Wall(int x, int y, int w, int h) {
-		// taille de mur diff�rente
+	public Wall(World world, int x, int y, int w, int h) {
+		super(world);
 		height = h;
 		width = w;
 		px = x;
@@ -56,9 +46,10 @@ public class Wall extends PhysicalObject {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-		g.setColor(new Color(0,0,0,0));
-		int[] tab = CoordinateSystem.changeCS(this);
+		g.setColor(new Color(255,0,0,255));
+		int[] tab = CoordinateSystem.changeCS(this, getWorld().map.getPosX(), getWorld().map.getPosY());
 		g.fillRect(tab[0], tab[1], tab[2], tab[3]);
+		// g.fillRect((int)px, (int)py, (int)width, (int)height);
 	}
 
 }

@@ -16,7 +16,7 @@ public class Room extends Scene{
 
     private static int count = 0;
 
-    private int id;
+    private int id;    
 
     public Room(ArrayList<Directions> freeDirections) {
         id = count++;

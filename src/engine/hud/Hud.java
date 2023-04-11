@@ -10,6 +10,8 @@ public abstract class Hud{
     ArrayList<HudElement> elements = new ArrayList<HudElement>();
     boolean isInteractable = true;
 	private boolean isShown = true;
+    private int x;
+    private int y;
 
     public Hud() {
         this.mc = new MouseController();
@@ -55,5 +57,21 @@ public abstract class Hud{
             elements.forEach(element -> {
                 element.draw(g);
             });
+    }
+    
+    public void setX(int x){
+        this.x = x;
+    }
+    
+    public void setY(int y){
+        this.y = y;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
     }
 }

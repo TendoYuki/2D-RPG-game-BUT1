@@ -14,6 +14,7 @@ import engine.hud.shop.Shop;
 import engine.main.GamePhysics;
 import engine.physics.PhysicsEngine;
 import engine.physics.World;
+import engine.physics.WorldBorder;
 import engine.tiles.Atlas;
 import engine.tiles.Directions;
 import engine.tiles.TileMap;
@@ -48,11 +49,11 @@ public class Game {
         physicsEngine = new PhysicsEngine();
         // On ajoute le monde au moteur
         physicsEngine.world = world;
-        world.setPlayer(0, 0, 50, 20, 100, 10);
-
+        
         Room startRoom = new Room(new Directions[] {Directions.UP});
-
+        
         world.setMap(MapGenerator.GenerateMap(startRoom, null, 4, 5, 5));
+        world.setPlayer(0, 0, 0,0, 100, 10);
         display = new Display(physicsEngine.world, world.map);
         TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
         world.setTriggerMap(triggerMap);
@@ -73,7 +74,7 @@ public class Game {
             public void onTriggered() {
                 Room left = world.map.getAdjacentRoom(Directions.LEFT);
                 world.map.setActiveRoom(left.getId());
-                world.player.px = display.getWidth() - 50;
+                world.player.px = world.map.getActiveRoom().getTileMap().size() - 50;
                 world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
             }
             
@@ -84,7 +85,7 @@ public class Game {
             public void onTriggered() {
                 Room down = world.map.getAdjacentRoom(Directions.DOWN);
                 world.map.setActiveRoom(down.getId());
-                world.player.py = display.getHeight() - 50;
+                world.player.py = world.map.getActiveRoom().getTileMap().size() - 50;
                 world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
             }
             
@@ -118,7 +119,7 @@ public class Game {
             "Ça fait plaisir de rencontrer quelqu’un qui pourrait m’aider.",
             "Voilà, j’ai  un problème depuis quelques semaines maintenant.",
             "Un objet qui m’est très chère est perdu dans ce donjon.",
-            "Ramène le moi et je te promet une récompense. "
+            "Ramène le moi et je te promets une récompense. "
         });
         npc1.addLine(new String[] {
             "Pas si vite! ",
@@ -126,11 +127,11 @@ public class Game {
             "Vient ici que je t’apprennes toutes mes techniques."
         });
         npc1.addLine(new String[] {
-            "Tu peux appuyer sur l'icone $ en bas a droite de ton ecran afin d'ameliorer ",
+            "Tu peux appuyer sur l'icone $ en bas a droite de ton ecran afin d'ameliorer",
             "tes competences a tout moment",
             "Tu peux augmenter ta vie, ta defense et ton attaque",
-            "Si tu as des pieces d'or sur toi je te conseille d'ameliorer dans un premier temps,",
-            "bien entendu tu n'es pas oblige de m'ecouter mais tu sera le seul responsable",
+            "Si tu as des pieces d'or sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
+            "bien entendu tu n'es pas oblige de m'ecouter mais tu seras le seul responsable",
             "s'il t'arrive quelque chose.",
         });
         Dialog npc1End = new Dialog();
@@ -138,7 +139,7 @@ public class Game {
             "Oh tu es de retour, ça fait plaisir de te revoir, tu as bien mon objet hein ?"
         });
         npc1End.addLine(new String[]{
-            "Oh mon dieu tu as vraiment reussis a le recuperer, me voila bien surpris",
+            "Oh mon dieu tu as vraiment reussi a le recuperer, me voila bien surpris",
             "Tiens donc la recompense que je t'ai promis"
         });
         npc1End.addLine(new String[]{
@@ -150,19 +151,19 @@ public class Game {
         Dialog porteFermee = new Dialog();
         porteFermee.addLine(new String[]{
             "La porte est fermee",
-            "Tuez tout les monstres afin qu'elle s'ouvre"
+            "Tuez tous les monstres afin qu'elle s'ouvre"
         });
         
         Dialog porteOuverte = new Dialog();
         porteOuverte.addLine(new String[] {
-            "Vous avez tuer tout les monstres de cette zone",
+            "Vous avez tue tous les monstres de cette zone",
             "Les portes s'ouvrent"
         });
 
         // Dialogue du boss
         Dialog bossStart = new Dialog();
         bossStart.addLine(new String[]{
-            "Oh tient tient... Un nouvel aventurier qui pense pouvroir me batre",
+            "Oh tient tient... Un nouvel aventurier qui pense pouvoir me battre",
             "MUAHAHAHAHAHHAHAHAHAHA"
         });
 
@@ -210,33 +211,11 @@ public class Game {
             display.addMouseListener(hud.getMouseController());
         }
 
-        // Adding walls
-        int BORDER_WIDTH = 2;
-
-        // Top Border
-        world.addWall(
-                0,
-                imgHeight,
-                imgWidth,
-                BORDER_WIDTH);
-        // Left Border
-        world.addWall(
-                0 - BORDER_WIDTH,
-                0,
-                BORDER_WIDTH,
-                imgHeight);
-        // Bottom Border
-        world.addWall(
-                0,
-                0 - BORDER_WIDTH,
-                imgWidth,
-                2);
-        // Right Border
-        world.addWall(
-                imgWidth + BORDER_WIDTH,
-                0,
-                BORDER_WIDTH,
-                imgHeight);
+        world.setWorldBorder(new WorldBorder(
+            world,
+            imgWidth,
+            imgHeight
+        ));
 
         // Adding enemies
         world.addEnemy(0, 0, 100, 100);

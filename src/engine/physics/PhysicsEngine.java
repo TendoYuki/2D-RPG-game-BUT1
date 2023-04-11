@@ -14,7 +14,9 @@ package engine.physics;
 import static engine.main.GamePhysics.*;
 
 import java.io.IOException;
+import java.util.Map.Entry;
 
+import engine.tiles.Directions;
 import engine.trigger.TriggerMap;
 
 //permet de g�rer la physique
@@ -61,6 +63,11 @@ public class PhysicsEngine {
 		for (PhysicalObject o : world.objects) {
 			o.update();
 			o.collision = 0;
+		}
+
+		for(Entry<Directions, Wall> wall: world.getWorldBorder().getBorderWalls().entrySet()){
+			wall.getValue().update();
+			wall.getValue().collision = 0;
 		}
 
 		// mise a jour des monstres
@@ -161,9 +168,9 @@ public class PhysicsEngine {
 		world.player.update();
 
 		// test de collision pour chaque mur
-		for (PhysicalObject obj : world.objects) {
+		for (Entry<Directions, Wall> wall: world.getWorldBorder().getBorderWalls().entrySet()) {
 
-			if (Collision.collision(world.player, obj)) {
+			if (Collision.collision(world.player, wall.getValue())) {
 				world.player.py = world.player.py - 1.1*world.player.vy;
 				world.player.vy = 0;
 				world.player.px = world.player.px - 1.1*world.player.vx;

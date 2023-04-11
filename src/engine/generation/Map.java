@@ -11,7 +11,34 @@ public class Map{
     HashMap<Integer, Room> rooms = new HashMap<Integer, Room>();
     Room activeRoom;
 
-    public Map() { }
+    private int posX = 0;
+    private int posY = 0; 
+
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
+    public Map(int posX, int posY) { 
+        this.posX = posX;
+        this.posY = posY;
+    }
+
+    public Map() { 
+        this(0,0);
+    }
     
     public void addRoom(Room room) {
         rooms.put(room.getId(), room);
@@ -52,6 +79,8 @@ public class Map{
     }
 
     public void draw(Graphics g) {
+        activeRoom.setPosX(posX);
+        activeRoom.setPosY(posY);
         activeRoom.draw(g);
     }
     

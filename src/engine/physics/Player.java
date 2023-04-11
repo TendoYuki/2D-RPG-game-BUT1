@@ -13,7 +13,7 @@ import engine.view.Sprites;
 public class Player extends Entity{
 
 	// distributeur de sprite
-	public Sprites sprites;
+	public PlayerSprites sprites;
 
 	// lien vers son controleur
 	Control c;
@@ -44,7 +44,7 @@ public class Player extends Entity{
 	 * @throws IOException
 	 */
 	public Player(World world, int x, int y, int health, int coins) throws IOException {
-		super(health, 5, 2);
+		super(world, health, 5, 2);
 		this.world = world;
 		START_HEALTH = health;
 		this.coins = coins;
@@ -142,7 +142,7 @@ public class Player extends Entity{
 		g.setColor(Color.black);
 
 		// change de repere
-		int[] tab = CoordinateSystem.changeCS(this);
+		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
 		sprites.draw(tab[0], tab[1], g);
 		sprites.animate();
 	}

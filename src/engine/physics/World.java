@@ -35,10 +35,13 @@ public class World {
      */
     public Control c;
 
+    private WorldBorder worldBorder;
+
     /**
      * les murs
      */
     public ArrayList<PhysicalObject> objects = new ArrayList<PhysicalObject>();
+
 
     public int wallCount = 0;
 
@@ -97,7 +100,7 @@ public class World {
      * @param dy
      */
     public void addWall(int x, int y, int dx, int dy) {
-        objects.add(new Wall(x, y, dx, dy));
+        objects.add(new Wall(this, x, y, dx, dy));
         objects.get(wallCount).index = wallCount;
         wallCount++;
 
@@ -113,7 +116,7 @@ public class World {
      * @throws java.io.IOException
      */
     public void addEnemy(double vx, double vy, int px, int py) throws IOException {
-        Enemy enemy = new Enemy(20,10,5);
+        Enemy enemy = new Enemy(this, 20,10,5);
 
         enemy.m = this;
 
@@ -135,7 +138,7 @@ public class World {
      * @throws java.io.IOException
      */
     public void addNPC(double vx, double vy, int px, int py) throws IOException {
-        NPC npc = new NPC(20,10,5);
+        NPC npc = new NPC(this, 20,10,5);
 
         npc.m = this;
         npc.vx = vx;
@@ -169,6 +172,12 @@ public class World {
     public void setTriggerMapTileMap(TileMap map) {
         worldTrigger.setTileMap(map);
     }
+    public void setWorldBorder(WorldBorder worldBorder) {
+        this.worldBorder = worldBorder;
+    }
+    public WorldBorder getWorldBorder() {
+        return this.worldBorder;
+    }
     /**
      * ajouter heros
      * 
@@ -180,10 +189,6 @@ public class World {
      */
     public void setPlayer(double vx, double vy, int px, int py, int health, int coins) throws IOException {
         player = new Player(this, px, py, health, coins);
-        player.vx = vx;
-        player.vy = vy;
-        player.px = px;
-        player.py = py;
         player.index = 1;
     }
 }
