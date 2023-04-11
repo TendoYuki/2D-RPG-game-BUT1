@@ -68,6 +68,15 @@ public class BouclePrincipale {
 
 			beforeTime = System.nanoTime();
 
+			// Changes the world's map's position according to the window height
+			jeuPhysique.physicsEngine.world.map.setPosX(
+				(jeuPhysique.display.getWidth()/2) -
+				(jeuPhysique.physicsEngine.world.map.size()/2)
+			);
+			jeuPhysique.physicsEngine.world.map.setPosY(
+				(jeuPhysique.display.getHeight()/2) -
+				(jeuPhysique.physicsEngine.world.map.size()/2)
+			);
 		}
 		long l2 = System.currentTimeMillis();
 
