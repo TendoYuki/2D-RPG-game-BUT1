@@ -34,7 +34,6 @@ public class TriggerMap {
             (int)(entity.px + entity.width/2),
             (int)(entity.py + entity.height/2)
         );
-        System.out.println(currentTile);
         triggers.get(currentTile).forEach(trigger -> {
            trigger.onTriggered();
         });
