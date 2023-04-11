@@ -41,7 +41,7 @@ public class TileMap {
                 int key = tilesAtlasKey[y][x];
                 tileGrid.setCell(x, y, new Tile(
                     tileAtlas.get(key),
-                    key, y*tileSize, x*tileSize, scaleFactor
+                    key, x*tileSize, y*tileSize, scaleFactor
                 ));
             }
         }
@@ -69,7 +69,7 @@ public class TileMap {
     public void draw(Graphics g) {
         for(int y = 0; y < tilesAtlasKey.length; y++) {
             for(int x = 0; x < tilesAtlasKey[0].length; x++) {
-                tileGrid.getCell(x, y).draw(g);
+                tileGrid.getCellContent(x, y).draw(g);
             }
         }
     }
@@ -90,7 +90,7 @@ public class TileMap {
      */
     public int getTileID(int x, int y) {
         int colNum = x/(size()/scale);
-        int rowNum = y/(size()/scale);
-        return tileGrid.getCell(colNum, rowNum).getId();
+        int rowNum = scale-(y/(size()/scale))-1;
+        return tileGrid.getCellContent(colNum, rowNum).getId();
     }
 }

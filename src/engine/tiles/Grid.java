@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public class Grid<T>{
     
-    private HashMap<Integer, T> cells;
+    private HashMap<Integer, GridCell<T>> cells;
 
     private int xCount;
     private int yCount;
@@ -24,7 +24,10 @@ public class Grid<T>{
     public Grid(int xCount, int yCount) {
         this.xCount = xCount;
         this.yCount = yCount;
-        cells = new HashMap<Integer, T>();
+        cells = new HashMap<Integer, GridCell<T>>();
+        for(int y = 0; y < yCount; y++)
+            for(int x = 0; x < xCount; x++)
+                cells.put(y*xCount + x, new GridCell<T>(null, x, y, y*xCount + x));
     }
 
 
@@ -43,13 +46,23 @@ public class Grid<T>{
      * @param y Y coord
      * @return Cell at the x and y coord
      */
-    public T getCell(int x, int y) {
+    public T getCellContent(int x, int y) {
+        return cells.get(y*xCount + x).getContent();
+    }
+
+    /**
+     * Gets a cell at a given position
+     * @param x X coord
+     * @param y Y coord
+     * @return Cell at the x and y coord
+     */
+    public GridCell<T> getCell(int x, int y) {
         return cells.get(y*xCount + x);
     }
     
     public int[] getCellPos(T cell) {
         int index = -1;
-        for (Entry<Integer, T> entry : cells.entrySet()) {
+        for (Entry<Integer, GridCell<T>> entry : cells.entrySet()) {
             if (cell.equals(entry.getValue())) {
                 index = entry.getKey();
             }
@@ -59,6 +72,9 @@ public class Grid<T>{
         return new int[] {x,y};
     }
 
+    public int[] getCellPos(GridCell<T> cell) {
+        return cell.getCoords();
+    }
     /**
      * Gets a hashmap of all the cells of the grid adjacent to the one passed
      * as parameter
@@ -66,8 +82,8 @@ public class Grid<T>{
      * @param y Ypos
      * @return Hashmap of the possible directions
      */
-    public HashMap<Directions, T> getAdjacentCells(int x, int y) {
-        HashMap<Directions, T> adjacentCells = new HashMap<Directions, T>();
+    public HashMap<Directions, GridCell<T>> getAdjacentCells(int x, int y) {
+        HashMap<Directions, GridCell<T>> adjacentCells = new HashMap<Directions, GridCell<T>>();
         adjacentCells.put(
             Directions.UP,
             cells.get(y*xCount + x - xCount)
@@ -81,13 +97,18 @@ public class Grid<T>{
             cells.get(y*xCount + x + 1)
         );
         adjacentCells.put(
-            Directions.RIGHT,
+            Directions.LEFT,
             cells.get(y*xCount + x - 1)
         );
         return adjacentCells;
     }
 
-    public HashMap<Directions, T> getAdjacentCells(T cell){
+    public HashMap<Directions, GridCell<T>> getAdjacentCells(T cell){
+        int[] pos = getCellPos(cell);
+        return getAdjacentCells(pos[0], pos[1]);
+    }
+
+    public HashMap<Directions, GridCell<T>> getAdjacentCells(GridCell<T> cell){
         int[] pos = getCellPos(cell);
         return getAdjacentCells(pos[0], pos[1]);
     }
@@ -99,9 +120,17 @@ public class Grid<T>{
      * @param cell New value
      */
     public void setCell(int x, int y, T cell) {
-        cells.put(y*xCount + x, cell);
+        cells.put(y*xCount + x, new GridCell<T>(cell, x, y, y*xCount + x));
     }
-
+    /**
+     * Changes the value of a cell
+     * @param x X coord
+     * @param y Y coord
+     * @param cell New value
+     */
+    public void setCell(int index, T cell) {
+        cells.put(index, new GridCell<T>(cell, index%xCount, index%yCount, index));
+    }
     public int getxCount() {
         return xCount;
     }

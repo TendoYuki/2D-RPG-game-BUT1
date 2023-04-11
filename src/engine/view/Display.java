@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.*;
 
 import engine.physics.*;
+import engine.generation.Map;
 import engine.hud.Hud;
 
 public class Display extends JPanel {
@@ -14,7 +15,9 @@ public class Display extends JPanel {
 	public World m;
 
 	// l'afficheur de Decor
-	public Scene decor;
+	// public Scene decor;
+
+	Map map;
 
 	// double buffering
 	public BufferStrategy bs;
@@ -25,12 +28,12 @@ public class Display extends JPanel {
 	 *
 	 * @param monde
 	 */
-	public Display(World monde, Scene decor) {
+	public Display(World monde, Map map) {
 		JFrame f = new JFrame();
 
-		this.decor = decor;
+		this.map = map;
 
-		setPreferredSize(new Dimension(decor.size(),decor.size()));
+		setPreferredSize(new Dimension(map.size(),map.size()));
 
 		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,13 +55,15 @@ public class Display extends JPanel {
 	// permet de faire un affichage
 
 	// Renvoie le decor
-	public Scene getDecor() {
-		return decor;
-	}
+	// public Scene getDecor() {
+	// 	return decor;
+	// }
 
-	public void setDecor(Scene decor) {
-		this.decor = decor;
-	}
+	// public void setDecor(Scene decor) {
+	// 	this.decor = decor;
+	// }
+
+	
 
 	/**
 	 *
@@ -69,7 +74,8 @@ public class Display extends JPanel {
 		g.setColor(Color.black);
 
 		// Affiche le decor
-		decor.draw(g);
+		// decor.draw(g);
+		map.draw(g);
 
 		// affiche les objets
 		for (PhysicalObject obj : m.objects) {
@@ -96,9 +102,17 @@ public class Display extends JPanel {
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
-		g.clearRect(0, 0, decor.size(), decor.size());
+		g.clearRect(0, 0, map.size(), map.size());
 		g.dispose();
 
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
 	}
 
 }

@@ -7,7 +7,6 @@ public class Scene {
 
 	private TileMap tileMap;
 
-	// construit le sprite
 	public Scene(TileMap tileMap) {
 		this.tileMap = tileMap;
 	}
@@ -28,6 +27,10 @@ public class Scene {
 
 	public void draw(Graphics g) {
 		if(tileMap != null) tileMap.draw(g);
+	}
+
+	public TileMap getTileMap() {
+		return tileMap;
 	}
 
 }

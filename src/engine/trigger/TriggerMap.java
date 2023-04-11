@@ -19,6 +19,10 @@ public class TriggerMap {
             triggers.put(i, new ArrayList<Trigger>());
     }
 
+    public void setTileMap(TileMap tileMap) {
+        this.tileMap= tileMap;
+    }
+
     public void addTrigger(int triggeringTileId, Trigger trigger) {
         ArrayList<Trigger> trig = triggers.get(triggeringTileId);
         trig.add(trigger);
@@ -30,6 +34,7 @@ public class TriggerMap {
             (int)(entity.px + entity.width/2),
             (int)(entity.py + entity.height/2)
         );
+        System.out.println(currentTile);
         triggers.get(currentTile).forEach(trigger -> {
            trigger.onTriggered();
         });

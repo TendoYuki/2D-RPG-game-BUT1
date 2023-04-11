@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import engine.controller.Control;
+import engine.generation.Map;
 import engine.hud.Hud;
+import engine.tiles.TileMap;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 
@@ -57,10 +59,14 @@ public class World {
     
     public HashMap<String, Hud> huds = new HashMap<String, Hud>();
 
+    public TriggerMap worldTrigger;
+
     /**
      * les heros
      */
     public Player player;
+
+    public Map map;
 
     public int enemiesCount = 0;
 
@@ -151,6 +157,17 @@ public class World {
 
     public void addTriggerMap(TriggerMap triggerMap) {
         this.triggerMaps.add(triggerMap);
+    }
+
+    
+    public void setMap(Map map) {
+        this.map = map;
+    }
+    public void setTriggerMap(TriggerMap tm) {
+        worldTrigger = tm;
+    }
+    public void setTriggerMapTileMap(TileMap map) {
+        worldTrigger.setTileMap(map);
     }
     /**
      * ajouter heros

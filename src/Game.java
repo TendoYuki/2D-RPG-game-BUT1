@@ -2,6 +2,9 @@ import engine.main.BouclePrincipale;
 import engine.controller.KeyboardController;
 import engine.dialog.Dialog;
 import engine.dialog.DialogController;
+import engine.generation.Room;
+import engine.generation.Map;
+import engine.generation.MapGenerator;
 import engine.hud.Hud;
 import engine.hud.gameover.GameOver;
 import engine.hud.menu.Menu;
@@ -12,6 +15,7 @@ import engine.main.GamePhysics;
 import engine.physics.PhysicsEngine;
 import engine.physics.World;
 import engine.tiles.Atlas;
+import engine.tiles.Directions;
 import engine.tiles.TileMap;
 import engine.trigger.Trigger;
 import engine.trigger.TriggerMap;
@@ -46,54 +50,60 @@ public class Game {
         physicsEngine.world = world;
         world.setPlayer(0, 0, 50, 20, 100, 10);
 
-        
-        // Creating world display
-        // Displaying tileMap
-		Atlas atlas = new Atlas(
-            "assets/tiles/tilemap.png",
-            16,
-            1,
-            4,
-			2
-        );
-        TileMap tileMap = new TileMap(
-            16,
-            2,
-            new int[][] {
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,4,4,4,4,4,4,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,3,3,3,3,3,3,3,3,3,3,3,3,2,1},
-                {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-            },
-            atlas
-        );
-        display = new Display(physicsEngine.world, new Scene(tileMap));
-        TriggerMap triggerMap = new TriggerMap(world.player, tileMap);
+        Room startRoom = new Room(new Directions[] {Directions.UP});
+
+        world.setMap(MapGenerator.GenerateMap(startRoom, null, 4, 5, 5));
+        display = new Display(physicsEngine.world, world.map);
+        TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
+        world.setTriggerMap(triggerMap);
+        triggerMap.addTrigger(1, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room up = world.map.getAdjacentRoom(Directions.UP);
+                world.map.setActiveRoom(up.getId());
+                world.player.py = 50;
+                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+            }
+            
+        });
+        triggerMap.addTrigger(2, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room left = world.map.getAdjacentRoom(Directions.LEFT);
+                world.map.setActiveRoom(left.getId());
+                world.player.px = display.getWidth() - 50;
+                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+            }
+            
+        });
+        triggerMap.addTrigger(3, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room down = world.map.getAdjacentRoom(Directions.DOWN);
+                world.map.setActiveRoom(down.getId());
+                world.player.py = display.getHeight() - 50;
+                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+            }
+            
+        });
         triggerMap.addTrigger(4, new Trigger() {
 
             @Override
             public void onTriggered() {
-                System.out.println("triggered !");
-                
+                Room right = world.map.getAdjacentRoom(Directions.RIGHT);
+                world.map.setActiveRoom(right.getId());
+                world.player.px = 50;
+                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
             }
             
         });
         world.addTriggerMap(triggerMap);
 
-        int imgWidth = display.getDecor().size();
-        int imgHeight = display.getDecor().size();
+        int imgWidth = display.getMap().size();
+        int imgHeight = display.getMap().size();
         CoordinateSystem.setWindowHeight(imgHeight);
 
         // Dialogue du gardien
