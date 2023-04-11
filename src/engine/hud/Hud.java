@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import engine.controller.MouseController;
+import engine.view.Display;
 
 public abstract class Hud{
     MouseController mc;
@@ -12,10 +13,33 @@ public abstract class Hud{
 	private boolean isShown = true;
     private int x;
     private int y;
+    private int width;
+    private int height;
+    private int offsetY;
+    private Display display;
 
-    public Hud() {
-        this.mc = new MouseController();
+    public Hud(Display display,int offsetY, int x, int y, int width, int height) {
+        this.width =width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.mc = new MouseController(offsetY);
+        this.offsetY = offsetY;
+        this.display = display;
         changeListenerState();
+    }
+
+    public Hud(Display display, int x, int y, int width, int height) {
+        this(display, 0, x, y, width, height);
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
+        this.mc.setOffsetY(offsetY);
+    }
+
+    public int getTopInset() {
+        return display.getFrame().getInsets().top;
     }
 
     public MouseController getMouseController() {
@@ -74,4 +98,26 @@ public abstract class Hud{
     public int getY(){
         return y;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Display getDisplay() {
+        return display;
+    }
+    
+    
 }

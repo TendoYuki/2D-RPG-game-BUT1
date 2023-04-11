@@ -24,6 +24,9 @@ public class Display extends JPanel {
 	// double buffering
 	public BufferStrategy bs;
 
+	private JFrame frame;
+
+
 	// creation d'un afficheur
 
 	/**
@@ -36,14 +39,17 @@ public class Display extends JPanel {
 		this.map = map;
 
 		// setPreferredSize(new Dimension(map.size(),map.size()));
-		setPreferredSize(new Dimension(map.size() + 200,map.size() + 200));
-
+		// setPreferredSize(new Dimension(map.size() + 200,map.size() + 200));
+		
 		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setContentPane(this);
+		this.setPreferredSize(new Dimension(map.size() + 200,map.size() + 200));
+		f.getContentPane().add(this);
+		f.setResizable(false);
+
 		f.pack();
 		f.setVisible(true);
-
+		
 		// ajouter pour eviter les repaint
 		f.setIgnoreRepaint(true);
 
@@ -53,6 +59,7 @@ public class Display extends JPanel {
 		this.setIgnoreRepaint(true);
 
 		this.m = monde;
+		this.frame = f;
 	}
 
 	// permet de faire un affichage
@@ -110,9 +117,14 @@ public class Display extends JPanel {
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
-		g.clearRect(0, 0, this.getWidth(), this.getHeight());
+		g.clearRect(0, 0, this.getWidth(), this.getHeight()+frame.getInsets().top);
 		g.dispose();
 
+
+	}
+
+	public JFrame getFrame() {
+		return frame;
 	}
 
 	public Map getMap() {

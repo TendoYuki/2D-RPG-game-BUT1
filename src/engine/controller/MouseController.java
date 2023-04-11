@@ -11,9 +11,18 @@ public class MouseController extends MouseAdapter{
     ArrayList<Clickable> interactiveElements = new ArrayList<Clickable>();
     ArrayList<Clickable> pressedElements = new ArrayList<Clickable>();
     private boolean isListening = true;
+    private int offsetY;
+
+    public MouseController(int offsetY) {
+        this.offsetY = offsetY;
+    }
 
     public void register(Clickable clickable) {
         interactiveElements.add(clickable);
+    }
+
+    public void setOffsetY(int offsetY) {
+        this.offsetY = offsetY;
     }
 
     private boolean isActionInElement(Clickable element, MouseEvent event) {
@@ -24,8 +33,8 @@ public class MouseController extends MouseAdapter{
                 element.getWidth()
             ) &&
             (
-                event.getY() > element.getY() &&
-                event.getY() < element.getY() +
+                event.getY() + offsetY > element.getY() &&
+                event.getY() + offsetY < element.getY() +
                 element.getHeight()
             )
         );

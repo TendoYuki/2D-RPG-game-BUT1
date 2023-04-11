@@ -9,15 +9,13 @@ import engine.view.Display;
 
 public class PlayerHud extends Hud{
     
-    Display display;
-
     OpenShop openShop;
     CoinsCount counsCount;
 
     public PlayerHud(Display display, Player player, Shop shop) {
-        super();
-        this.display = display;
-        addElement(new HealthBar(player, 10, 10, 200, 20));
+        super(display, 0, 0, display.getWidth(), display.getHeight());
+        int topInset = getTopInset();
+        addElement(new HealthBar(player, 10, 10+topInset, 200, 20));
 
         openShop = new OpenShop(shop, display.getWidth()-32, display.getHeight()-32, 50, 50);
         counsCount = new CoinsCount(player, display.getWidth()-32, display.getHeight()-70, 50, 50);
@@ -27,11 +25,13 @@ public class PlayerHud extends Hud{
     }
 
     public void draw(Graphics g) {
-        openShop.setX(display.getWidth()-32);
-        openShop.setY(display.getHeight()-32);
+        int topInset = getTopInset();
+        this.setOffsetY(topInset);
+        openShop.setX(getDisplay().getWidth()-32);
+        openShop.setY(getDisplay().getHeight()-32 + topInset);
 
-        counsCount.setX(display.getWidth()-32);
-        counsCount.setY(display.getHeight()-70);
+        counsCount.setX(getDisplay().getWidth()-32);
+        counsCount.setY(getDisplay().getHeight()-70 + topInset);
 
         super.draw(g);
     }

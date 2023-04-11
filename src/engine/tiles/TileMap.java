@@ -124,9 +124,6 @@ public class TileMap {
     public int getTileID(int x, int y) {
         int colNum = (x)/(size()/scale);
         int rowNum = scale-((y)/(size()/scale))-1;
-        System.out.println("---------------");
-        System.out.println(colNum + "-" + rowNum);
-        System.out.println("---------------");
         if(tileGrid.getCellContent(colNum, rowNum) != null)
             return tileGrid.getCellContent(colNum, rowNum).getId();
         return -1;

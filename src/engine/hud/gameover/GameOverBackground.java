@@ -30,10 +30,9 @@ public class GameOverBackground extends HudElement{
     public void draw(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.gray);
-        g.fillRect(getY(), getX(), getWidth(), getHeight());
+        g.fillRect(getX(), getY(), getWidth(), getHeight());
         g.setColor(c);
         sprite.draw(g, getWidth()/2 - sprite.getSizeX()/2, getHeight()/8);
-        
     }
 
     @Override

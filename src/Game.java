@@ -177,6 +177,7 @@ public class Game {
 
         // Adding huds
         shop = new Shop(
+            display,
             world.player,
             display.getWidth() / 2 - (int) (512 / 1.4) / 2,
             display.getHeight() / 2 - (int) (512 / 1.4) / 2,
@@ -192,16 +193,16 @@ public class Game {
         playerHud.setInteractable(false);
         world.addHud("hud", playerHud);
 
-        menu = new Menu(playerHud,0, 0, display.getWidth(), display.getHeight());
+        menu = new Menu(display, playerHud,0, 0, display.getWidth(), display.getHeight());
         world.addHud("menu", menu);
 
         
-        gameOver = new GameOver(0, 0, display.getWidth(), display.getHeight());
+        gameOver = new GameOver(display, 0, 0, display.getWidth(), display.getHeight());
         gameOver.setIsShown(false);
         gameOver.setInteractable(false);
         world.addHud("gameOver", gameOver);
 
-        npcHud = new NPCHud(0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
+        npcHud = new NPCHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
         npcHud.setInteractable(false);
         npcHud.setIsShown(false);
         world.addHud("npc", npcHud);
