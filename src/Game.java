@@ -187,7 +187,7 @@ public class Game {
         shop.setInteractable(false);
         world.addHud("shop", shop);
 
-        playerHud = new PlayerHud(world.player, shop);
+        playerHud = new PlayerHud(display, world.player, shop);
         playerHud.setIsShown(false);
         playerHud.setInteractable(false);
         world.addHud("hud", playerHud);

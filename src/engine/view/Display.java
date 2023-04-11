@@ -35,7 +35,8 @@ public class Display extends JPanel {
 
 		this.map = map;
 
-		setPreferredSize(new Dimension(map.size(),map.size()));
+		// setPreferredSize(new Dimension(map.size(),map.size()));
+		setPreferredSize(new Dimension(map.size() + 200,map.size() + 200));
 
 		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
