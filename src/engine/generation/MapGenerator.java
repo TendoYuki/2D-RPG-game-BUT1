@@ -115,58 +115,77 @@ public class MapGenerator {
 
         for(int i = 0; i < totalRoomCount; i++) {
             //Searches for available spots
-            ArrayList<GridCell<Room>> availableSpots = new ArrayList<GridCell<Room>>();
-            rooms.forEach(room->{
-                room.getContent().getAvailableDirections().forEach(direction -> {
-                    for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(room).entrySet()) {
-                        if(entry.getValue() != null && entry.getKey() == direction) {
-                            availableSpots.add(entry.getValue());
-                        }
-                    }
-                });
-            });
+            ArrayList<GridCell<Room>> availableSpots = getAvailableSpots(rooms, roomsGrid);
 
             // Creates new room at a random available spot
             Random rand = new Random();
             GridCell<Room> newRoom = availableSpots.get(rand.nextInt(availableSpots.size()));
             newRoom.setContent(new Room(Directions.values()));
-            for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(newRoom).entrySet()) {
-                if(entry.getValue() != null && entry.getValue().getContent() != null) {
-                    switch(entry.getKey()) {
-                        case UP:
-                            if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.DOWN)) {
-                                linkRooms(newRoom,entry, Directions.DOWN);
-                            }
-                            break;
-                        case DOWN:
-                            if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.UP)) {
-                                linkRooms(newRoom,entry, Directions.UP);
-                            }
-                            break;
-                        case LEFT:
-                            if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.RIGHT)) {
-                                linkRooms(newRoom,entry, Directions.RIGHT);
-                            }
-                            break;
-                        case RIGHT:
-                            if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.LEFT)) {
-                                linkRooms(newRoom,entry, Directions.LEFT);
-                            }
-                            break;
-                    }
-                }
-            }
+
+            // Links the new room
+            linkRoom(roomsGrid, newRoom);
             
             //Register the new room
             rooms.add(newRoom);
         }
+
+        Map map = generateMap(rooms);
+        
+        map.setActiveRoom(rooms.get(0).getContent().getId());
+        return map;
+    }
+
+    private static Map generateMap(ArrayList<GridCell<Room>> rooms) {
         Map map = new Map();
+
         rooms.forEach(cell->{
             map.addRoom(cell.getContent());
             cell.getContent().setTileMap(generateTileMap(cell.getContent()));
             System.out.println(cell.getContent().toString());
         });
-        map.setActiveRoom(rooms.get(0).getContent().getId());
         return map;
+    }
+
+    private static void linkRoom(Grid<Room> roomsGrid, GridCell<Room> newRoom) {
+        for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(newRoom).entrySet()) {
+            if(entry.getValue() != null && entry.getValue().getContent() != null) {
+                switch(entry.getKey()) {
+                    case UP:
+                        if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.DOWN)) {
+                            linkRooms(newRoom,entry, Directions.DOWN);
+                        }
+                        break;
+                    case DOWN:
+                        if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.UP)) {
+                            linkRooms(newRoom,entry, Directions.UP);
+                        }
+                        break;
+                    case LEFT:
+                        if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.RIGHT)) {
+                            linkRooms(newRoom,entry, Directions.RIGHT);
+                        }
+                        break;
+                    case RIGHT:
+                        if(entry.getValue().getContent().getRoomPossibleDirections().contains(Directions.LEFT)) {
+                            linkRooms(newRoom,entry, Directions.LEFT);
+                        }
+                        break;
+                }
+            }
+        }
+    }
+
+    private static ArrayList<GridCell<Room>> getAvailableSpots(ArrayList<GridCell<Room>> rooms, Grid<Room> roomsGrid) {
+        ArrayList<GridCell<Room>> availableSpots = new ArrayList<GridCell<Room>>();
+        rooms.forEach(room->{
+            room.getContent().getAvailableDirections().forEach(direction -> {
+                for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(room).entrySet()) {
+                    if(entry.getValue() != null && entry.getKey() == direction) {
+                        availableSpots.add(entry.getValue());
+                    }
+                }
+            });
+        });
+        return availableSpots;
     }
 }
