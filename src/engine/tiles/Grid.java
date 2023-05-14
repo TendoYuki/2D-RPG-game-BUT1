@@ -2,13 +2,14 @@ package engine.tiles;
 
 import java.util.Map.Entry;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
  * Grid of a certain scale with a determined x and y count 
  * and contains value of a given type
  */
-public class Grid<T>{
+public class Grid<T> implements Iterable<GridCell<T>>{
     
     private HashMap<Integer, GridCell<T>> cells;
 
@@ -94,14 +95,22 @@ public class Grid<T>{
             Directions.DOWN,
             cells.get(y*xCount + x + xCount)
         );
-        adjacentCells.put(
-            Directions.RIGHT,
-            cells.get(y*xCount + x + 1)
-        );
-        adjacentCells.put(
-            Directions.LEFT,
-            cells.get(y*xCount + x - 1)
-        );
+        if(x + 1 < xCount)
+            adjacentCells.put(
+                Directions.RIGHT,
+                cells.get(y*xCount + x + 1)
+            );
+        else {
+            adjacentCells.put(Directions.RIGHT, null);
+        }
+        if(x - 1 > 0)
+            adjacentCells.put(
+                Directions.LEFT,
+                cells.get(y*xCount + x - 1)
+            );
+        else {
+            adjacentCells.put(Directions.LEFT, null);
+        }
         return adjacentCells;
     }
 
@@ -140,4 +149,28 @@ public class Grid<T>{
     public int getyCount() {
         return yCount;
     }    
+
+    @Override
+    public Iterator<GridCell<T>> iterator() {
+        Iterator<GridCell<T>> it = new Iterator<GridCell<T>>() {
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < xCount * yCount;
+            }
+
+            @Override
+            public GridCell<T> next() {
+                return cells.get(currentIndex++);
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+        return it;
+    }
 }

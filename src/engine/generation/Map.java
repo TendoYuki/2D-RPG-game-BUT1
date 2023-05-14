@@ -1,14 +1,22 @@
 package engine.generation;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import engine.tiles.Directions;
+import engine.tiles.Grid;
+import engine.tiles.GridCell;
 import engine.view.Scene;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 public class Map{
-    HashMap<Integer, Room> rooms = new HashMap<Integer, Room>();
+    Grid<Room> rooms;
+    
     Room activeRoom;
 
     private int posX = 0;
@@ -31,17 +39,14 @@ public class Map{
         this.posY = posY;
     }
 
-    public Map(int posX, int posY) { 
+    public Map(int posX, int posY, int xCount, int yCount) { 
         this.posX = posX;
         this.posY = posY;
-    }
-
-    public Map() { 
-        this(0,0);
+        rooms = new Grid<Room>(xCount, yCount);
     }
     
-    public void addRoom(Room room) {
-        rooms.put(room.getId(), room);
+    public void addRoom(Room room, int x, int y) {
+        rooms.setCell(x, y, room);
     }   
 
     
@@ -50,7 +55,10 @@ public class Map{
     }
 
     public Room getRoom(int id) {
-        return rooms.get(id);
+        for(GridCell<Room> cell: rooms) {
+            if(cell.getContent() != null && id == cell.getContent().getId()) return cell.getContent();
+        }
+        return null;
     }   
 
     public Room getAdjacentRoom(Directions dir) {
@@ -74,8 +82,7 @@ public class Map{
     }
     
     public void setActiveRoom(int id) {
-        activeRoom = rooms.get(id);
-        
+        activeRoom = getRoom(id);
     }
 
     public void draw(Graphics g) {
@@ -88,3 +95,4 @@ public class Map{
         return activeRoom.size();
     }
 }
+
