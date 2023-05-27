@@ -28,11 +28,10 @@ import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 import engine.view.Scene;
 import engine.view.Display;
-import engine.generation.MapDisplay;
+import engine.view.MapDisplay;
 
 public class Game {
     public static void main(String[] args) throws Exception {
-
         // le moteur physique
         PhysicsEngine physicsEngine;
         // le rendu
@@ -47,6 +46,8 @@ public class Game {
         Menu menu;
         GameOver gameOver;
         NPCHud npcHud;
+        
+
 
         // Construction du monde
         world = new World();
@@ -58,7 +59,7 @@ public class Game {
         
         Room startRoom = new Room(new Directions[] {Directions.UP});
         
-        world.setMap(MapGenerator.GenerateMap(startRoom, null, 20, 5, 5));
+        world.setMap(MapGenerator.GenerateMap(startRoom, null, 10, 5, 5));
         world.setPlayer(0, 0, 0,0, 100, 10);
         display = new Display(physicsEngine.world, world.map);
         TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
@@ -252,6 +253,7 @@ public class Game {
         maBoucle.jeuPhysique.physicsEngine.world = physicsEngine.world;
 
         JFrame mdisplay = new JFrame();
+
         mdisplay.setVisible(true);
         mdisplay.add(new MapDisplay(world.map));
         mdisplay.setSize(new Dimension(500,500));

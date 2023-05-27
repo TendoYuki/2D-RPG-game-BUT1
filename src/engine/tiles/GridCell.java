@@ -1,5 +1,7 @@
 package engine.tiles;
 
+import java.util.HashMap;
+
 /**
  * GridCell
  */
@@ -8,8 +10,10 @@ public class GridCell<T> {
     private int y;
     private int index;
     private T content; 
+    private Grid<T> grid;
 
-    public GridCell(T content, int x, int y, int index) {
+    public GridCell(Grid<T> grid, T content, int x, int y, int index) {
+        this.grid = grid;
         this.x = x;
         this.y = y;
         this.index = index;
@@ -20,7 +24,7 @@ public class GridCell<T> {
         return content;
     }
 
-    public void setContent(T content) {
+    void setContent(T content) {
         this.content = content;
     }
 
@@ -34,5 +38,9 @@ public class GridCell<T> {
 
     public boolean isEmpty() {
         return content == null;
+    }
+
+    public HashMap<Directions, GridCell<T>> getAdjacentCells() { 
+        return grid.getAdjacentCells(this);
     }
 }

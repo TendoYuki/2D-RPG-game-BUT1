@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import engine.tiles.Directions;
+import engine.tiles.Grid;
 import engine.tiles.GridCell;
 import engine.view.Scene;
 
@@ -24,33 +25,34 @@ public class Room extends Scene{
     private int id;    
 
     /** Creates a new unique room
-     * @param freeDirections Directions in which the room can have neighbors
+     * @param roomConstraints Directions in which the room can have neighbors
      */
-    public Room(ArrayList<Directions> freeDirections) {
+    public Room(ArrayList<Directions> roomConstraints) {
         id = count++;
-        setRoomPossibleDirections(freeDirections);
+        setRoomPossibleDirections(roomConstraints);
     }
 
     /** Creates a new unique room
-     * @param freeDirections Directions in which the room can have neighbors
+     * @param roomConstraints Directions in which the room can have neighbors
      */
-    public Room(Directions[] freeDirections) {
+    public Room(Directions[] roomConstraints) {
         id = count++;
-        setRoomPossibleDirections(freeDirections);
+        setRoomPossibleDirections(roomConstraints);
     }
 
     /**
-     * @return Returns all directions which are not occupied by a room
+     * @return Returns all directions which are not occupied by a room and does
+     * not overflow from the given grid
+     * @param grid Grid
      */
-    public List<Directions> getAvailableDirections() {
+    public List<Directions> getAvailableDirections(Grid<Room> grid) {
         ArrayList<Directions> availableDirections = new ArrayList<Directions>();
-
-        for(Directions dir: Directions.values())
+        HashMap<Directions, GridCell<Room>> adjacentRoomsCells = grid.getAdjacentCells(this);
+        for(Directions dir: roomConstraints)
             if (
-                roomConstraints.contains(dir) &&
-                neighboringRooms.get(dir) == null
+                adjacentRoomsCells.get(dir) != null &&
+                adjacentRoomsCells.get(dir).isEmpty()
             ) availableDirections.add(dir);
-
         return availableDirections;
     }
 
@@ -131,5 +133,13 @@ public class Room extends Scene{
     public void linkRoom(Room target, Directions dir) {
         addNeighbor(dir, target);
         target.addNeighbor(dir.opposite(), this);
+    }
+
+    public boolean equals(Object o) {
+        if(!(o instanceof Room))
+            return false;
+        if(id == ((Room)o).id)
+            return true;
+        else return false;
     }
 }

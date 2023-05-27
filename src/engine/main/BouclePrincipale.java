@@ -6,6 +6,7 @@ import java.awt.Insets;
 import javax.swing.JFrame;
 
 import engine.controller.KeyboardController;
+import engine.view.MapDisplay;
 
 public class BouclePrincipale {
 
@@ -86,6 +87,7 @@ public class BouclePrincipale {
 				(jeuPhysique.display.getHeight()/2) -
 				(jeuPhysique.physicsEngine.world.map.size()/2) + is.top
 			);
+			MapDisplay.instance.repaint();
 		}
 		long l2 = System.currentTimeMillis();
 

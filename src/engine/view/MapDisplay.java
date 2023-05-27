@@ -1,4 +1,4 @@
-package engine.generation;
+package engine.view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -6,48 +6,56 @@ import java.util.Map.Entry;
 
 import javax.swing.JPanel;
 
+import engine.generation.Map;
+import engine.generation.Room;
 import engine.tiles.Directions;
 import engine.tiles.GridCell;
 
 public class MapDisplay extends JPanel {
     Map map;
+    public static MapDisplay instance;
     public MapDisplay(Map map) {
         super();
         this.map = map;
         this.setSize(new Dimension(250,250));
+        instance = this;
     }
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        int roomsize = 250 / (map.rooms.getxCount());
+        int interRoomOffset = roomsize;
         for(GridCell<Room> roomCell: map.rooms) {
             if(roomCell.getContent() != null) {
-                int x = 100+ roomCell.getCoords()[0]*80;
-                int y = 100+ roomCell.getCoords()[1]*80;
+                int x = roomCell.getCoords()[0]*(roomsize + interRoomOffset) + 10;
+                int y = roomCell.getCoords()[1]*(roomsize + interRoomOffset) + 10;
+                if(map.activeRoom.equals(roomCell.getContent()))
+                    g.fillOval(x+roomsize/4,y+roomsize/4,roomsize/2,roomsize/2);
                 g.drawRect(
                     x,
                     y,
-                    50,
-                    50
+                    roomsize,
+                    roomsize
                 );
                 g.drawString(
                     "" +roomCell.getContent().getId(),
-                    x +25,
-                    y +25
+                    x + roomsize/2,
+                    y + roomsize/2
                 );
                 for(Entry<Directions, Room> nRoom: roomCell.getContent().getNeighbors().entrySet()) {
                     if(nRoom.getValue() != null)
                         switch (nRoom.getKey()) {
                             case DOWN:
-                                g.drawLine(x+25, y+50, x+25, y+50+ 30);
+                                g.drawLine(x+roomsize/2, y+roomsize, x+roomsize/2, y+roomsize + interRoomOffset);
                                 break;
                             case UP:
-                                g.drawLine(x+25, y, x+25, y - 30);
+                                g.drawLine(x+roomsize/2, y, x+roomsize/2, y - interRoomOffset);
                                 break;
                             case LEFT:
-                                g.drawLine(x, y+25, x - 30, y+25);
+                                g.drawLine(x, y+roomsize/2, x - interRoomOffset, y+roomsize/2);
                                 break;
                             case RIGHT:
-                                g.drawLine(x+50, y+25, x + 50 + 30, y+25);
+                                g.drawLine(x+roomsize, y+roomsize/2, x + roomsize + interRoomOffset, y+roomsize/2);
                                 break;
                         }
                 }

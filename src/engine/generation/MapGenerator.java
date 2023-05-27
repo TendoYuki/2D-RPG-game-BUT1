@@ -116,9 +116,12 @@ public class MapGenerator {
             // Creates new room at a random available spot
             Random rand = new Random();
             Spot newRoomSpot = availableSpots.get(rand.nextInt(availableSpots.size()));
-            newRoomSpot.getSpot().setContent(new Room(Directions.values()));
+            roomsGrid.setCell(newRoomSpot.getSpot(), new Room(Directions.values()));
 
             // Links the new room
+            newRoomSpot.getOrigin().getContent().linkRoom(
+                newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
+            );
             linkRoom(roomsGrid, newRoomSpot);
             
             //Register the new room
@@ -143,21 +146,18 @@ public class MapGenerator {
     }
 
     private static void linkRoom(Grid<Room> roomsGrid, Spot newRoomSpot) {
-        for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(newRoomSpot.getSpot()).entrySet()) {
+        for(Entry<Directions, GridCell<Room>> entry: newRoomSpot.getSpot().getAdjacentCells().entrySet()) {
             // Checks if the current adjacent cell isn't null
             if(entry.getValue() != null && entry.getValue().getContent() != null) {
                 // Checks if the current adjacent room can link in the opposite direction
                 if(
                     entry.getValue().getContent().getRoomConstraints().contains(entry.getKey().opposite())
                 ) {
-                    newRoomSpot.getOrigin().getContent().linkRoom(
-                        newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
-                    );
-                    // Random rand = new Random();
-                    // if(rand.nextInt(100)%2==0)
-                    //     newRoomSpot.getSpot().getContent().linkRoom(
-                    //         entry.getValue().getContent(), entry.getKey()
-                    //     );
+                    Random rand = new Random();
+                    if(rand.nextInt(100)%3==0)
+                        newRoomSpot.getSpot().getContent().linkRoom(
+                            entry.getValue().getContent(), entry.getKey()
+                        );
                 }
             }
         }
@@ -165,23 +165,39 @@ public class MapGenerator {
 
     private static ArrayList<Spot> getAvailableSpots(Grid<Room> grid) {
         ArrayList<Spot> availableSpots = new ArrayList<Spot>();
-        grid.forEach(cell -> {
-            if(!cell.isEmpty()) {
-                HashMap<Directions, GridCell<Room>> adjacentCells = grid.getAdjacentCells(cell);
-                cell.getContent().getAvailableDirections().forEach(direction->{
-                    if(
-                        adjacentCells.get(direction) != null && (
-                            (adjacentCells.get(direction).getContent() != null &&
-                            adjacentCells.get(direction).getContent().getAvailableDirections().contains(direction.opposite())) ||
-                            adjacentCells.get(direction).getContent() == null
-                        )
-                    )
-                        availableSpots.add(
-                            new Spot(cell, adjacentCells.get(direction), direction)
-                        );
-                });
-            }
+
+        grid.getNonEmptyCells().forEach(cell->{
+            cell.getContent().getAvailableDirections(grid).forEach(direction->{
+                boolean exists = false;
+                for(Spot spot: availableSpots) {
+                    if(spot.getSpot().getIndex()==cell.getIndex())
+                        exists = true;
+                };
+                if(!exists)
+                    availableSpots.add(
+                        new Spot(cell, cell.getAdjacentCells().get(direction), direction)
+                    );
+            });
         });
+
+
+        // grid.forEach(cell -> {
+        //     if(!cell.isEmpty()) {
+        //         HashMap<Directions, GridCell<Room>> adjacentCells = cell.getAdjacentCells();
+        //         cell.getContent().getAvailableDirections(grid).forEach(direction->{
+        //             if(
+        //                 adjacentCells.get(direction) != null && (
+        //                     (adjacentCells.get(direction).getContent() != null &&
+        //                     adjacentCells.get(direction).getContent().getAvailableDirections().contains(direction.opposite())) ||
+        //                     adjacentCells.get(direction).getContent() == null
+        //                 )
+        //             )
+        //                 availableSpots.add(
+        //                     new Spot(cell, adjacentCells.get(direction), direction)
+        //                 );
+        //         });
+        //     }
+        // });
         return availableSpots;
     }
 }

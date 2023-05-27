@@ -15,9 +15,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 public class Map{
-    Grid<Room> rooms;
+    public Grid<Room> rooms;
     
-    Room activeRoom;
+    public Room activeRoom;
 
     private int posX = 0;
     private int posY = 0; 
