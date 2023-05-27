@@ -144,6 +144,10 @@ public class MapGenerator {
             ) {
                 Random rand = new Random();
                 int ct = rand.nextInt(minEnemyCount, maxEnemyCount);
+                if(ct == 0 && rand.nextInt(minEnemyCount, maxEnemyCount)%2 == 0)
+                    ct = rand.nextInt(minEnemyCount, maxEnemyCount);
+
+
                 ArrayList<Coords> possiblePositions = new ArrayList<Coords>();
 
                 int cX = roomCell.getContent().getTileMap().getCountX();
@@ -152,7 +156,29 @@ public class MapGenerator {
                 // Inits all from zero to max coords
                 for(int y = 1; y < cY-1; y++) {
                     for(int x = 1; x < cX-1; x++) {
-                        possiblePositions.add(new Coords(x, y));
+                        if(!(
+                            //Down
+                            (
+                                y < 3 &&
+                                x > cX/2-4 && x < cX/2+3
+                            ) ||
+                            // Up
+                            (
+                                y > cY-4 &&
+                                x > cX/2-4 && x < cX/2+3
+                            ) ||
+                            // Left
+                            (
+                                x < 4 &&
+                                y > cY/2-4 && y < cY/2+3
+                            ) ||
+                            // Right
+                            (
+                                x > cX-4 &&
+                                y > cY/2-4 && y < cY/2+3
+                            ) 
+                        ))
+                            possiblePositions.add(new Coords(x, y));
                     }
                 }
 

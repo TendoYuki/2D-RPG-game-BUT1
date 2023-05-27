@@ -1,6 +1,8 @@
 import engine.main.BouclePrincipale;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 
@@ -60,7 +62,7 @@ public class Game {
         Room startRoom = new Room(world, new Directions[] {Directions.UP});
         
         world.setMap(MapGenerator.GenerateMap(world, startRoom, null, 10, 5, 5));
-        MapGenerator.populateMap(world.map, 0, 5);
+        MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(Arrays.asList(0)));
         world.setPlayer(0, 0, 0,0, 100, 10);
         display = new Display(physicsEngine.world, world.map);
         TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
