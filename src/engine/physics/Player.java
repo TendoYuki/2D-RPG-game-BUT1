@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 
 import engine.controller.Control;
+import engine.generation.Room;
 import engine.hud.Hud;
 import engine.view.CoordinateSystem;
 import engine.view.PlayerSprites;
@@ -37,15 +38,12 @@ public class Player extends Entity{
 	// pieces du heros
 	private int coins;
 
-	private World world;
-
 	/**
 	 *
 	 * @throws IOException
 	 */
-	public Player(World world, int x, int y, int health, int coins) throws IOException {
-		super(world, health, 5, 2);
-		this.world = world;
+	public Player(World world, Room r, int x, int y, int health, int coins) throws IOException {
+		super(world, r, health, 5, 2);
 		START_HEALTH = health;
 		this.coins = coins;
 		sprites = new PlayerSprites(this);

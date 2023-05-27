@@ -1,5 +1,7 @@
 package engine.physics;
 
+import engine.generation.Room;
+
 public abstract class Entity extends PhysicalObject {
 
 	/** Entity's max health */
@@ -14,17 +16,28 @@ public abstract class Entity extends PhysicalObject {
 	/** Entity's defense points */
 	private int defence;
 
-	public Entity(World w, int health, int attack, int defence){
+	/** World */
+	World world;
+
+	/** Room of the entity */
+	Room room;
+
+	public Entity(World w, Room r, int health, int attack, int defence){
 		super(w);
-		this.health = health;
-		this.maxHealth = health;
+		this.room = r;
+		this.world = w;
 		this.attack = attack;
 		this.defence = defence;
+		this.health = health;
+		maxHealth = health;
 		normalize();
 	}
 
 	private void normalize() {
-		defence = defence == 0 ? 1 : defence;
+		defence = defence <= 0 ? 1 : defence;
+		attack = attack <= 0 ? 1 : attack;
+		health = health <= 0 ? 1 : health;
+		maxHealth = health;
 	}
 
 	public int getMaxHealth() {

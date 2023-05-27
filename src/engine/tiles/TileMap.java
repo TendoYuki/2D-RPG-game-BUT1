@@ -36,6 +36,13 @@ public class TileMap {
         updateTilesPositons();
     }
 
+    public int getCountX() {
+        return tileGrid.getxCount();
+    }
+    public int getCountY() {
+        return tileGrid.getyCount();
+    }
+
     /**
      * Creates a tilemap of a given scale(ex 16 -> 16x16px) 
      * with an array of keys that maps to the provided tileAtlas

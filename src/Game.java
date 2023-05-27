@@ -57,9 +57,10 @@ public class Game {
         // On ajoute le monde au moteur
         physicsEngine.world = world;
         
-        Room startRoom = new Room(new Directions[] {Directions.UP});
+        Room startRoom = new Room(world, new Directions[] {Directions.UP});
         
-        world.setMap(MapGenerator.GenerateMap(startRoom, null, 10, 5, 5));
+        world.setMap(MapGenerator.GenerateMap(world, startRoom, null, 10, 5, 5));
+        MapGenerator.populateMap(world.map, 0, 5);
         world.setPlayer(0, 0, 0,0, 100, 10);
         display = new Display(physicsEngine.world, world.map);
         TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
@@ -226,18 +227,18 @@ public class Game {
         ));
 
         // Adding enemies
-        world.addEnemy(0, 0, 100, 100);
+        world.map.activeRoom.addEnemy(0, 0, 100, 100);
 
         // Adding NPCs + link dialogs
-        world.addNPC(0, 0, 200, 200);
-        world.npcs.get(0).addDialog("start", npc1);
-        world.npcs.get(0).addDialog("end", npc1End);
-        world.npcs.get(0).setActiveDialog("start");
+        world.map.activeRoom.addNPC(0, 0, 200, 200);
+        world.map.activeRoom.npcs.get(0).addDialog("start", npc1);
+        world.map.activeRoom.npcs.get(0).addDialog("end", npc1End);
+        world.map.activeRoom.npcs.get(0).setActiveDialog("start");
 
-        world.addNPC(0,0,400,300);
-        world.npcs.get(1).addDialog("start", bossStart);
-        world.npcs.get(1).addDialog("end", bossMort);
-        world.npcs.get(1).setActiveDialog("end");
+        world.map.activeRoom.addNPC(0,0,400,300);
+        world.map.activeRoom.npcs.get(1).addDialog("start", bossStart);
+        world.map.activeRoom.npcs.get(1).addDialog("end", bossMort);
+        world.map.activeRoom.npcs.get(1).setActiveDialog("end");
 
         // Gestion de la boucle principale
         BouclePrincipale maBoucle = new BouclePrincipale();

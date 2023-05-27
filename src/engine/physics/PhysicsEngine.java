@@ -71,7 +71,7 @@ public class PhysicsEngine {
 		}
 
 		// mise a jour des monstres
-		for (Enemy enemy : world.enemies) {
+		for (Enemy enemy : world.map.activeRoom.enemies) {
 			enemy.evolue();
 			if (Collision.typeOfCollision == ENEMY) {
 				world.player.collision = ENEMY;
@@ -178,7 +178,7 @@ public class PhysicsEngine {
 			}
 
 		}
-		for (Enemy monstre : world.enemies) {
+		for (Enemy monstre : world.map.activeRoom.enemies) {
 			if(Collision.collision(monstre, world.player)) {
 				world.player.py = world.player.py - 1.1*world.player.vy;
 				world.player.vy = 0;
@@ -187,7 +187,7 @@ public class PhysicsEngine {
 			}
 
 		}
-		for (NPC npc : world.npcs) {
+		for (NPC npc : world.map.activeRoom.npcs) {
 			if(Collision.collision(npc, world.player)) {
 				world.player.py = world.player.py - 1.1*world.player.vy;
 				world.player.vy = 0;
@@ -204,7 +204,7 @@ public class PhysicsEngine {
 			world.player.collision = Collision.typeOfCollision;
 
 		boolean isPlayerInteracting = false;
-		for (NPC npc : world.npcs){
+		for (NPC npc : world.map.activeRoom.npcs){
 			if (npc.isInTriggerZone()) {
 				npc.interact();
 				isPlayerInteracting = true;

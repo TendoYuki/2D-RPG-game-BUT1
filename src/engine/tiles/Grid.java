@@ -46,16 +46,6 @@ public class Grid<T> implements Iterable<GridCell<T>>{
                 cells.put(y*xCount + x, new GridCell<T>(this, null, x, y, y*xCount + x));
     }
 
-
-    // public Grid(T[][] initArray) {
-    //     this(initArray[0].length, initArray.length);
-    //     for(int y = 0; y < initArray.length; y++) {
-    //         for(int x = 0; x < initArray[0].length; x++) {
-    //             setCell(x,y,initArray[y][x]);
-    //         }
-    //     }
-    // }   
-
     /**
      * Gets a cell at a given position
      * @param x X coord

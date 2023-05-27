@@ -42,23 +42,10 @@ public class World {
      */
     public ArrayList<PhysicalObject> objects = new ArrayList<PhysicalObject>();
 
-
-    public int wallCount = 0;
-
     /**
-     * Enemies
-     */
-    public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-
-    /**
-     * NPCs
-     */
-    public ArrayList<NPC> npcs = new ArrayList<NPC>();
-    /**
-     * NPCs
+     * Triggers
      */
     public ArrayList<TriggerMap> triggerMaps = new ArrayList<TriggerMap>();
-
     
     public HashMap<String, Hud> huds = new HashMap<String, Hud>();
 
@@ -71,24 +58,13 @@ public class World {
 
     public Map map;
 
-    public int enemiesCount = 0;
-
-    /**
-     *
-     * @throws IOException
-     */
     /**
      * un monde par defaut
      * 
      * @throws java.io.IOException
      */
     public World() throws IOException {
-        // getsion du controleur
-        player = new Player(this, 0, 0 ,100, 10);
-
-        // gere la vision subjective
-        CoordinateSystem.h = player;
-
+        player = new Player(this, null, 0, 0, 100, 30);
     }
 
     /**
@@ -101,57 +77,7 @@ public class World {
      */
     public void addWall(int x, int y, int dx, int dy) {
         objects.add(new Wall(this, x, y, dx, dy));
-        objects.get(wallCount).index = wallCount;
-        wallCount++;
-
-    }
-
-    /**
-     * ajouter monstre
-     * 
-     * @param vx
-     * @param vy
-     * @param px
-     * @param py
-     * @throws java.io.IOException
-     */
-    public void addEnemy(double vx, double vy, int px, int py) throws IOException {
-        Enemy enemy = new Enemy(this, 20,10,5);
-
-        enemy.m = this;
-
-        enemy.vx = vx;
-        enemy.vy = vy;
-        enemy.px = px;
-        enemy.py = py;
-        enemy.index = enemies.size();
-
-        enemies.add(enemy);
-    }
-    /**
-     * ajouter monstre
-     * 
-     * @param vx
-     * @param vy
-     * @param px
-     * @param py
-     * @throws java.io.IOException
-     */
-    public void addNPC(double vx, double vy, int px, int py) throws IOException {
-        NPC npc = new NPC(this, 20,10,5);
-
-        npc.m = this;
-        npc.vx = vx;
-        npc.vy = vy;
-        npc.px = px;
-        npc.py = py;
-        npc.index = npcs.size();
-
-        npcs.add(npc);
-    }
-
-    public void addObject(PhysicalObject o) {
-        objects.add(o);
+        objects.get(objects.size()).index = objects.size();
     }
 
     public void addHud(String hudName, Hud hud) {
@@ -188,7 +114,8 @@ public class World {
      * @throws java.io.IOException
      */
     public void setPlayer(double vx, double vy, int px, int py, int health, int coins) throws IOException {
-        player = new Player(this, px, py, health, coins);
+        player = new Player(this, map.activeRoom, px, py, health, coins);
+        CoordinateSystem.h = player;
         player.index = 1;
     }
 }

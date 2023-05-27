@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
 
+import engine.generation.Room;
 import engine.view.CoordinateSystem;
 import engine.view.EnemySprites;
 
@@ -19,16 +20,12 @@ public class Enemy extends Entity {
 	// son etat
 	State state = State.ROAMING;
 
-	// lien vers le monde
-	World m;
-
 	/**
 	 *
 	 * @throws IOException
 	 */
-	public Enemy(World w, int vie,int attaque,int defense) throws IOException {
-		super(w,vie, attaque, defense);
-		m = w;
+	public Enemy(World w, Room r, int vie,int attaque,int defense) throws IOException {
+		super(w, r,vie, attaque, defense);
 		ax = 0;
 		ay = 0;
 		px = 0;
@@ -48,7 +45,7 @@ public class Enemy extends Entity {
 	public void draw(Graphics g) {
 
 		// change de repere
-		int[] tab = CoordinateSystem.changeCS(this, m.map.getPosX(), m.map.getPosY());
+		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
 
 		if (state == State.ATTACKING)
 			g.setColor(Color.red);

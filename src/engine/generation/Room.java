@@ -1,14 +1,20 @@
 package engine.generation;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import engine.physics.Enemy;
+import engine.physics.NPC;
+import engine.physics.PhysicalObject;
+import engine.physics.World;
 import engine.tiles.Directions;
 import engine.tiles.Grid;
 import engine.tiles.GridCell;
+import engine.trigger.TriggerMap;
 import engine.view.Scene;
 
 public class Room extends Scene{
@@ -24,10 +30,83 @@ public class Room extends Scene{
     /** Id of the room */
     private int id;    
 
+    /** World */
+    private World world;
+    
+    /**
+    * Objects
+    */
+    public ArrayList<PhysicalObject> objects = new ArrayList<PhysicalObject>();
+
+    /**
+     * Enemies
+     */
+    public ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+
+    /**
+     * NPCs
+     */
+    public ArrayList<NPC> npcs = new ArrayList<NPC>();
+
+    /**
+     * Triggers
+     */
+    public ArrayList<TriggerMap> triggerMaps = new ArrayList<TriggerMap>();
+
+
+
+    /**
+     * Add enemy
+     * 
+     * @param vx
+     * @param vy
+     * @param px
+     * @param py
+     * @throws java.io.IOException
+     */
+    public void addEnemy(double vx, double vy, int px, int py) throws IOException {
+        Enemy enemy = new Enemy(world, this, 20,10,5);
+        enemy.vx = vx;
+        enemy.vy = vy;
+        enemy.px = px;
+        enemy.py = py;
+        enemy.index = enemies.size();
+
+        enemies.add(enemy);
+    }
+    /**
+     * Add NPC
+     * 
+     * @param vx
+     * @param vy
+     * @param px
+     * @param py
+     * @throws java.io.IOException
+     */
+    public void addNPC(double vx, double vy, int px, int py) throws IOException {
+        NPC npc = new NPC(world, this, 20,10,5);
+        npc.vx = vx;
+        npc.vy = vy;
+        npc.px = px;
+        npc.py = py;
+        npc.index = npcs.size();
+
+        npcs.add(npc);
+    }
+
+    /**
+     * Add object
+     * @param o
+     */
+    public void addObject(PhysicalObject o) {
+        objects.add(o);
+    }
+
     /** Creates a new unique room
      * @param roomConstraints Directions in which the room can have neighbors
      */
-    public Room(ArrayList<Directions> roomConstraints) {
+    public Room(World world, ArrayList<Directions> roomConstraints) {
+        this.world = world;
         id = count++;
         setRoomPossibleDirections(roomConstraints);
     }
@@ -35,7 +114,8 @@ public class Room extends Scene{
     /** Creates a new unique room
      * @param roomConstraints Directions in which the room can have neighbors
      */
-    public Room(Directions[] roomConstraints) {
+    public Room(World world, Directions[] roomConstraints) {
+        this.world = world;
         id = count++;
         setRoomPossibleDirections(roomConstraints);
     }

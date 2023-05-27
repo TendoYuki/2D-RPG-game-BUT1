@@ -5,11 +5,38 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Map.Entry;
 
+import engine.physics.World;
 import engine.tiles.Atlas;
 import engine.tiles.Directions;
 import engine.tiles.Grid;
 import engine.tiles.GridCell;
 import engine.tiles.TileMap;
+
+class Coords {
+    private int x;
+    private int y;
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    Coords(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 public class MapGenerator {
 
@@ -95,6 +122,70 @@ public class MapGenerator {
         return tileMap;
     }
 
+    public static void populateMap(
+        Map map,
+        int minEnemyCount,
+        int maxEnemyCount
+    ) { 
+        populateMap(map, minEnemyCount, maxEnemyCount, new ArrayList<Integer>());
+    }
+
+    public static void populateMap(
+        Map map,
+        int minEnemyCount,
+        int maxEnemyCount,
+        ArrayList<Integer> exclusionIndexes
+    ) {
+        int minOffset = 2;
+        map.rooms.forEach(roomCell->{
+            if(
+                !roomCell.isEmpty() &&
+                !exclusionIndexes.contains(roomCell.getContent().getId())
+            ) {
+                Random rand = new Random();
+                int ct = rand.nextInt(minEnemyCount, maxEnemyCount);
+                ArrayList<Coords> possiblePositions = new ArrayList<Coords>();
+
+                int cX = roomCell.getContent().getTileMap().getCountX();
+                int cY = roomCell.getContent().getTileMap().getCountY();
+
+                // Inits all from zero to max coords
+                for(int y = 1; y < cY-1; y++) {
+                    for(int x = 1; x < cX-1; x++) {
+                        possiblePositions.add(new Coords(x, y));
+                    }
+                }
+
+
+                for(int i = 0; i < ct ; i++) {
+                    try{
+                        Coords coords = possiblePositions.get(rand.nextInt(possiblePositions.size()));  
+                        roomCell.getContent().addEnemy(
+                            0,
+                            0,
+                            coords.getX()*roomCell.getContent().getTileMap().size()/cX,
+                            coords.getY()*roomCell.getContent().getTileMap().size()/cY
+                        );
+                        for(int j = 0; j < possiblePositions.size(); j++) {
+                            if(
+                                possiblePositions.get(j).getX() < (coords.getX()+minOffset) &&
+                                possiblePositions.get(j).getX() > (coords.getX()-minOffset) &&
+                                possiblePositions.get(j).getY() < (coords.getY()+minOffset) &&
+                                possiblePositions.get(j).getY() > (coords.getY()-minOffset))
+                                {
+
+                                    System.out.println("removed : " + possiblePositions.get(j).getX() + ":" + possiblePositions.get(j).getY());
+                                    possiblePositions.remove(j);
+                                }
+                        }
+                    }
+                    catch (Exception e) {}        
+                }
+                    
+            }
+        });
+    }
+
     /** 
      * @param startRoom
      * @param endRoom
@@ -102,7 +193,14 @@ public class MapGenerator {
      * @param countX
      * @param countY
     */
-    public static Map GenerateMap(Room startRoom, Room endRoom,int totalRoomCount, int countX, int countY) {
+    public static Map GenerateMap(
+        World w,
+        Room startRoom,
+        Room endRoom,
+        int totalRoomCount,
+        int countX,
+        int countY
+    ) {
         ArrayList<GridCell<Room>> rooms = new ArrayList<GridCell<Room>>();
         Grid<Room> roomsGrid = new Grid<Room>(countX, countY);
         startRoom.setRoomPossibleDirections(new Directions[] {Directions.UP});
@@ -116,7 +214,7 @@ public class MapGenerator {
             // Creates new room at a random available spot
             Random rand = new Random();
             Spot newRoomSpot = availableSpots.get(rand.nextInt(availableSpots.size()));
-            roomsGrid.setCell(newRoomSpot.getSpot(), new Room(Directions.values()));
+            roomsGrid.setCell(newRoomSpot.getSpot(), new Room(w, Directions.values()));
 
             // Links the new room
             newRoomSpot.getOrigin().getContent().linkRoom(
