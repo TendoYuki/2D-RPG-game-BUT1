@@ -199,8 +199,6 @@ public class MapGenerator {
                                 possiblePositions.get(j).getY() < (coords.getY()+minOffset) &&
                                 possiblePositions.get(j).getY() > (coords.getY()-minOffset))
                                 {
-
-                                    System.out.println("removed : " + possiblePositions.get(j).getX() + ":" + possiblePositions.get(j).getY());
                                     possiblePositions.remove(j);
                                 }
                         }
