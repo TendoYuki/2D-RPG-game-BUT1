@@ -31,4 +31,8 @@ public class GridCell<T> {
     public int getIndex() {
         return index;
     }
+
+    public boolean isEmpty() {
+        return content == null;
+    }
 }

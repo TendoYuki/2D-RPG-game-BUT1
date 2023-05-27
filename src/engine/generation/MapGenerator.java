@@ -1,6 +1,7 @@
 package engine.generation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Map.Entry;
 
@@ -13,11 +14,6 @@ import engine.tiles.TileMap;
 public class MapGenerator {
 
     public MapGenerator() {}
-
-    private static void linkRooms(GridCell<Room> r, Entry<Directions, GridCell<Room>> entry, Directions dir) {
-        r.getContent().addNeighbor(entry.getKey(), entry.getValue().getContent());
-        entry.getValue().getContent().addNeighbor(dir, r.getContent());
-    }
 
     private static TileMap generateTileMap(Room r) {
         Atlas atlas = new Atlas(
@@ -115,18 +111,18 @@ public class MapGenerator {
 
         for(int i = 0; i < totalRoomCount; i++) {
             //Searches for available spots
-            ArrayList<GridCell<Room>> availableSpots = getAvailableSpots(rooms, roomsGrid);
+            ArrayList<Spot> availableSpots = getAvailableSpots(roomsGrid);
 
             // Creates new room at a random available spot
             Random rand = new Random();
-            GridCell<Room> newRoom = availableSpots.get(rand.nextInt(availableSpots.size()));
-            newRoom.setContent(new Room(Directions.values()));
+            Spot newRoomSpot = availableSpots.get(rand.nextInt(availableSpots.size()));
+            newRoomSpot.getSpot().setContent(new Room(Directions.values()));
 
             // Links the new room
-            linkRoom(roomsGrid, newRoom);
+            linkRoom(roomsGrid, newRoomSpot);
             
             //Register the new room
-            rooms.add(newRoom);
+            rooms.add(newRoomSpot.getSpot());
         }
 
         Map map = generateMap(rooms, countX, countY);
@@ -146,32 +142,67 @@ public class MapGenerator {
         return map;
     }
 
-    private static void linkRoom(Grid<Room> roomsGrid, GridCell<Room> newRoom) {
-        for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(newRoom).entrySet()) {
+    private static void linkRoom(Grid<Room> roomsGrid, Spot newRoomSpot) {
+        for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(newRoomSpot.getSpot()).entrySet()) {
+            // Checks if the current adjacent cell isn't null
             if(entry.getValue() != null && entry.getValue().getContent() != null) {
-                if(entry.getValue().getContent().getRoomPossibleDirections().contains(entry.getKey().opposite())) {
-                    linkRooms(newRoom,entry, entry.getKey().opposite());
+                // Checks if the current adjacent room can link in the opposite direction
+                if(
+                    entry.getValue().getContent().getRoomConstraints().contains(entry.getKey().opposite())
+                ) {
+                    newRoomSpot.getOrigin().getContent().linkRoom(
+                        newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
+                    );
+                    // Random rand = new Random();
+                    // if(rand.nextInt(100)%2==0)
+                    //     newRoomSpot.getSpot().getContent().linkRoom(
+                    //         entry.getValue().getContent(), entry.getKey()
+                    //     );
                 }
             }
         }
     }
 
-    private static ArrayList<GridCell<Room>> getAvailableSpots(ArrayList<GridCell<Room>> rooms, Grid<Room> roomsGrid) {
-        ArrayList<GridCell<Room>> availableSpots = new ArrayList<GridCell<Room>>();
-        rooms.forEach(room->{
-            room.getContent().getAvailableDirections().forEach(direction -> {
-                for(Entry<Directions, GridCell<Room>> entry: roomsGrid.getAdjacentCells(room).entrySet()) {
-                    if(entry.getValue() != null && entry.getValue().getContent() == null && entry.getKey() == direction) {
-                        availableSpots.add(entry.getValue());
-                    }
-                }
-            });
+    private static ArrayList<Spot> getAvailableSpots(Grid<Room> grid) {
+        ArrayList<Spot> availableSpots = new ArrayList<Spot>();
+        grid.forEach(cell -> {
+            if(!cell.isEmpty()) {
+                HashMap<Directions, GridCell<Room>> adjacentCells = grid.getAdjacentCells(cell);
+                cell.getContent().getAvailableDirections().forEach(direction->{
+                    if(
+                        adjacentCells.get(direction) != null && (
+                            (adjacentCells.get(direction).getContent() != null &&
+                            adjacentCells.get(direction).getContent().getAvailableDirections().contains(direction.opposite())) ||
+                            adjacentCells.get(direction).getContent() == null
+                        )
+                    )
+                        availableSpots.add(
+                            new Spot(cell, adjacentCells.get(direction), direction)
+                        );
+                });
+            }
         });
-        System.out.println("Available Spots : \n[");
-        availableSpots.forEach(spot -> {
-            System.out.println("x: " + spot.getCoords()[0] + " ; y: " +  spot.getCoords()[1] + " : " + spot.getContent());
-        });
-        System.out.println("]");
         return availableSpots;
+    }
+}
+
+class Spot {
+    private GridCell<Room> origin;
+    private Directions direction;
+    private GridCell<Room> spot;
+    
+    public GridCell<Room> getOrigin() {
+        return origin;
+    }
+    public Directions getDirection() {
+        return direction;
+    }
+    public GridCell<Room> getSpot() {
+        return spot;
+    }
+    public Spot(GridCell<Room> origin, GridCell<Room> dest, Directions direction) {
+        this.origin = origin;
+        this.direction = direction;
+        this.spot = dest;
     }
 }
