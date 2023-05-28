@@ -100,7 +100,7 @@ public class PhysicalObject {
     // Index de l'élément parmis son type (Monstre , Mur, etc...)
     public int index;
 
-    private World world;
+    public World world;
 
     public PhysicalObject(World w) {
         world = w;
@@ -166,4 +166,14 @@ public class PhysicalObject {
     public double getPy() {
         return py;
     }
+    public boolean isInTriggerZone(PhysicalObject po, TriggerZone tz){
+		return (
+			px+width > po.px- tz.getWidth()/2 &&
+			px < po.px + po.width + tz.getWidth()/2
+		) &&
+		( 
+			py+height> po.py - tz.getHeight()/2 &&
+			py < po.py + po.height + tz.getHeight()/2
+		);
+	}
 }

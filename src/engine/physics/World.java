@@ -20,6 +20,7 @@ import engine.controller.KeyboardController;
 import engine.generation.Map;
 import engine.hud.Hud;
 import engine.hud.map.MapHud;
+import engine.hud.player.PlayerHud;
 import engine.tiles.TileMap;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
@@ -62,7 +63,7 @@ public class World {
      * @throws java.io.IOException
      */
     public World() throws IOException {
-        player = new Player(this, null, 0, 0, 100, 30);
+        player = new Player(this, null, 0, 0, 100);
     }
 
     /**
@@ -121,8 +122,8 @@ public class World {
      * @param py
      * @throws java.io.IOException
      */
-    public void setPlayer(double vx, double vy, int px, int py, int health, int coins) throws IOException {
-        player = new Player(this, map.activeRoom, px, py, health, coins);
+    public void setPlayer(double vx, double vy, int px, int py, int health, int gems) throws IOException {
+        player = new Player(this, map.activeRoom, px, py, gems);
         CoordinateSystem.h = player;
         player.index = 1;
     }

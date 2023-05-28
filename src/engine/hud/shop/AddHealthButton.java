@@ -40,10 +40,10 @@ public class AddHealthButton extends Button {
     @Override
     public void onClick() {
         int curr = player.getHealthMultiplicator()+1;
-        if(curr <= 10 && player.getCoins() >= 5) {
+        if(curr <= 10 && player.getgems() >= 5) {
             player.setHealthMultiplicator(curr);
             player.setHealth(player.getHealth() + player.HEALTH_MUL_UNIT);
-            player.addCoins(-5);
+            player.addgems(-5);
         }
     }
 }

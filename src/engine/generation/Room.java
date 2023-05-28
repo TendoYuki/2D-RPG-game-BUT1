@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import engine.physics.Enemy;
+import engine.physics.Item;
 import engine.physics.NPC;
 import engine.physics.PhysicalObject;
 import engine.physics.World;
@@ -31,7 +32,7 @@ public class Room extends Scene{
     private int id;    
 
     /** World */
-    private World world;
+    public World world;
 
     private boolean isLocked = false;
 
@@ -47,6 +48,8 @@ public class Room extends Scene{
         isLocked = false;
     }
     
+    public ArrayList<Item> items = new ArrayList<Item>();
+
     /**
     * Objects
     */
@@ -78,8 +81,8 @@ public class Room extends Scene{
      * @param py
      * @throws java.io.IOException
      */
-    public void addEnemy(double vx, double vy, int px, int py) throws IOException {
-        Enemy enemy = new Enemy(world, this, 20,10,0);
+    public void addEnemy(double vx, double vy, int px, int py, int level) throws IOException {
+        Enemy enemy = new Enemy(world, this, level);
         enemy.vx = vx;
         enemy.vy = vy;
         enemy.px = px;
@@ -98,7 +101,7 @@ public class Room extends Scene{
      * @throws java.io.IOException
      */
     public void addNPC(double vx, double vy, int px, int py) throws IOException {
-        NPC npc = new NPC(world, this, 20,10,5);
+        NPC npc = new NPC(world, this);
         npc.vx = vx;
         npc.vy = vy;
         npc.px = px;

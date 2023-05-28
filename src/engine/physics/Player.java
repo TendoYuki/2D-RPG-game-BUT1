@@ -21,7 +21,7 @@ public class Player extends Entity{
 	// lien vers son controleur
 	Control c;
 
-	public final int HEALTH_MUL_UNIT = 10;
+	public final int HEALTH_MUL_UNIT = 25;
 	public final int ATTACK_MUL_UNIT = 5;
 	public final int DEFENCE_MUL_UNIT = 1;
 
@@ -37,21 +37,22 @@ public class Player extends Entity{
 	/** Multiplicator de l'attaque */
 	private int attackMultiplicator = 0;
 
-	// pieces du heros
-	private int coins;
+	// gems du heros
+	private int gems;
 
 	private boolean canAttack = true;
-    int attackZoneWidth = 25;
-    int attackZoneHeight = 25;
+	private TriggerZone attackZone = new TriggerZone(25, 25);
 
 	/**
 	 *
 	 * @throws IOException
 	 */
-	public Player(World world, Room r, int x, int y, int health, int coins) throws IOException {
-		super(world, r, health, 5, 2);
-		START_HEALTH = health;
-		this.coins = coins;
+	public Player(World world, Room r, int x, int y, int gems) throws IOException {
+		super(world, r, 1);
+		START_HEALTH = 100;
+		this.gems = gems;
+		super.setHealth(START_HEALTH);
+		
 		sprites = new PlayerSprites(this);
 		height = 10;
 		width = 10;
@@ -71,7 +72,7 @@ public class Player extends Entity{
 		ArrayList<Enemy> cpy = new ArrayList<Enemy>(world.map.activeRoom.enemies);
 
 		for(Enemy enemy: cpy) {
-			if(isInTriggerZone(enemy) && canAttack) {
+			if(isInTriggerZone(enemy,attackZone) && canAttack) {
 				System.out.println(enemy.getHealth());
 				canAttack = false;
 				attack(enemy);
@@ -88,36 +89,26 @@ public class Player extends Entity{
 		}
 	}
 
-	public boolean isInTriggerZone(Entity entity){
-		return (
-			px+width > entity.px- attackZoneWidth/2 &&
-			px < entity.px + entity.width + attackZoneWidth/2
-		) &&
-		( 
-			py+height > entity.py - attackZoneHeight/2 &&
-			py < entity.py + entity.height + attackZoneHeight/2
-		);
+
+	/**  ajoute des gems au heros
+	 * @param gems les gems a ajouter
+	 */
+	public void addgems(int gems){
+		this.gems += gems;
 	}
 
-	/**  ajoute des pieces au heros
-	 * @param coins les pieces a ajouter
+	/** change les gems du heros
+	 * @param gems nouvelles gems du heros
 	 */
-	public void addCoins(int coins){
-		this.coins += coins;
+	public void setgems(int gems){
+		this.gems = gems;
 	}
 
-	/** change les pieces du heros
-	 * @param coins nouvelles pieces du heros
+	/** Retourne les gems du heros
+	 * @return les gems du heros
 	 */
-	public void setCoins(int coins){
-		this.coins = coins;
-	}
-
-	/** Retourne les pieces du heros
-	 * @return les pieces du heros
-	 */
-	public int getCoins(){
-		return coins;
+	public int getgems(){
+		return gems;
 	}
 
 	/** Mort du heros */

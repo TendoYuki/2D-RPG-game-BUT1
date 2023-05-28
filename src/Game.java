@@ -16,6 +16,7 @@ import engine.hud.npc.DialogHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
 import engine.main.GamePhysics;
+import engine.physics.Enemy;
 import engine.physics.PhysicsEngine;
 import engine.physics.World;
 import engine.physics.WorldBorder;
@@ -35,6 +36,7 @@ public class Game {
         KeyboardController keyboardController = new KeyboardController(true);
         // Le monde
         World world;
+
 
         PlayerHud playerHud;
         Shop shop;
@@ -92,114 +94,6 @@ public class Game {
         );
         world.addHud("mapHud", world.mapHud);
 
-        TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
-        world.setTriggerMap(triggerMap);
-        triggerMap.addTrigger(1, new Trigger() {
-
-            @Override
-            public void onTriggered() {
-                Room up = world.map.getAdjacentRoom(Directions.UP);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!up.isLocked()) {
-                        world.map.setActiveRoom(up.getId());
-                        world.player.py = 50;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
-            }
-
-            @Override
-            public void onTriggerExit() {
-                doorHud.setIsShown(false);
-            }
-
-        });
-        triggerMap.addTrigger(2, new Trigger() {
-
-            @Override
-            public void onTriggered() {
-                Room left = world.map.getAdjacentRoom(Directions.LEFT);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!left.isLocked()) {
-                        world.map.setActiveRoom(left.getId());
-                        world.player.px = world.map.getActiveRoom().getTileMap().size() - 50;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
-            }
-
-            @Override
-            public void onTriggerExit() {
-                doorHud.setIsShown(false);
-            }
-            
-        });
-        triggerMap.addTrigger(3, new Trigger() {
-
-            @Override
-            public void onTriggered() {
-                Room down = world.map.getAdjacentRoom(Directions.DOWN);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!down.isLocked()) {
-                        world.map.setActiveRoom(down.getId());
-                        world.player.py = world.map.getActiveRoom().getTileMap().size() - 50;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
-            }
-            
-            @Override
-            public void onTriggerExit() {
-                doorHud.setIsShown(false);
-            }
-            
-        });
-        triggerMap.addTrigger(4, new Trigger() {
-
-            @Override
-            public void onTriggered() {
-                Room right = world.map.getAdjacentRoom(Directions.RIGHT);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!right.isLocked()) {
-                        world.map.setActiveRoom(right.getId());
-                        world.player.px = 50;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
-            }
-            
-            @Override
-            public void onTriggerExit() {
-                doorHud.setIsShown(false);
-            }
-            
-        });
-        world.addTriggerMap(triggerMap);
-
         int imgWidth = display.getMap().size();
         int imgHeight = display.getMap().size();
         CoordinateSystem.setWindowHeight(imgHeight);
@@ -227,7 +121,7 @@ public class Game {
             "Tu peux appuyer sur l'icone $ en bas a droite de ton ecran afin d'ameliorer",
             "tes competences a tout moment",
             "Tu peux augmenter ta vie, ta defense et ton attaque",
-            "Si tu as des pieces d'or sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
+            "Si tu as des gems d'or sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
             "bien entendu tu n'es pas oblige de m'ecouter mais tu seras le seul responsable",
             "s'il t'arrive quelque chose.",
         });
@@ -311,7 +205,7 @@ public class Game {
         ));
 
         // Adding enemies
-        world.map.activeRoom.addEnemy(0, 0, 100, 100);
+        world.map.activeRoom.addEnemy(0, 0, 100, 100,1);
 
         // Adding NPCs + link dialogs
         world.map.activeRoom.addNPC(0, 0, 200, 200);
@@ -336,6 +230,140 @@ public class Game {
         // Ajout du jeu a la boucle
         maBoucle.jeuPhysique.physicsEngine = physicsEngine;
         maBoucle.jeuPhysique.physicsEngine.world = physicsEngine.world;
+
+
+        TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
+        world.setTriggerMap(triggerMap);
+        triggerMap.addTrigger(1, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room up = world.map.getAdjacentRoom(Directions.UP);
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!up.isLocked()) {
+                        for(Enemy enemy: world.map.activeRoom.enemies) {
+                            playerHud.removeElement(enemy.healthBar);
+                        }
+                        world.map.setActiveRoom(up.getId());
+                        world.player.py = 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                        for(Enemy enemy: up.enemies) {
+                            playerHud.addElement(enemy.healthBar);
+                        }
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
+            }
+
+        });
+        triggerMap.addTrigger(2, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room left = world.map.getAdjacentRoom(Directions.LEFT);
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!left.isLocked()) {
+                        for(Enemy enemy: world.map.activeRoom.enemies) {
+                            playerHud.removeElement(enemy.healthBar);
+                        }
+                        world.map.setActiveRoom(left.getId());
+                        world.player.px = world.map.getActiveRoom().getTileMap().size() - 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                        for(Enemy enemy: left.enemies) {
+                            playerHud.addElement(enemy.healthBar);
+                        }
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
+            }
+            
+        });
+        triggerMap.addTrigger(3, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room down = world.map.getAdjacentRoom(Directions.DOWN);
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!down.isLocked()) {
+                        for(Enemy enemy: world.map.activeRoom.enemies) {
+                            playerHud.removeElement(enemy.healthBar);
+                        }
+                        world.map.setActiveRoom(down.getId());
+                        world.player.py = world.map.getActiveRoom().getTileMap().size() - 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                        for(Enemy enemy: down.enemies) {
+                            playerHud.addElement(enemy.healthBar);
+                        }
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+            
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
+            }
+            
+        });
+        triggerMap.addTrigger(4, new Trigger() {
+
+            @Override
+            public void onTriggered() {
+                Room right = world.map.getAdjacentRoom(Directions.RIGHT);
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!right.isLocked()) {
+                        for(Enemy enemy: world.map.activeRoom.enemies) {
+                            playerHud.removeElement(enemy.healthBar);
+                        }
+                        world.map.setActiveRoom(right.getId());
+                        world.player.px = 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                        for(Enemy enemy: right.enemies) {
+                            playerHud.addElement(enemy.healthBar);
+                        }
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+            
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
+            }
+            
+        });
+        world.addTriggerMap(triggerMap);
+
 
         maBoucle.lanceBouclePrincipale();
     }

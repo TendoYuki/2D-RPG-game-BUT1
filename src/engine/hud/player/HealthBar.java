@@ -11,11 +11,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
-import engine.physics.Player;
+import engine.physics.Entity;
 
 public class HealthBar extends HudElement{
 
-    private Player hero; 
+    private Entity entity; 
 
     private BufferedImage leftPart;
 
@@ -23,11 +23,17 @@ public class HealthBar extends HudElement{
 
     private BufferedImage rightPart;
 
+    private boolean hasDecoration;
+
+    private boolean displayLevel;
+
     private int offset;
 
-    public HealthBar(Player hero, int x, int y, int width, int height) {
+    public HealthBar(Entity entity, int x, int y, int width, int height, boolean hasDecoration, boolean displayLevel) {
         super(x, y, width, height);
-        this.hero = hero;
+        this.entity = entity;
+        this.hasDecoration = hasDecoration;
+        this.displayLevel = displayLevel;
         try{
             leftPart = ImageIO.read(new File(
                 "assets/misc/HealthContainerLeft.png"
@@ -43,12 +49,21 @@ public class HealthBar extends HudElement{
     }
 
     /**
-     * Calculates the fill of the healthbar in px according to the player's
+     * Calculates the fill of the healthbar in px according to the entity's
      * actual health
      * @return
      */
     private int calcFill() {
-        return hero.getHealth() * (offset-7) / hero.getMaxHealth();
+        return entity.getHealth() * getWidth() / entity.getMaxHealth();
+    }
+
+    /**
+     * Calculates the fill of the healthbar in px according to the entity's
+     * actual health
+     * @return
+     */
+    private int calcFillOffseted(int offset) {
+        return entity.getHealth() * (getWidth() + offset) / entity.getMaxHealth();
     }
 
     @Override
@@ -56,47 +71,56 @@ public class HealthBar extends HudElement{
         Graphics2D g2d = (Graphics2D)g;
         Color temp = g.getColor();
         g.setColor(Color.GRAY);
-        offset = getX();
-        AffineTransform at = AffineTransform.getTranslateInstance(offset, getY());
-        at.scale(2, 2);
-        g2d.drawImage(leftPart, at, null);
-        offset += leftPart.getWidth();
 
-        int totalCenterSize = 0;
-        for(int i = 1; totalCenterSize < getWidth() - rightPart.getWidth()*2 ; i++) {
-            at = AffineTransform.getTranslateInstance(
-                getX() + totalCenterSize + leftPart.getWidth(),
-                getY()
-            );
+        if(hasDecoration) {
+            offset = getX();
+            AffineTransform at = AffineTransform.getTranslateInstance(offset, getY());
             at.scale(2, 2);
-            g2d.drawImage(
-                centerPart,
-                at,
-                null
-            );
-            totalCenterSize = i*centerPart.getWidth()*2;
+            g2d.drawImage(leftPart, at, null);
+            offset += leftPart.getWidth();
+
+            int totalCenterSize = 0;
+            for(int i = 1; totalCenterSize < getWidth() - rightPart.getWidth()*2 ; i++) {
+                at = AffineTransform.getTranslateInstance(
+                    getX() + totalCenterSize + leftPart.getWidth(),
+                    getY()
+                );
+                at.scale(2, 2);
+                g2d.drawImage(
+                    centerPart,
+                    at,
+                    null
+                );
+                totalCenterSize = i*centerPart.getWidth()*2;
+            }
+
+            offset += totalCenterSize;
+
+            at = AffineTransform.getTranslateInstance(offset, getY());
+            at.scale(2, 2);
+            g2d.drawImage(rightPart, at, null);
+            offset += rightPart.getWidth();
+
+            g.setColor(Color.RED);
+            g.fillRect(getX()+4, getY()+6, calcFillOffseted(30), getHeight());
+            g.setColor(temp);
+
+            Font tempFont = g.getFont();
+            g.setFont(tempFont.deriveFont(Font.BOLD).deriveFont(14F));
+            g.drawString("" + entity.getHealth() + " / " + entity.getMaxHealth(), getX() + leftPart.getWidth(), getY() + (int)(leftPart.getHeight()*1.3));
+            g.setFont(tempFont);
+        } else {
+            if(displayLevel)
+                g.drawString("" + entity.getLevel(), getX()+4, getY()+4);
+            g.setColor(Color.RED);
+            g.fillRect(getX()+4, getY()+6, calcFill(), getHeight());
+            g.setColor(temp);
         }
-
-        offset += totalCenterSize;
-
-        at = AffineTransform.getTranslateInstance(offset, getY());
-        at.scale(2, 2);
-        g2d.drawImage(rightPart, at, null);
-        offset += rightPart.getWidth();
-
-        g.setColor(Color.RED);
-        g.fillRect(getX()+4, getY()+6, calcFill(), getHeight());
-        g.setColor(temp);
-        
-        Font tempFont = g.getFont();
-        g.setFont(tempFont.deriveFont(Font.BOLD).deriveFont(14F));
-        g.drawString("" + hero.getHealth() + " / " + hero.getMaxHealth(), getX() + leftPart.getWidth(), getY() + (int)(leftPart.getHeight()*1.3));
-        g.setFont(tempFont);
     }
-
+    
     @Override
     public void onClick() { 
-        hero.setHealth(hero.getHealth() - 10/hero.getDefence());
+        entity.setHealth(entity.getHealth() - 10/entity.getDefence());
     }
     
 }

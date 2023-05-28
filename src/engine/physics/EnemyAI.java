@@ -12,9 +12,7 @@ public class EnemyAI {
 
     State state;
 
-    int attackZoneWidth = 20;
-    int attackZoneHeight = 20;
-
+    private TriggerZone attackZone = new TriggerZone(20, 20);
     boolean canAttack = true;
 
     public EnemyAI(Enemy enemy) {
@@ -26,7 +24,7 @@ public class EnemyAI {
         if(enemy.room != enemy.world.map.activeRoom) return;
         enemy.vx = lerp(enemy.px, enemy.world.player.px, 0.01);
         enemy.vy = lerp(enemy.py, enemy.world.player.py, 0.01);
-        if(isInTriggerZone() && canAttack) {
+        if(enemy.isInTriggerZone(enemy.world.player,attackZone) && canAttack) {
             canAttack = false;
             enemy.attack(enemy.world.player);
             TimerTask task = new TimerTask() {
@@ -41,16 +39,7 @@ public class EnemyAI {
         }
     }
 
-    public boolean isInTriggerZone(){
-		return (
-			enemy.world.player.px+enemy.world.player.width > enemy.px- attackZoneWidth/2 &&
-			enemy.world.player.px < enemy.px + enemy.width + attackZoneWidth/2
-		) &&
-		( 
-			enemy.world.player.py+enemy.world.player.height > enemy.py - attackZoneHeight/2 &&
-			enemy.world.player.py < enemy.py + enemy.height + attackZoneHeight/2
-		);
-	}
+   
 
     /**
      * Linear interpolation between a and b 

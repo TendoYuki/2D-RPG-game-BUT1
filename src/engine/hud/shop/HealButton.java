@@ -41,14 +41,14 @@ public class HealButton extends Button {
     public void onClick() {
         int vie = player.getHealth();
         int maxVie = player.getMaxHealth();
-        if (player.getCoins() >= 5){
-            if(vie +15 <= maxVie) {
-                player.setHealth(vie + 15);
-                player.addCoins(-5);
+        if (player.getgems() >= 5){
+            if(vie +40 <= maxVie) {
+                player.setHealth(vie + 40);
+                player.addgems(-5);
             }
-            else if(vie+15 < maxVie + 15){
+            else if(vie+40 < maxVie + 40){
                 player.setHealth(maxVie);
-                player.addCoins(-5);
+                player.addgems(-5);
             }
         }
     }

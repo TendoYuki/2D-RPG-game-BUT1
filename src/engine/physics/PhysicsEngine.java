@@ -12,6 +12,7 @@
 package engine.physics;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import engine.tiles.Directions;
@@ -226,6 +227,11 @@ public class PhysicsEngine {
 			}
 			for (TriggerMap triggerMap : world.triggerMaps) {
 				triggerMap.update();
+			}
+
+			ArrayList<Item> cpy = new ArrayList<Item>(world.map.activeRoom.items);
+			for (Item item : cpy) {
+				item.update();
 			}
 	
 			boolean isPlayerInteracting = false;

@@ -39,10 +39,10 @@ public class AddAttackButton extends Button {
 
     @Override
     public void onClick() {
-        int curr = player.getAttackMultiplicator()+1;
-        if(curr <= 10 && player.getCoins() >= 5) {
+        int curr = (int)(player.getAttackMultiplicator()+1.5);
+        if(curr <= 10 && player.getgems() >= 5) {
             player.setAttackMultiplicator(curr);
-            player.addCoins(-5);
+            player.addgems(-5);
         }
     }
 }

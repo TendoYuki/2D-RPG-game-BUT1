@@ -21,6 +21,10 @@ public class MouseController extends MouseAdapter{
         interactiveElements.add(clickable);
     }
 
+    public void unRegister(Clickable clickable) {
+        interactiveElements.remove(clickable);
+    }
+
     public void setOffsetY(int offsetY) {
         this.offsetY = offsetY;
     }

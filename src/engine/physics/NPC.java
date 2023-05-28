@@ -28,8 +28,8 @@ public class NPC extends Entity {
 	 *
 	 * @throws IOException
 	 */
-	public NPC(World w, Room r, int vie,int attaque,int defense) throws IOException {
-		super(w, r, vie, attaque, defense);
+	public NPC(World w, Room r) throws IOException {
+		super(w, r, 0);
 		activeDialog = new Dialog();
 		activeDialog.addLine("");
 		sprite = new NPCSprites(this);

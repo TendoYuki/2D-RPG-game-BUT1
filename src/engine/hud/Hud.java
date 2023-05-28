@@ -50,6 +50,11 @@ public abstract class Hud{
         elements.add(el);
         mc.register(el);
     }
+
+    public void removeElement(HudElement el) {
+        elements.remove(el);
+        mc.unRegister(el);
+    }
     
     private void changeListenerState() {
         if(isInteractable) {

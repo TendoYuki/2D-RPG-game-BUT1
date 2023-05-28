@@ -40,9 +40,9 @@ public class AddDefenceButton extends Button {
     @Override
     public void onClick() {
         int curr = player.getDefenceMultiplicator()+1;
-        if(curr <= 10 && player.getCoins() >= 5) {
+        if(curr <= 10 && player.getgems() >= 5) {
             player.setDefenceMultiplicator(curr);
-            player.addCoins(-5);
+            player.addgems(-5);
         }
     }
 }

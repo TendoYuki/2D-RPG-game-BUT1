@@ -16,19 +16,30 @@ public abstract class Entity extends PhysicalObject {
 	/** Entity's defense points */
 	private int defence;
 
+	private int level;
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
 	/** World */
-	World world;
+	public World world;
 
 	/** Room of the entity */
-	Room room;
+	public Room room;
 
-	public Entity(World w, Room r, int health, int attack, int defence){
+	public Entity(World w, Room r, int level){
 		super(w);
+		this.level = level;
 		this.room = r;
 		this.world = w;
-		this.attack = attack;
-		this.defence = defence;
-		this.health = health;
+		defence = (int)(0.15 * level);
+		attack = 2* level;
+    	health = 10* level;
 		maxHealth = health;
 		normalize();
 	}

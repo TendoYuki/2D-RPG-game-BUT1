@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Map.Entry;
 
+import engine.physics.Gem;
 import engine.physics.World;
 import engine.tiles.Atlas;
 import engine.tiles.Directions;
@@ -135,12 +136,14 @@ public class MapGenerator {
         int maxEnemyCount,
         ArrayList<Integer> exclusionIndexes
     ) {
+        
         int minOffset = 2;
-        map.rooms.forEach(roomCell->{
+        for(GridCell<Room> roomCell : map.rooms){
             if(
                 !roomCell.isEmpty() &&
                 !exclusionIndexes.contains(roomCell.getContent().getId())
             ) {
+                int id = roomCell.getContent().getId();
                 Random rand = new Random();
                 int ct = rand.nextInt(minEnemyCount, maxEnemyCount);
                 if(ct == 0 && rand.nextInt(minEnemyCount, maxEnemyCount)%2 == 0)
@@ -184,12 +187,15 @@ public class MapGenerator {
 
                 for(int i = 0; i < ct ; i++) {
                     try{
+                        Random randLevel = new Random();
+                        int level = randLevel.nextInt(id-1,id+1);
                         Coords coords = possiblePositions.get(rand.nextInt(possiblePositions.size()));  
                         roomCell.getContent().addEnemy(
                             0,
                             0,
                             coords.getX()*roomCell.getContent().getTileMap().size()/cX,
-                            coords.getY()*roomCell.getContent().getTileMap().size()/cY
+                            coords.getY()*roomCell.getContent().getTileMap().size()/cY,
+                            level                        
                         );
                         for(int j = 0; j < possiblePositions.size(); j++) {
                             if(
@@ -202,11 +208,37 @@ public class MapGenerator {
                                 }
                         }
                     }
-                    catch (Exception e) {}        
-                }
-                    
+                    catch (Exception e) {}   
+                     
+                }  
+                Room room = roomCell.getContent();
+                if(room.enemies.size() == 0){
+                    // Place gems in the middle of the room :D 
+                    for(int i = 0; i < rand.nextInt(5,10) ; i++) {
+                        try{
+                            Coords coords = possiblePositions.get(rand.nextInt(possiblePositions.size()));  
+                            room.items.add(new Gem(
+                                room.world,
+                                coords.getX()*roomCell.getContent().getTileMap().size()/cX,
+                                coords.getY()*roomCell.getContent().getTileMap().size()/cY
+                            ));
+                            for(int j = 0; j < possiblePositions.size(); j++) {
+                                if(
+                                    possiblePositions.get(j).getX() < (coords.getX()+minOffset) &&
+                                    possiblePositions.get(j).getX() > (coords.getX()-minOffset) &&
+                                    possiblePositions.get(j).getY() < (coords.getY()+minOffset) &&
+                                    possiblePositions.get(j).getY() > (coords.getY()-minOffset))
+                                    {
+                                        possiblePositions.remove(j);
+                                    }
+                            }
+                        }
+                        catch (Exception e) {}   
+                         
+                    }  
+                }            
             }
-        });
+        };
     }
 
     /** 

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 
 import engine.generation.Room;
+import engine.hud.player.HealthBar;
 import engine.view.CoordinateSystem;
 import engine.view.EnemySprites;
 
@@ -12,19 +13,21 @@ public class Enemy extends Entity {
 
 	EnemySprites sprite;
 
+	public HealthBar healthBar;
 	
 	/**
 	 *
 	 * @throws IOException
 	 */
-	public Enemy(World w, Room r, int vie,int attaque,int defense) throws IOException {
-		super(w, r,vie, attaque, defense);
+	public Enemy(World w, Room r, int level) throws IOException {
+		super(w, r, level);
 		ax = 0;
 		ay = 0;
 		px = 0;
 		py = 0;
 		vx = 0;
 		vy = 0;
+		healthBar = new HealthBar(this, (int)px, (int)py, 25, 3, false, true);
 		height = 30;
 		width = 20;
 		sprite = new EnemySprites(this);
@@ -36,8 +39,6 @@ public class Enemy extends Entity {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-
-		// change de repere
 		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
 
 		sprite.draw(tab[0], tab[1], g);
@@ -46,13 +47,17 @@ public class Enemy extends Entity {
 
 	@Override
 	public void handleDeath() {
-		// TODO Auto-generated method stub
 		world.map.activeRoom.enemies.remove(world.map.activeRoom.enemies.indexOf(this));
+		world.player.addgems(3);
+		world.huds.get("hud").removeElement(healthBar);
 	}
 
 	public void update() {
 		super.update();
 		ai.update();
+		int[] c = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+		healthBar.setX(c[0]);
+		healthBar.setY(c[1]-20);
 	}
 
     @Override
