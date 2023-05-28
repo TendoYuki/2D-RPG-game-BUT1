@@ -32,8 +32,7 @@ public class CoordinateSystem {
     public static Player h;
 
     /**
-     *
-     * @param o
+     * Changes the corordinate system from y top -> bottom to y bottom -> top
      * @return
      */
     public static int[] changeCS(PhysicalObject o, int x0, int y0) {

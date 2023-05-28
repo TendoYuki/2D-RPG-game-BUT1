@@ -6,8 +6,8 @@ import engine.tiles.Directions;
 
 public class WorldBorder {
 
-    private int width;
-    private int height;
+    int width;
+    int height;
     private int BORDER_WIDTH = 2;
 
     private Wall tBorder;

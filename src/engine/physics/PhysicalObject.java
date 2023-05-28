@@ -90,10 +90,6 @@ public class PhysicalObject {
      */
     public double height = 0;
 
-    // collision
-    // permet de savoir si un objet est en collision
-    // TODO debug a supprimer
-
     /**
      *
      */
@@ -170,5 +166,4 @@ public class PhysicalObject {
     public double getPy() {
         return py;
     }
-
 }

@@ -49,7 +49,6 @@ public class Wall extends PhysicalObject {
 		g.setColor(new Color(255,0,0,255));
 		int[] tab = CoordinateSystem.changeCS(this, getWorld().map.getPosX(), getWorld().map.getPosY());
 		g.fillRect(tab[0], tab[1], tab[2], tab[3]);
-		// g.fillRect((int)px, (int)py, (int)width, (int)height);
 	}
 
 }
