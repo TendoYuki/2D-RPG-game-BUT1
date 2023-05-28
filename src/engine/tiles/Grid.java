@@ -4,7 +4,6 @@ import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Grid of a certain scale with a determined x and y count 

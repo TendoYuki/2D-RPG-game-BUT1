@@ -2,7 +2,6 @@ package engine.hud.map;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.lang.reflect.WildcardType;
 
 import engine.generation.Map;
 import engine.hud.HudElement;

@@ -12,7 +12,6 @@ import engine.generation.Room;
 import engine.hud.Hud;
 import engine.view.CoordinateSystem;
 import engine.view.PlayerSprites;
-import engine.view.Sprites;
 
 public class Player extends Entity{
 

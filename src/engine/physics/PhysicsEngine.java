@@ -11,8 +11,6 @@
 
 package engine.physics;
 
-import static engine.main.GamePhysics.*;
-
 import java.io.IOException;
 import java.util.Map.Entry;
 

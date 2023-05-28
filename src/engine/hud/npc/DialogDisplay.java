@@ -3,7 +3,6 @@ package engine.hud.npc;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import engine.dialog.Dialog;
 import engine.dialog.DialogController;
 import engine.hud.HudElement;
 

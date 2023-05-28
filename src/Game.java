@@ -1,10 +1,7 @@
 import engine.main.BouclePrincipale;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import javax.swing.JFrame;
 
 import engine.controller.KeyboardController;
 import engine.dialog.Dialog;
@@ -15,7 +12,6 @@ import engine.hud.Hud;
 import engine.hud.gameover.GameOver;
 import engine.hud.map.MapHud;
 import engine.hud.menu.Menu;
-import engine.hud.npc.DialogDisplay;
 import engine.hud.npc.DialogHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
