@@ -10,27 +10,24 @@ import engine.controller.KeyboardController;
 import engine.dialog.Dialog;
 import engine.dialog.DialogController;
 import engine.generation.Room;
-import engine.generation.Map;
 import engine.generation.MapGenerator;
 import engine.hud.Hud;
 import engine.hud.gameover.GameOver;
+import engine.hud.map.MapHud;
 import engine.hud.menu.Menu;
-import engine.hud.npc.NPCHud;
+import engine.hud.npc.DialogDisplay;
+import engine.hud.npc.DialogHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
 import engine.main.GamePhysics;
 import engine.physics.PhysicsEngine;
 import engine.physics.World;
 import engine.physics.WorldBorder;
-import engine.tiles.Atlas;
 import engine.tiles.Directions;
-import engine.tiles.TileMap;
 import engine.trigger.Trigger;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
-import engine.view.Scene;
 import engine.view.Display;
-import engine.view.MapDisplay;
 
 public class Game {
     public static void main(String[] args) throws Exception {
@@ -47,7 +44,7 @@ public class Game {
         Shop shop;
         Menu menu;
         GameOver gameOver;
-        NPCHud npcHud;
+        DialogHud npcHud;
         
 
 
@@ -60,11 +57,45 @@ public class Game {
         physicsEngine.world = world;
         
         Room startRoom = new Room(world, new Directions[] {Directions.UP});
-        
-        world.setMap(MapGenerator.GenerateMap(world, startRoom, null, 10, 5, 5));
-        MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(Arrays.asList(0)));
+        Room endRoom = new Room(world, Directions.values()); 
+        endRoom.lockRoom();
+
+        world.setMap(MapGenerator.GenerateMap(world, startRoom, endRoom, 10, 5, 5));
+        MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(
+            Arrays.asList(startRoom.getId(), endRoom.getId()))
+        );
+
         world.setPlayer(0, 0, 250,250, 100, 10);
         display = new Display(physicsEngine.world, world.map);
+
+        DialogHud doorHud = new DialogHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
+        doorHud.setInteractable(false);
+        doorHud.setIsShown(false);
+        world.addHud("doorClosed", doorHud);
+        // dialogue des portes
+        Dialog doorClosed = new Dialog();
+        doorClosed.addLine(new String[]{
+            "La porte est fermée",
+            "Tuez tous les monstres de la pièce afin qu'elle s'ouvre"
+        });
+
+        Dialog bossDoorClosed = new Dialog();
+        bossDoorClosed.addLine(new String[]{
+            "La porte est fermée",
+            "Tuez tous les monstres du donjon afin qu'elle s'ouvre"
+        });
+
+        
+        world.mapHud = new MapHud(
+            display,
+            world.map,
+            (display.getWidth() / 2 - (int) (world.map.size()/1.4)/2) -5,
+            (display.getHeight() / 2 - (int) (world.map.size()/1.4)/2) -15,
+            (int) (world.map.size()/1.4),
+            (int) (world.map.size()/1.4)
+        );
+        world.addHud("mapHud", world.mapHud);
+
         TriggerMap triggerMap = new TriggerMap(world.player, world.map.getActiveRoom().getTileMap());
         world.setTriggerMap(triggerMap);
         triggerMap.addTrigger(1, new Trigger() {
@@ -72,20 +103,50 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room up = world.map.getAdjacentRoom(Directions.UP);
-                world.map.setActiveRoom(up.getId());
-                world.player.py = 50;
-                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!up.isLocked()) {
+                        world.map.setActiveRoom(up.getId());
+                        world.player.py = 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
             }
-            
+
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
+            }
+
         });
         triggerMap.addTrigger(2, new Trigger() {
 
             @Override
             public void onTriggered() {
                 Room left = world.map.getAdjacentRoom(Directions.LEFT);
-                world.map.setActiveRoom(left.getId());
-                world.player.px = world.map.getActiveRoom().getTileMap().size() - 50;
-                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!left.isLocked()) {
+                        world.map.setActiveRoom(left.getId());
+                        world.player.px = world.map.getActiveRoom().getTileMap().size() - 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
             }
             
         });
@@ -94,9 +155,24 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room down = world.map.getAdjacentRoom(Directions.DOWN);
-                world.map.setActiveRoom(down.getId());
-                world.player.py = world.map.getActiveRoom().getTileMap().size() - 50;
-                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!down.isLocked()) {
+                        world.map.setActiveRoom(down.getId());
+                        world.player.py = world.map.getActiveRoom().getTileMap().size() - 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+            
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
             }
             
         });
@@ -105,9 +181,24 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room right = world.map.getAdjacentRoom(Directions.RIGHT);
-                world.map.setActiveRoom(right.getId());
-                world.player.px = 50;
-                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                if(!world.map.activeRoom.isLocked()) {
+                    if(!right.isLocked()) {
+                        world.map.setActiveRoom(right.getId());
+                        world.player.px = 50;
+                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                    } else {
+                        DialogController.setCurrentDialog(bossDoorClosed);
+                        doorHud.setIsShown(true);
+                    }
+                } else {
+                    DialogController.setCurrentDialog(doorClosed);
+                    doorHud.setIsShown(true);
+                }
+            }
+            
+            @Override
+            public void onTriggerExit() {
+                doorHud.setIsShown(false);
             }
             
         });
@@ -157,12 +248,7 @@ public class Game {
             "Plus aucun programme ne vous sera impossible a faire !"
         });
 
-        // dialogue des portes
-        Dialog porteFermee = new Dialog();
-        porteFermee.addLine(new String[]{
-            "La porte est fermee",
-            "Tuez tous les monstres afin qu'elle s'ouvre"
-        });
+       
         
         Dialog porteOuverte = new Dialog();
         porteOuverte.addLine(new String[] {
@@ -189,8 +275,8 @@ public class Game {
         shop = new Shop(
             display,
             world.player,
-            display.getWidth() / 2 - (int) (512 / 1.4) / 2,
-            display.getHeight() / 2 - (int) (512 / 1.4) / 2,
+            (display.getWidth() / 2 - (int) (512 / 1.4) / 2) -5,
+            (display.getHeight() / 2 - (int) (512 / 1.4) / 2) -15,
             (int) (512 / 1.4),
             (int) (512 / 1.4)
         );
@@ -212,7 +298,7 @@ public class Game {
         gameOver.setInteractable(false);
         world.addHud("gameOver", gameOver);
 
-        npcHud = new NPCHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
+        npcHud = new DialogHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
         npcHud.setInteractable(false);
         npcHud.setIsShown(false);
         world.addHud("npc", npcHud);
@@ -255,12 +341,6 @@ public class Game {
         maBoucle.jeuPhysique.physicsEngine = physicsEngine;
         maBoucle.jeuPhysique.physicsEngine.world = physicsEngine.world;
 
-        JFrame mdisplay = new JFrame();
-
-        mdisplay.setVisible(true);
-        mdisplay.add(new MapDisplay(world.map));
-        mdisplay.setSize(new Dimension(500,500));
-        mdisplay.setResizable(false);
         maBoucle.lanceBouclePrincipale();
     }
 }

@@ -32,6 +32,20 @@ public class Room extends Scene{
 
     /** World */
     private World world;
+
+    private boolean isLocked = false;
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void lockRoom() {
+        isLocked = true;
+    }
+
+    public void unlockRoom() {
+        isLocked = false;
+    }
     
     /**
     * Objects
@@ -65,7 +79,7 @@ public class Room extends Scene{
      * @throws java.io.IOException
      */
     public void addEnemy(double vx, double vy, int px, int py) throws IOException {
-        Enemy enemy = new Enemy(world, this, 20,10,5);
+        Enemy enemy = new Enemy(world, this, 20,10,0);
         enemy.vx = vx;
         enemy.vy = vy;
         enemy.px = px;

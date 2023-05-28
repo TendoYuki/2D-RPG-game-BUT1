@@ -42,6 +42,8 @@ public class KeyboardController implements KeyListener {
 	 */
 	public Control c;
 
+	public static boolean map = false;
+
 	// constructeur avec affichage du controleur ou non.
 
 	/**
@@ -81,6 +83,10 @@ public class KeyboardController implements KeyListener {
 			if (e.getKeyCode() == KeyEvent.VK_Q) {
 				fin = true;
 			}
+			
+		}
+		if (e.getKeyCode() == KeyEvent.VK_M) {
+			map = true;
 		}
 	}
 
@@ -101,6 +107,10 @@ public class KeyboardController implements KeyListener {
 		// touche down
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			c.bas = false;
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_M) {
+			map = false;
 		}
 
 	}

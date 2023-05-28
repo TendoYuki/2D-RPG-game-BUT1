@@ -3,6 +3,9 @@ package engine.physics;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import engine.controller.Control;
 import engine.generation.Room;
@@ -38,6 +41,10 @@ public class Player extends Entity{
 	// pieces du heros
 	private int coins;
 
+	private boolean canAttack = true;
+    int attackZoneWidth = 25;
+    int attackZoneHeight = 25;
+
 	/**
 	 *
 	 * @throws IOException
@@ -57,6 +64,40 @@ public class Player extends Entity{
 		vy = 0;
 		ax = 0;
 		ay = 0;
+	}
+
+	public void update() {
+		super.update();
+
+		ArrayList<Enemy> cpy = new ArrayList<Enemy>(world.map.activeRoom.enemies);
+
+		for(Enemy enemy: cpy) {
+			if(isInTriggerZone(enemy) && canAttack) {
+				System.out.println(enemy.getHealth());
+				canAttack = false;
+				attack(enemy);
+				TimerTask task = new TimerTask() {
+					@Override
+					public void run() {
+						canAttack = true;
+					}
+				};
+				Timer timer = new Timer("Timer");
+				long delay = 2500L;
+				timer.schedule(task, delay);
+			}
+		}
+	}
+
+	public boolean isInTriggerZone(Entity entity){
+		return (
+			px+width > entity.px- attackZoneWidth/2 &&
+			px < entity.px + entity.width + attackZoneWidth/2
+		) &&
+		( 
+			py+height > entity.py - attackZoneHeight/2 &&
+			py < entity.py + entity.height + attackZoneHeight/2
+		);
 	}
 
 	/**  ajoute des pieces au heros
@@ -85,12 +126,13 @@ public class Player extends Entity{
 		world.huds.values().forEach(hud -> {
 			hud.setInteractable(false);
 			hud.setIsShown(false);
-		});;
+		});
 
 		Hud gO = world.huds.get("gameOver");
 
 		gO.setInteractable(true);
 		gO.setIsShown(true);
+		PhysicsEngine.endGame = true;
 	}
 
 

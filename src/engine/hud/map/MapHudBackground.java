@@ -1,34 +1,41 @@
-package engine.view;
+package engine.hud.map;
 
-import java.awt.Dimension;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Map.Entry;
-
-import javax.swing.JPanel;
+import java.lang.reflect.WildcardType;
 
 import engine.generation.Map;
+import engine.hud.HudElement;
 import engine.generation.Room;
+import java.util.Map.Entry;
+import java.awt.FontMetrics;
 import engine.tiles.Directions;
 import engine.tiles.GridCell;
 
-public class MapDisplay extends JPanel {
-    Map map;
-    public static MapDisplay instance;
-    public MapDisplay(Map map) {
-        super();
+public class MapHudBackground extends HudElement{
+
+	private Map map;
+
+    public MapHudBackground(Map map, int x, int y, int width, int height) {
+        super(x, y, width, height);
         this.map = map;
-        this.setSize(new Dimension(250,250));
-        instance = this;
     }
+
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        int roomsize = 250 / (map.rooms.getxCount());
+    public void draw(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(new Color(100, 100, 100, 150));
+        
+        g.fillRect(getY()  , getX() , getWidth(), getHeight());
+        g.setColor(c);
+
+
+		int roomsize = getWidth() / (map.rooms.getxCount()*2);
         int interRoomOffset = roomsize;
         for(GridCell<Room> roomCell: map.rooms) {
             if(roomCell.getContent() != null) {
-                int x = roomCell.getCoords()[0]*(roomsize + interRoomOffset) + 10;
-                int y = roomCell.getCoords()[1]*(roomsize + interRoomOffset) + 10;
+                int x = getX() +10 + roomCell.getCoords()[0]*(roomsize + interRoomOffset) + 10;
+                int y = getY() +10 + roomCell.getCoords()[1]*(roomsize + interRoomOffset) + 10;
                 if(map.activeRoom.equals(roomCell.getContent()))
                     g.fillOval(x+roomsize/4,y+roomsize/4,roomsize/2,roomsize/2);
                 g.drawRect(
@@ -37,11 +44,18 @@ public class MapDisplay extends JPanel {
                     roomsize,
                     roomsize
                 );
+                
+                
+                String str = "" +roomCell.getContent().getId();
+                FontMetrics metrics = g.getFontMetrics(g.getFont());
+                int xStr = x + (roomsize - metrics.stringWidth(str)) / 2;
+                int yStr = y + ((roomsize - metrics.getHeight()) / 2) + metrics.getAscent();
                 g.drawString(
-                    "" +roomCell.getContent().getId(),
-                    x + roomsize/2,
-                    y + roomsize/2
+                    str,
+                    xStr,
+                    yStr
                 );
+
                 for(Entry<Directions, Room> nRoom: roomCell.getContent().getNeighbors().entrySet()) {
                     if(nRoom.getValue() != null)
                         switch (nRoom.getKey()) {
@@ -61,5 +75,10 @@ public class MapDisplay extends JPanel {
                 }
             }
         }
+        
     }
+
+    @Override
+    public void onClick() {}
+    
 }

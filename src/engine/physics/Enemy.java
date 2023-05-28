@@ -13,6 +13,7 @@ public class Enemy extends Entity {
 
 	EnemySprites sprite;
 
+	
 	/**
 	 *
 	 * @throws IOException
@@ -47,7 +48,7 @@ public class Enemy extends Entity {
 	@Override
 	public void handleDeath() {
 		// TODO Auto-generated method stub
-		
+		world.map.activeRoom.enemies.remove(world.map.activeRoom.enemies.indexOf(this));
 	}
 
 	public void update() {

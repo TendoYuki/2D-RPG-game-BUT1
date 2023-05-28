@@ -9,6 +9,7 @@ import engine.tiles.TileMap;
 public class TriggerMap {
     private TileMap tileMap;
     private Entity entity;
+    private int previousTile = -1;
     private HashMap<Integer, ArrayList<Trigger>> triggers = 
         new HashMap<Integer, ArrayList<Trigger>>();
 
@@ -34,9 +35,17 @@ public class TriggerMap {
             (int)(entity.px + entity.width/2),
             (int)(entity.py + entity.height/2)
         );
-        if(currentTile != -1)
+        if(currentTile != -1) {
             triggers.get(currentTile).forEach(trigger -> {
-            trigger.onTriggered();
+                trigger.onTriggered();
             });
+        }
+        if(previousTile != -1) {
+            triggers.get(previousTile).forEach(trigger -> {
+                if(previousTile != currentTile)
+                    trigger.onTriggerExit();
+            });
+        }
+        previousTile = currentTile;
     }
 }

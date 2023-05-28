@@ -5,11 +5,11 @@ import java.awt.Graphics;
 import engine.hud.Hud;
 import engine.view.Display;
 
-public class NPCHud extends Hud{
+public class DialogHud extends Hud{
     
     DialogDisplay dialogDisplay;
 
-    public NPCHud(Display display, int x, int y, int width, int height) {
+    public DialogHud(Display display, int x, int y, int width, int height) {
         super(display, x, y, width, height);
         dialogDisplay = new DialogDisplay(x, y, width, height);
         addElement(dialogDisplay);

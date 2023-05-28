@@ -1,27 +1,30 @@
 package engine.generation;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import engine.tiles.Directions;
 import engine.tiles.Grid;
 import engine.tiles.GridCell;
-import engine.view.Scene;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 public class Map{
     public Grid<Room> rooms;
     
     public Room activeRoom;
+    public Room endRoom;
+    public Room startRoom;
 
     private int posX = 0;
     private int posY = 0; 
 
+    public int enemiesCount() {
+        int ct = 0;
+        for(GridCell<Room> roomCell: rooms) {
+            if(!roomCell.isEmpty()) {
+                ct += roomCell.getContent().enemies.size();
+            }
+        }
+        return ct;
+    }
 
     public int getPosX() {
         return posX;

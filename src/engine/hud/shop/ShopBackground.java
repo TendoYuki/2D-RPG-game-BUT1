@@ -15,7 +15,7 @@ public class ShopBackground extends HudElement{
     public void draw(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.cyan);
-        g.fillRect(getY(), getX(), getWidth(), getHeight());
+        g.fillRect(getY(), getX() , getWidth(), getHeight());
         g.setColor(c);
         
     }

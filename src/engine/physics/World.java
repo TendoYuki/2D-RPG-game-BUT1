@@ -16,18 +16,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import engine.controller.Control;
+import engine.controller.KeyboardController;
 import engine.generation.Map;
 import engine.hud.Hud;
+import engine.hud.map.MapHud;
 import engine.tiles.TileMap;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 
-//gere les objets du monde
-
-/**
- *
- * @author Pierre-Frederic Villard
- */
 public class World {
 
     /**
@@ -57,6 +53,8 @@ public class World {
     public Player player;
 
     public Map map;
+
+    public MapHud mapHud;
 
     /**
      * un monde par defaut
@@ -104,8 +102,18 @@ public class World {
     public WorldBorder getWorldBorder() {
         return this.worldBorder;
     }
+
+    private boolean hasDefeatedAllEnemies = false;
+
+    public void update() {
+        mapHud.setIsShown(KeyboardController.map);
+        if(!hasDefeatedAllEnemies && map.enemiesCount() == 0) {
+            map.endRoom.unlockRoom();
+        }
+    }
+
     /**
-     * ajouter heros
+     * Set player
      * 
      * @param vx
      * @param vy

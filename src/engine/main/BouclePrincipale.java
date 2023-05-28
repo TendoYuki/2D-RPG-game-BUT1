@@ -1,24 +1,17 @@
 package engine.main;
 
-import java.awt.Dimension;
 import java.awt.Insets;
 
 import javax.swing.JFrame;
 
 import engine.controller.KeyboardController;
-import engine.view.MapDisplay;
 
 public class BouclePrincipale {
 
-	public String nom = "Mon super Jeu";
 	public int fps = 60;
 	public GamePhysics jeuPhysique;
 	// creation du controleur
 	public KeyboardController cClavier;
-
-	public void setName(String nom) {
-		this.nom = nom;
-	}
 
 	public void setFPS(int fps) {
 		this.fps = fps;
@@ -37,16 +30,13 @@ public class BouclePrincipale {
 		jeuPhysique.physicsEngine.world.c = cClavier.c;
 
 		// afficher
-		System.out.println("\n\n**************************************************");
-		System.out.println("*  " + nom);
-		System.out.println("*                                                 *");
-		System.out.println("*** touche 'Q' pour arreter jeu                  ***");
-		System.out.println("****************************************************");
-		System.out.println("\n\n");
+		System.out.println("\n********************************");
+		System.out.println("* touche 'Q' pour arreter jeu  *");
+		System.out.println("********************************");
 
 		// fps
 		long dureeBoucle = 1000000 / fps;
-		System.out.println(" ---> duree d'une boucle " + dureeBoucle / 1000.);
+		System.out.println(" ---> duree d'une boucle " + dureeBoucle / 1000. + "\n");
 
 		// lancement
 		Thread.sleep(1000);
@@ -87,7 +77,6 @@ public class BouclePrincipale {
 				(jeuPhysique.display.getHeight()/2) -
 				(jeuPhysique.physicsEngine.world.map.size()/2) + is.top
 			);
-			MapDisplay.instance.repaint();
 		}
 		long l2 = System.currentTimeMillis();
 

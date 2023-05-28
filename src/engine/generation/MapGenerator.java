@@ -230,27 +230,39 @@ public class MapGenerator {
         startRoom.setRoomPossibleDirections(new Directions[] {Directions.UP});
         roomsGrid.setCell(countX/2, countY/2, startRoom);
         rooms.add(roomsGrid.getCell(countX/2, countY/2));
-
         for(int i = 0; i < totalRoomCount; i++) {
+
             //Searches for available spots
             ArrayList<Spot> availableSpots = getAvailableSpots(roomsGrid);
 
             // Creates new room at a random available spot
             Random rand = new Random();
             Spot newRoomSpot = availableSpots.get(rand.nextInt(availableSpots.size()));
-            roomsGrid.setCell(newRoomSpot.getSpot(), new Room(w, Directions.values()));
 
-            // Links the new room
-            newRoomSpot.getOrigin().getContent().linkRoom(
-                newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
-            );
-            linkRoom(roomsGrid, newRoomSpot);
+            if(i == totalRoomCount-1) {
+                roomsGrid.setCell(newRoomSpot.getSpot(), endRoom);
+
+                // Links the last room
+                newRoomSpot.getOrigin().getContent().linkRoom(
+                    newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
+                );
+            } else {
+                roomsGrid.setCell(newRoomSpot.getSpot(), new Room(w, Directions.values()));
+
+                // Links the new room
+                newRoomSpot.getOrigin().getContent().linkRoom(
+                    newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
+                );
+                linkRoom(roomsGrid, newRoomSpot);
+            }
             
             //Register the new room
             rooms.add(newRoomSpot.getSpot());
         }
 
         Map map = generateMap(rooms, countX, countY);
+        map.startRoom = startRoom;
+        map.endRoom = endRoom;
         
         map.setActiveRoom(rooms.get(0).getContent().getId());
         return map;
@@ -262,7 +274,6 @@ public class MapGenerator {
         rooms.forEach(cell->{
             map.addRoom(cell.getContent(), cell.getCoords()[0], cell.getCoords()[1]);
             cell.getContent().setTileMap(generateTileMap(cell.getContent()));
-            System.out.println(cell.getContent().toString());
         });
         return map;
     }
