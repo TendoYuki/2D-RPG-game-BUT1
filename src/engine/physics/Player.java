@@ -51,6 +51,9 @@ public class Player extends Entity{
 	/** Whether or not the player can attack */
 	private boolean canAttack = true;
 
+    /** Items */
+    public ArrayList<Item> inventory = new ArrayList<Item>();
+
 	/** Zone in which the player can attack other entities */
 	private TriggerZone attackZone = new TriggerZone(25, 25);
 
@@ -81,13 +84,32 @@ public class Player extends Entity{
 	public void update() {
 		super.update();
 
-		ArrayList<Enemy> cpy = new ArrayList<Enemy>(world.map.activeRoom.enemies);
+		ArrayList<Enemy> cpyEnemies = new ArrayList<Enemy>(world.map.activeRoom.enemies);
 
-		for(Enemy enemy: cpy) {
+		for(Enemy enemy: cpyEnemies) {
 			if(isInTriggerZone(enemy,attackZone) && canAttack) {
 				System.out.println(enemy.getHealth());
 				canAttack = false;
 				attack(enemy);
+				TimerTask task = new TimerTask() {
+					@Override
+					public void run() {
+						canAttack = true;
+					}
+				};
+				Timer timer = new Timer("Timer");
+				long delay = 2500L;
+				timer.schedule(task, delay);
+			}
+		}
+
+		ArrayList<Boss> cpyBosses = new ArrayList<Boss>(world.map.activeRoom.bosses);
+
+		for(Boss boss: cpyBosses) {
+			if(isInTriggerZone(boss,attackZone) && canAttack) {
+				System.out.println(boss.getHealth());
+				canAttack = false;
+				attack(boss);
 				TimerTask task = new TimerTask() {
 					@Override
 					public void run() {
@@ -107,6 +129,13 @@ public class Player extends Entity{
 	 */
 	public void addgems(int gems){
 		this.gems += gems;
+	}
+
+	/**  Adds gems to the player
+	 * @param gems 
+	 */
+	public void addToInventory(Item item){
+		inventory.add(item);
 	}
 
 	/** Changes player's gems count

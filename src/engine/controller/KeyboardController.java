@@ -41,15 +41,19 @@ public class KeyboardController implements KeyListener {
 	/** opens the map*/
 	public static boolean map = false;
 
-	
+	/** Shows the next dialog */
+	public static boolean nextDialog = false;
+
+	/** Wheter or not the shop must be closed */
+	public static boolean closeShop = true;
+
 	/** 
-	 * @param arg0
+	 * @param e
 	 */
 	// constructeur avec affichage du controleur ou non.
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyTyped(KeyEvent e) {
 		
 	}
 
@@ -92,6 +96,10 @@ public class KeyboardController implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_M) {
 			map = true;
 		}
+		// F key
+		if (e.getKeyCode() == KeyEvent.VK_F){
+			nextDialog = true;
+		}
 	}
 
 	@Override
@@ -116,7 +124,15 @@ public class KeyboardController implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_M) {
 			map = false;
 		}
-
+		// F key
+		if (e.getKeyCode() == KeyEvent.VK_F){
+			nextDialog = false;
+		}
+		// Escape key
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			closeShop = true;
+			canMove = true;
+		}	
 	}
 
 }

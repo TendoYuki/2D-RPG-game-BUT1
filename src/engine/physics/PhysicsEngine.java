@@ -140,8 +140,29 @@ public class PhysicsEngine {
 				}
 			}
 
+			/** Checks for collision with the bosses and the world border */
+			for (Boss boss : world.map.activeRoom.bosses) {
+				if(boss.px+boss.width > world.getWorldBorder().width) {
+					boss.px = world.getWorldBorder().width-boss.width-2;
+					boss.vx = boss.vx * -0.9;
+				}
+				if(boss.px <= 0) {
+					boss.px = 2;
+					boss.vx = boss.vx * -0.9;
+				}
+				if(boss.py+boss.height > world.getWorldBorder().height) {
+					boss.py = world.getWorldBorder().height-boss.height-2;
+					boss.vy = boss.vy * -0.9;
+				}
+				if(boss.py <= 0) {
+					boss.py = 2;
+					boss.vy = boss.vy * -0.9;
+				}
+			}
+			
 			for (Enemy enemy : world.map.activeRoom.enemies) {
 				Collision col = Collision.collision(enemy, world.player);
+				/** Checks for collision with the enemy and the player */
 				if (Collision.collision(enemy, world.player) != null) {
 					world.player.px = world.player.px - (col.correctionValue * Math.cos(col.collisionAngle));
 					world.player.py = world.player.py - (col.correctionValue * Math.sin(col.collisionAngle));
@@ -150,6 +171,7 @@ public class PhysicsEngine {
 					enemy.py = enemy.py + (col.correctionValue * Math.sin(col.collisionAngle));
 				}
 				
+			/** Checks for collision with the enemies and the enemy */
 				for (Enemy enemy1 : world.map.activeRoom.enemies) {
 					Collision col1 = Collision.collision(enemy, enemy1);
 					if (!enemy.equals(enemy1) && Collision.collision(enemy, enemy1) != null) {
@@ -161,6 +183,19 @@ public class PhysicsEngine {
 					}
 				}
 			}
+			
+			for (Boss boss : world.map.activeRoom.bosses) {
+				Collision col = Collision.collision(boss, world.player);
+				/** Checks for collision with the boss and the player */
+				if (Collision.collision(boss, world.player) != null) {
+					world.player.px = world.player.px - (col.correctionValue * Math.cos(col.collisionAngle));
+					world.player.py = world.player.py - (col.correctionValue * Math.sin(col.collisionAngle));
+	
+					boss.px = boss.px + (col.correctionValue * Math.cos(col.collisionAngle));
+					boss.py = boss.py + (col.correctionValue * Math.sin(col.collisionAngle));
+				}
+			}
+			
 			for (NPC npc : world.map.activeRoom.npcs) {
 				Collision col = Collision.collision(npc, world.player);
 				if (col != null) {

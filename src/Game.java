@@ -16,6 +16,7 @@ import engine.hud.npc.DialogHud;
 import engine.hud.player.PlayerHud;
 import engine.hud.shop.Shop;
 import engine.main.GamePhysics;
+import engine.physics.Boss;
 import engine.physics.Enemy;
 import engine.physics.PhysicsEngine;
 import engine.physics.World;
@@ -42,7 +43,6 @@ public class Game {
 
 
         PlayerHud playerHud;
-        Shop shop;
         Menu menu;
         GameOver gameOver;
         DialogHud npcHud;
@@ -62,10 +62,10 @@ public class Game {
         endRoom.lockRoom();
 
         world.setMap(MapGenerator.GenerateMap(world, startRoom, endRoom, 10, 5, 5));
-        MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(
+        MapGenerator.populateMap(world.map, 0, 1, new ArrayList<Integer>(
             Arrays.asList(startRoom.getId(), endRoom.getId()))
         );
-        world.setPlayer(0, 0, 256,20, 100, 10);
+        world.setPlayer(0, 0, 256,20, 100, 1000);
         display = new Display(physicsEngine.world, world.map);
 
         DialogHud doorHud = new DialogHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
@@ -89,8 +89,8 @@ public class Game {
         world.mapHud = new MapHud(
             display,
             world.map,
-            (display.getWidth() / 2 - (int) (world.map.size()/1.4)/2) -5,
-            (display.getHeight() / 2 - (int) (world.map.size()/1.4)/2) -15,
+            (display.getWidth() / 2 - (int) (world.map.size()/1.4)/2) ,
+            (display.getHeight() / 2 - (int) (world.map.size()/1.4)/2) + 27 ,
             (int) (world.map.size()/1.4),
             (int) (world.map.size()/1.4)
         );
@@ -164,23 +164,23 @@ public class Game {
         });
 
         // Adding huds
-        shop = new Shop(
+        world.shop = new Shop(
             display,
             world.player,
-            (display.getWidth() / 2 - (int) (512 / 1.4) / 2) -5,
-            (display.getHeight() / 2 - (int) (512 / 1.4) / 2) -15,
+            (display.getWidth() / 2 - (int) (512 / 1.4) / 2),
+            (display.getHeight() / 2 - (int) (512 / 1.4) / 2)  + 27 ,
             (int) (512 / 1.4),
             (int) (512 / 1.4)
         );
 
-        playerHud = new PlayerHud(display, world.player, shop);
+        playerHud = new PlayerHud(display, world.player, world.shop);
         playerHud.setIsShown(false);
         playerHud.setInteractable(false);
         world.addHud("hud", playerHud);
 
-        shop.setIsShown(false);
-        shop.setInteractable(false);
-        world.addHud("shop", shop);
+        world.shop.setIsShown(false);
+        world.shop.setInteractable(false);
+        world.addHud("shop", world.shop);
 
         menu = new Menu(display, playerHud,0, 0, display.getWidth(), display.getHeight());
         world.addHud("menu", menu);
@@ -239,11 +239,17 @@ public class Game {
                         for(Enemy enemy: world.map.activeRoom.enemies) {
                             playerHud.removeElement(enemy.healthBar);
                         }
+                        for(Boss boss: world.map.activeRoom.bosses) {
+                            playerHud.removeElement(boss.healthBar);
+                        }
                         world.map.setActiveRoom(up.getId());
                         world.player.py = 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: up.enemies) {
                             playerHud.addElement(enemy.healthBar);
+                        }
+                        for(Boss boss: up.bosses) {
+                            playerHud.addElement(boss.healthBar);
                         }
                     } else {
                         DialogController.setCurrentDialog(bossDoorClosed);
@@ -271,11 +277,17 @@ public class Game {
                         for(Enemy enemy: world.map.activeRoom.enemies) {
                             playerHud.removeElement(enemy.healthBar);
                         }
+                        for(Boss boss: world.map.activeRoom.bosses) {
+                            playerHud.removeElement(boss.healthBar);
+                        }
                         world.map.setActiveRoom(left.getId());
                         world.player.px = world.map.getActiveRoom().getTileMap().size() - 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: left.enemies) {
                             playerHud.addElement(enemy.healthBar);
+                        }
+                        for(Boss boss: left.bosses) {
+                            playerHud.addElement(boss.healthBar);
                         }
                     } else {
                         DialogController.setCurrentDialog(bossDoorClosed);
@@ -303,11 +315,17 @@ public class Game {
                         for(Enemy enemy: world.map.activeRoom.enemies) {
                             playerHud.removeElement(enemy.healthBar);
                         }
+                        for(Boss boss: world.map.activeRoom.bosses) {
+                            playerHud.removeElement(boss.healthBar);
+                        }
                         world.map.setActiveRoom(down.getId());
                         world.player.py = world.map.getActiveRoom().getTileMap().size() - 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: down.enemies) {
                             playerHud.addElement(enemy.healthBar);
+                        }
+                        for(Boss boss: down.bosses) {
+                            playerHud.addElement(boss.healthBar);
                         }
                     } else {
                         DialogController.setCurrentDialog(bossDoorClosed);
@@ -335,11 +353,17 @@ public class Game {
                         for(Enemy enemy: world.map.activeRoom.enemies) {
                             playerHud.removeElement(enemy.healthBar);
                         }
+                        for(Boss boss: world.map.activeRoom.bosses) {
+                            playerHud.removeElement(boss.healthBar);
+                        }
                         world.map.setActiveRoom(right.getId());
                         world.player.px = 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: right.enemies) {
                             playerHud.addElement(enemy.healthBar);
+                        }
+                        for(Boss boss: right.bosses) {
+                            playerHud.addElement(boss.healthBar);
                         }
                     } else {
                         DialogController.setCurrentDialog(bossDoorClosed);

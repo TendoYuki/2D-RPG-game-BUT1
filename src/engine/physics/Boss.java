@@ -16,6 +16,7 @@ public class Boss extends Entity {
 	/** Sprites of the enemy */
 	EnemySprites sprite;
 
+
 	/** HealthBar of the enemy */
 	public HealthBar healthBar;
     /**
@@ -54,6 +55,8 @@ public class Boss extends Entity {
     @Override
     public void handleDeath() {
         world.bossDefeated = true;
+		world.map.activeRoom.bosses.remove(world.map.activeRoom.bosses.indexOf(this));
+		world.huds.get("hud").removeElement(healthBar);
     }   
 
     /** Update called every frame */
@@ -63,7 +66,9 @@ public class Boss extends Entity {
 		int[] c = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
 		healthBar.setX(c[0]);
 		healthBar.setY(c[1]-20);
+		System.out.println("Vie du boss : "+ super.getHealth());
 	}
+
 
 	/** Checks if the given enemy is equal to the enemy */
     @Override

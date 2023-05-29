@@ -17,9 +17,11 @@ import java.util.HashMap;
 
 import engine.controller.Control;
 import engine.controller.KeyboardController;
+import engine.dialog.DialogController;
 import engine.generation.Map;
 import engine.hud.Hud;
 import engine.hud.map.MapHud;
+import engine.hud.shop.Shop;
 import engine.tiles.TileMap;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
@@ -50,6 +52,9 @@ public class World {
 
     /** Hud displaying the map */
     public MapHud mapHud;
+
+    /** Hud displaying the shop */
+    public Shop shop;
 
     /**
      * Creates a world
@@ -122,6 +127,11 @@ public class World {
     /** Updates the world */
     public void update() {
         mapHud.setIsShown(KeyboardController.map);
+        if(KeyboardController.nextDialog && DialogController.getCurrentDialog() !=null && huds.get("npc").isShown()){
+            DialogController.getCurrentDialog().nextLine();
+            KeyboardController.nextDialog = false;
+        }
+        shop.setIsShown(!KeyboardController.closeShop);
         if(map.enemiesCount() == 0) {
             map.endRoom.unlockRoom();
         }

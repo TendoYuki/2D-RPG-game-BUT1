@@ -48,5 +48,6 @@ public class CloseButton extends Button {
         shop.setInteractable(false);   
         shop.setIsShown(false);
         KeyboardController.canMove = true;
+        KeyboardController.closeShop = true;
     }
 }

@@ -48,6 +48,7 @@ public class OpenShop extends HudElement{
 
     @Override
     public void onClick() {
+        KeyboardController.closeShop = !KeyboardController.closeShop;
         shop.setIsShown(true);
         shop.setInteractable(true);
         KeyboardController.canMove = false;
