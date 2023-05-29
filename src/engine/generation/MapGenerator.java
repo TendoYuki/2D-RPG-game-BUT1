@@ -221,10 +221,9 @@ public class MapGenerator {
             ) {
                 int id = roomCell.getContent().getId();
                 Random rand = new Random();
-                int ct = rand.nextInt(minEnemyCount, maxEnemyCount);
-                if(ct == 0 && rand.nextInt(minEnemyCount, maxEnemyCount)%2 == 0)
-                    ct = rand.nextInt(minEnemyCount, maxEnemyCount);
-
+                int ct = rand.nextInt(maxEnemyCount- minEnemyCount)+minEnemyCount;
+                if(ct == 0 && rand.nextInt(5)%2 == 0)
+                    ct = rand.nextInt(maxEnemyCount- minEnemyCount)+minEnemyCount;
 
                 ArrayList<Coords> possiblePositions = new ArrayList<Coords>();
 
@@ -264,7 +263,7 @@ public class MapGenerator {
                 for(int i = 0; i < ct ; i++) {
                     try{
                         Random randLevel = new Random();
-                        int level = randLevel.nextInt(id-1,id+1);
+                        int level = randLevel.nextInt((id+1)-(id-1))+id-1;
                         Coords coords = possiblePositions.get(rand.nextInt(possiblePositions.size()));  
                         roomCell.getContent().addEnemy(
                             0,
@@ -284,13 +283,13 @@ public class MapGenerator {
                                 }
                         }
                     }
-                    catch (Exception e) {}   
+                    catch (Exception e) { }   
                      
                 }  
                 Room room = roomCell.getContent();
                 if(room.enemies.size() == 0){
                     // Place gems in the middle of the room :D 
-                    for(int i = 0; i < rand.nextInt(5,10) ; i++) {
+                    for(int i = 0; i < rand.nextInt(5)+5 ; i++) {
                         try{
                             Coords coords = possiblePositions.get(rand.nextInt(possiblePositions.size()));  
                             room.items.add(new Gem(

@@ -2,14 +2,21 @@ package engine.hud.map;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import engine.generation.Map;
 import engine.hud.HudElement;
 import engine.generation.Room;
 import java.util.Map.Entry;
+
+import javax.imageio.ImageIO;
+
 import java.awt.FontMetrics;
 import engine.tiles.Directions;
 import engine.tiles.GridCell;
+import engine.view.Sprite;
 /** MapHudBackground class */
 public class MapHudBackground extends HudElement{
     /** The map to draw */
@@ -29,9 +36,20 @@ public class MapHudBackground extends HudElement{
     @Override
     public void draw(Graphics g) {
         Color c = g.getColor();
-        g.setColor(new Color(100, 100, 100, 150));
+        g.setColor(new Color(100, 100, 100, 0));
         
         g.fillRect(getY()  , getX() , getWidth(), getHeight());
+        try{
+            new Sprite(
+                getX(),
+                getY(),
+                1,
+                ImageIO.read(
+                    new File("assets/misc/MenuBackground.png")
+                )
+                
+            ).draw(g, getX(), getY());;
+        } catch (Exception e) { }
         g.setColor(c);
 
 
@@ -43,12 +61,13 @@ public class MapHudBackground extends HudElement{
                 int y = getY() +10 + roomCell.getCoords()[1]*(roomsize + interRoomOffset) + 10;
                 if(map.activeRoom.equals(roomCell.getContent()))
                     g.fillOval(x+roomsize/4,y+roomsize/4,roomsize/2,roomsize/2);
+
                 g.drawRect(
                     x,
                     y,
                     roomsize,
                     roomsize
-                );
+                ); 
                 
                 
                 String str = "" +roomCell.getContent().getId();
