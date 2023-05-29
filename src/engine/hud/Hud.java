@@ -24,7 +24,7 @@ public abstract class Hud{
     /** Height of the hud */
     private int height;
     /** Coordinate offset */
-    private int offsetY;
+    int offsetY;
     /** The display  */
     private Display display;
     /** Constructs a hud 

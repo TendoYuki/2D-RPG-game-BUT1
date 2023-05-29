@@ -15,7 +15,7 @@ public class Tile {
     /** The id of the tile */
     private int id;
     /** The scale factor */
-    private int scaleFactor;
+    int scaleFactor;
     /** Returns the position x
      * @return
      */

@@ -2,12 +2,10 @@ package engine.view;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Map.Entry;
 
 import javax.swing.*;
 
 import engine.physics.*;
-import engine.tiles.Directions;
 import engine.generation.Map;
 import engine.hud.Hud;
 /** Display class */

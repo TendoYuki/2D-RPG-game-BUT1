@@ -1,9 +1,6 @@
 package engine.physics;
 
 import java.util.ArrayList;
-import java.util.Map.Entry;
-
-import engine.tiles.Directions;
 import engine.trigger.TriggerMap;
 
 public class PhysicsEngine {
