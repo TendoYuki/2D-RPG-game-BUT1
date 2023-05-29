@@ -15,24 +15,29 @@ import engine.physics.PhysicalObject;
 import engine.physics.Player;
 
 /**
- *
+ * CoordinateSystem class
  * @author Pierre-Frederic Villard
  */
 public class CoordinateSystem {
-
+    /** The window height */
     private static int windowHeight;
-
+    /** Updates the window height 
+     * @param windowHeight
+    */
     public static void setWindowHeight(int windowHeight) {
         CoordinateSystem.windowHeight = windowHeight;
     }
 
     /**
-     *
+     * The player
      */
     public static Player h;
 
     /**
      * Changes the corordinate system from y top -> bottom to y bottom -> top
+     * @param o
+     * @param x0
+     * @param y0
      * @return
      */
     public static int[] changeCS(PhysicalObject o, int x0, int y0) {

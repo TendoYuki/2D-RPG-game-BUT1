@@ -22,27 +22,22 @@ package engine.controller;
 public class Control {
 
     /**
-     *
+     * left keybind
      */
     public boolean gauche;
 
     /**
-     *
+     * right keybind
      */
     public boolean droite;
 
     /**
-     *
+     * up keybind
      */
     public boolean haut;
 
     /**
-     *
+     * down keybind
      */
     public boolean bas;
-
-    /**
-     *
-     */
-    public boolean enAir;
 }

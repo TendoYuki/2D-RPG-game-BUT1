@@ -8,10 +8,15 @@ import javax.imageio.ImageIO;
 import engine.controller.KeyboardController;
 import engine.hud.Button;
 import engine.view.Sprite;
-
+/** QuitButton class */
 public class QuitButton extends Button {
 
-
+    /** Constructs a quit button 
+     * @param x 
+     * @param y
+     * @param width
+     * @param height
+    */
     public QuitButton(int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(

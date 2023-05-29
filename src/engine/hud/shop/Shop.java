@@ -5,9 +5,16 @@ import java.awt.Graphics;
 import engine.hud.Hud;
 import engine.physics.Player;
 import engine.view.Display;
-
+/** Shop class */
 public class Shop extends Hud{
-
+	/** Constructs a shop 
+	 * @param display
+	 * @param player
+	 * @param x
+     * @param y
+     * @param width
+     * @param height
+	*/
 	public Shop(Display display, Player player, int x, int y, int width, int height) {
 		super(display, 0,x, y, width, height);
 		try{
@@ -24,7 +31,9 @@ public class Shop extends Hud{
 		}
 		catch(Exception e) {}
 	}
-
+	/** Draws the shop 
+	 * @param g
+	*/
     public void draw(Graphics g) {
         super.draw(g);
         int topInset = getDisplay().getFrame().getInsets().top;

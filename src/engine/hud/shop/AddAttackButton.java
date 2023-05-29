@@ -8,11 +8,17 @@ import javax.imageio.ImageIO;
 import engine.hud.Button;
 import engine.physics.Player;
 import engine.view.Sprite;
-
+/** AddAttackButton class */
 public class AddAttackButton extends Button {
-
+    /** The player  */
     Player player;
-
+    /** Constructs the button to buy attack stats 
+     * @param player
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public AddAttackButton(Player player, int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(

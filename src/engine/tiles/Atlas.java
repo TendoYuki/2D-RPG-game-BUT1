@@ -25,8 +25,8 @@ public class Atlas {
     /**
      * Creates an atlas that binds an integer to a sprite from a spriteSheet
      * 
-     * @param spritesSheetURL Path to the sprite sheet
-     * @param spritesSize     Size of a sprite in the spriteSheet
+     * @param spriteSheetURL Path to the sprite sheet
+     * @param spriteSize     Size of a sprite in the spriteSheet
      * @param rows            Number of sprite in a row
      * @param cols            Number of sprite in a column
      * @param scaleFactor     Scale factor of the atlas's sprites
@@ -58,8 +58,8 @@ public class Atlas {
     /**
      * Creates an atlas that binds an integer to a sprite from a spriteSheet
      * 
-     * @param spritesSheetURL Path to the sprite sheet
-     * @param spritesSize     Size of a sprite in the spriteSheet
+     * @param spriteSheetURL Path to the sprite sheet
+     * @param spriteSize     Size of a sprite in the spriteSheet
      * @param rows            Number of sprite in a row
      * @param cols            Number of sprite in a column
      */
@@ -93,18 +93,34 @@ public class Atlas {
         return ret;
     }
     
+    /**
+     * Returns the size of a sprite
+     * @return
+     */
     public int getSpriteSize() {
         return spriteSize;
     }
 
+    /**
+     * Returns the number of rows
+     * @return
+     */
     public int getRows() {
         return rows;
     }
 
+    /**
+     * Returns the number of columns
+     * @return
+     */
     public int getCols() {
         return cols;
     }
     
+    /**
+     * Returns the count of different sprites
+     * @return
+     */
     public int getSpriteCount() {
         return spriteAtlas.size();
     }

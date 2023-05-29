@@ -14,18 +14,14 @@ package engine.controller;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-//permet de faire un controleur de clavier
-
 /**
  *
  * @author Pierre-Frederic Villard
  */
 public class KeyboardController implements KeyListener {
 
-	// fin du jeu
-
 	/**
-	 *
+	 * end of the game
 	 */
 	public static boolean fin = false;
 
@@ -38,53 +34,61 @@ public class KeyboardController implements KeyListener {
 	// la variable de controle
 
 	/**
-	 *
+	 * The controller
 	 */
 	public Control c;
 
+	/** opens the map*/
 	public static boolean map = false;
 
+	
+	/** 
+	 * @param arg0
+	 */
 	// constructeur avec affichage du controleur ou non.
 
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
-	 *
+	 * keyboard controller
 	 * @param affiche
 	 */
 	public KeyboardController(boolean affiche) {
 		c = new Control();
 		this.affiche = affiche;
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// vide
-	}
-
+	
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(canMove){
-			// touche gauche
+			// left key
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 				c.gauche = true;
 			}
-			// touche droite
+			// right key
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				c.droite = true;
 			}
-			// touche up
+			// up key
 			if (e.getKeyCode() == KeyEvent.VK_UP) {
 				c.haut = true;
 			}
-			// touche down
+			// down key
 			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				c.bas = true;
 			}
-			// touche up
+			// Q key
 			if (e.getKeyCode() == KeyEvent.VK_Q) {
 				fin = true;
 			}
 			
 		}
+		// M key
 		if (e.getKeyCode() == KeyEvent.VK_M) {
 			map = true;
 		}
@@ -92,23 +96,23 @@ public class KeyboardController implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// touche gauche
+		// left key
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			c.gauche = false;
 		}
-		// touche droite
+		// right key
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			c.droite = false;
 		}
-		// touche up
+		// up key
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			c.haut = false;
 		}
-		// touche down
+		// down key
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			c.bas = false;
 		}
-
+		// M key
 		if (e.getKeyCode() == KeyEvent.VK_M) {
 			map = false;
 		}

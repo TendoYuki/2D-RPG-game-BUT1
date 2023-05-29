@@ -18,16 +18,15 @@ import java.util.HashMap;
 //distributeur de sprites
 
 /**
- *
+ * Sprites class
  * @author Pierre-Frederic Villard
  */
 public abstract class Sprites {
 
-    // l'activit�
+    /** The activity */
     String activity;
-    // compteur interne
+    /**compteur interne */
     int iteration;
-    // numero de la frame
 
     /**
      *
@@ -80,7 +79,9 @@ public abstract class Sprites {
             num = 0;
         }
     }
-
+    /** Returns the activity 
+     * @return
+    */
     public String getActivity() {
         return activity;
     }

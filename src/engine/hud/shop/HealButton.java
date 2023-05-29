@@ -8,11 +8,17 @@ import javax.imageio.ImageIO;
 import engine.hud.Button;
 import engine.physics.Player;
 import engine.view.Sprite;
-
+/** HealButton class */
 public class HealButton extends Button {
-
+    /** The player */
     Player player;
-
+    /** Constructs the healing button 
+     * @param player
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public HealButton(Player player, int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(

@@ -11,21 +11,26 @@ import engine.generation.Room;
 import engine.view.CoordinateSystem;
 import engine.view.NPCSprites;
 
+/** NPC Class */
 public class NPC extends Entity {
 
+	/** Sprites of the npc */
 	NPCSprites sprite;
 
+	/** Whether or not he npc is interacting */
 	public static boolean interacting = false;
 
-	private int triggerZoneWidth = 25;
-	private int triggerZoneHeight = 25;
+	/** Zone in which the player interacts with the npc */
+	private TriggerZone interactZone = new TriggerZone(25, 25);
 
+	/** Dialogs of the npc */
 	private HashMap<String, Dialog> dialogs = new HashMap<String, Dialog>();
 
+	/** Active dialog of the npc */
 	private Dialog activeDialog;
 
 	/**
-	 *
+	 * Creates a new npc
 	 * @throws IOException
 	 */
 	public NPC(World w, Room r) throws IOException {
@@ -37,16 +42,25 @@ public class NPC extends Entity {
 		width  = sprite.sprites.get("fixe").getSizeX();
 	}
 
+	/**
+	 * Adds a new dialog to the npc
+	 * @param dialogName
+	 * @param dialog
+	 */
 	public void addDialog(String dialogName, Dialog dialog) {
 		dialogs.put(dialogName, dialog);
 	}
 
+	/**
+	 * Sets the active dialog to the corresponding one given in parameter
+	 * @param dialogName
+	 */
 	public void setActiveDialog(String dialogName) {
 		activeDialog = dialogs.get(dialogName);
 	}
 
 	/**
-	 *
+	 * Draws the npc
 	 * @param g
 	 */
 	public void draw(Graphics g) {
@@ -59,19 +73,19 @@ public class NPC extends Entity {
 		sprite.animate();
 	}
 
-	/** the player is near the NPC */
+	/** Checks if the player is near the NPC */
 	public boolean isInTriggerZone(){
 		return (
-			world.player.px+world.player.width > this.px- triggerZoneWidth/2 &&
-			world.player.px < this.px + width + triggerZoneWidth/2
+			world.player.px+world.player.width > this.px- interactZone.getWidth()/2 &&
+			world.player.px < this.px + width + interactZone.getWidth()/2
 		) &&
 		( 
-			world.player.py+world.player.height > this.py - triggerZoneHeight/2 &&
-			world.player.py < this.py + height + triggerZoneHeight/2
+			world.player.py+world.player.height > this.py - interactZone.getHeight()/2 &&
+			world.player.py < this.py + height + interactZone.getHeight()/2
 		);
 	}
 	/**
-	 *
+	 * Interaction logic
 	 */
 	public void interact() {
 		world.huds.get("npc").setIsShown(true);

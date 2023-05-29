@@ -5,15 +5,24 @@ import java.awt.Graphics;
 import engine.hud.Hud;
 import engine.hud.player.PlayerHud;
 import engine.view.Display;
-
+/** Menu class */
 public class Menu extends Hud{
-
+	/** Player hud */
 	private PlayerHud pHud;
-
+	/** Background of the menu */
 	MenuBackground menuBackground;
+	/** Start button */
 	StartButton startButton;
+	/** Quit button */
 	QuitButton quitButton;
-
+	/** Constructs a menu 
+	 * @param display
+	 * @param pHud
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	*/
 	public Menu(Display display, PlayerHud pHud, int x, int y, int width, int height) {
 		super(display, x, y, width, height);
 		this.pHud = pHud;
@@ -29,11 +38,15 @@ public class Menu extends Hud{
 		}
 		catch(Exception e) {}
 	}
-
+	/** Returns the player hud 
+	 * @return
+	*/
 	public PlayerHud getpHud() {
 		return pHud;
 	}
-
+	/** Draws the menu 
+	 * @param g
+	*/
     public void draw(Graphics g) {
         super.draw(g);
         int topInset = getTopInset();

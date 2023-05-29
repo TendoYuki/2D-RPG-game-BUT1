@@ -7,11 +7,17 @@ import javax.imageio.ImageIO;
 
 import engine.hud.Button;
 import engine.view.Sprite;
-
+/** StartButton class */
 public class StartButton extends Button {
-
+    /** The menu */
     private Menu menu;
-
+    /** Constructs a start button 
+     * @param menu
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public StartButton(Menu menu, int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(

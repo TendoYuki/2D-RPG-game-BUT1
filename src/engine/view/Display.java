@@ -10,27 +10,23 @@ import engine.physics.*;
 import engine.tiles.Directions;
 import engine.generation.Map;
 import engine.hud.Hud;
-
+/** Display class */
 public class Display extends JPanel {
 
-	// le monde a affcher
+	/** The world */
 	public World m;
-
-	// l'afficheur de Decor
-	// public Scene decor;
-
+	/** The map */
 	Map map;
 
-	// double buffering
+	/** The buffer strategy */
 	public BufferStrategy bs;
-
+	/** The jframe */
 	private JFrame frame;
 
 
-	// creation d'un afficheur
-
 	/**
-	 *
+	 * Constructs a display
+	 * @param map
 	 * @param monde
 	 */
 	public Display(World monde, Map map) {
@@ -62,21 +58,9 @@ public class Display extends JPanel {
 		this.frame = f;
 	}
 
-	// permet de faire un affichage
-
-	// Renvoie le decor
-	// public Scene getDecor() {
-	// 	return decor;
-	// }
-
-	// public void setDecor(Scene decor) {
-	// 	this.decor = decor;
-	// }
-
-	
 
 	/**
-	 *
+	 * Renders the display
 	 */
 	public void render() {
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
@@ -91,12 +75,7 @@ public class Display extends JPanel {
 		// for (PhysicalObject obj : m.objects) {
 		// 	obj.draw(g);
 		// }
-
-		// Draws walls
-		for(Entry<Directions, Wall> wall: m.getWorldBorder().getBorderWalls().entrySet()){
-			wall.getValue().draw(g);
-		}
-
+		
 		// affiche les monstres
 		for (Enemy enemy : m.map.activeRoom.enemies) {
 			enemy.draw(g);
@@ -119,6 +98,7 @@ public class Display extends JPanel {
 		for (Hud hud : m.huds.values()) {
 			hud.draw(g);
 		}
+		m.huds.get("shop").draw(g);
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
@@ -127,15 +107,21 @@ public class Display extends JPanel {
 
 
 	}
-
+	/** Returns the jframe 
+	 * @return
+	*/
 	public JFrame getFrame() {
 		return frame;
 	}
-
+	/** Returns the map 
+	 * @return
+	*/
 	public Map getMap() {
 		return map;
 	}
-
+	/** Updates the map 
+	 * @param map
+	*/
 	public void setMap(Map map) {
 		this.map = map;
 	}

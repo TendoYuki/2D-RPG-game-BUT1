@@ -18,21 +18,21 @@ import java.util.HashMap;
 import engine.physics.Player;
 import engine.tiles.Atlas;
 
-
+/** PlayerSprites class */
 public class PlayerSprites extends Sprites {
-
-	Player heros;
+	/** The player */
+	Player player;
+	/** The sprite path */
 	String imageFile = "assets/char/February.png";
+	/** The atlas */
 	Atlas spriteAtlas;
-	// constructeur de table de sprites
-
 	/**
-	 *
+	 * Constructs a player sprite
 	 * @param b
 	 * @throws IOException
 	 */
 	public PlayerSprites(Player b) throws IOException {
-		this.heros = b;
+		this.player = b;
 		spriteAtlas = new Atlas(imageFile, 16, 8, 15, 2);
 		activity = "down";
 		sprites = new HashMap<String, Sprite>();
@@ -110,7 +110,11 @@ public class PlayerSprites extends Sprites {
 		// sprites.put("up-left2", spriteAtlas.get(27));
 	}
 
-	// afficheur de sprite
+	/** Draws the player sprite 
+	 * @param x
+	 * @param y
+	 * @param g
+	*/
 	public void draw(int x, int y, Graphics g) {
 		Sprite s = sprites.get("fixe");
 		if (s == null)
@@ -127,7 +131,7 @@ public class PlayerSprites extends Sprites {
 		iteration++;
 
 		int itCount = 2;
-		if(heros.vx != 0 || heros.vy !=0) {
+		if(player.vx != 0 || player.vy !=0) {
 			if (iteration > itCount) {
 				num++;
 				iteration = 0;

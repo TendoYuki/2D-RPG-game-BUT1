@@ -4,41 +4,55 @@ import java.awt.Graphics;
 
 /** Scaled grid */
 public class TileMap {
+    /** The tile grid */
     Grid<Tile> tileGrid;
-
+    /** The tile atlas */
     Atlas tileAtlas;
-
+    /** The Keys of the tile atlas */
     int[][] tilesAtlasKey;
-
+    /** The scale */
     int scale;
-
+    /** The scale factor  */
     int scaleFactor;
-
-
+    /** The position x of the tilemap */
     private int posX = 0;
+    /** The position y of the tilemap */
     private int posY = 0; 
-
+    /** Returns position x
+     * @return
+    */
     public int getPosX() {
         return posX;
     }
-
+    /** Updates the position x 
+     * @param posX
+    */
     public void setPosX(int posX) {
         this.posX = posX;
         updateTilesPositons();
     }
-
+    /** Returns the position y 
+     * @return
+    */
     public int getPosY() {
         return posY;
     }
-
+    /** Updates the position y 
+     * @param posY
+    */
     public void setPosY(int posY) {
         this.posY = posY;
         updateTilesPositons();
     }
-
+    /** Returns the size x of the tile grid 
+     * @return
+    */
     public int getCountX() {
         return tileGrid.getxCount();
     }
+    /** Returns the size y of the tile grid 
+     * @return
+    */
     public int getCountY() {
         return tileGrid.getyCount();
     }
@@ -76,7 +90,7 @@ public class TileMap {
         }
         this.tileAtlas = tileAtlas;
     }
-
+    /** Updates the tiles positions */
     public void updateTilesPositons() {
         for(int y = 0; y < tilesAtlasKey.length; y++) {
             for(int x = 0; x < tilesAtlasKey[0].length; x++) {
@@ -113,11 +127,15 @@ public class TileMap {
             }
         }
     }
-
+    /** Returns the size of the tilemap 
+     * @return
+    */
     public int size() {
         return tileGrid.getxCount() * tileAtlas.getSpriteSize() * scaleFactor;
     }
-
+    /** Returns the number of tiles in the tilemap 
+     * @return
+    */
     public int tileCount() {
         return tileAtlas.getSpriteCount();
     }

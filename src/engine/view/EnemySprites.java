@@ -23,15 +23,16 @@ import engine.tiles.Atlas;
  * @author Pierre-Frederic Villard
  */
 public class EnemySprites extends Sprites {
-
+	/** The enemy */
 	Enemy enemy;
+	/** The sprite path */
 	String imageFile = "assets/char/February.png";
+	/** The atlas */
 	Atlas spriteAtlas;
 
-	// constructeur de table de sprites
-
 	/**
-	 *
+	 * Constructs an enemy sprite
+	 * @param b
 	 * @throws IOException
 	 */
 	public EnemySprites(Enemy b) throws IOException {

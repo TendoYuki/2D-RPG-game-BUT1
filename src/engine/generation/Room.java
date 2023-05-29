@@ -17,7 +17,7 @@ import engine.tiles.Grid;
 import engine.tiles.GridCell;
 import engine.trigger.TriggerMap;
 import engine.view.Scene;
-
+/** Room class */
 public class Room extends Scene{
     /** Directions in which the room can have neighbors */
     private ArrayList<Directions> roomConstraints = new ArrayList<Directions>();
@@ -33,21 +33,23 @@ public class Room extends Scene{
 
     /** World */
     public World world;
-
+    /** Whether or not the room is locked */
     private boolean isLocked = false;
-
+    /** Returns whether or not the room is locked
+     * @return
+    */
     public boolean isLocked() {
         return isLocked;
     }
-
+    /** Locks the room */
     public void lockRoom() {
         isLocked = true;
     }
-
+    /** Unlocks the room */
     public void unlockRoom() {
         isLocked = false;
     }
-    
+    /** Items */
     public ArrayList<Item> items = new ArrayList<Item>();
 
     /**
@@ -141,6 +143,7 @@ public class Room extends Scene{
      * @return Returns all directions which are not occupied by a room and does
      * not overflow from the given grid
      * @param grid Grid
+     * @return
      */
     public List<Directions> getAvailableDirections(Grid<Room> grid) {
         ArrayList<Directions> availableDirections = new ArrayList<Directions>();
@@ -168,7 +171,7 @@ public class Room extends Scene{
     public List<Directions> getRoomConstraints() {
         return roomConstraints;
     }
-
+    /** Updates the neighboring rooms */
     private void updateNeighboringRooms() {
         for(Directions dir: Directions.values()) {
             if(roomConstraints.contains(dir)) {
@@ -231,7 +234,10 @@ public class Room extends Scene{
         addNeighbor(dir, target);
         target.addNeighbor(dir.opposite(), this);
     }
-
+    /** Checks if the given room is equal to the room 
+     * @param o
+     * @return
+    */
     public boolean equals(Object o) {
         if(!(o instanceof Room))
             return false;

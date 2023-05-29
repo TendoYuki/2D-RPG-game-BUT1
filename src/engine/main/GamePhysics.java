@@ -1,39 +1,22 @@
 package engine.main;
 
-import java.io.IOException;
-
 import engine.physics.PhysicsEngine;
 import engine.view.Display;
 
+/** GamePhysics class */
 public class GamePhysics {
 
-	// le moteur physique
+	/** The physics engine */
 	public PhysicsEngine physicsEngine;
 
-	// le rendu
+	/** The display */
 	public Display display;
-
-	public final static short ENEMY = 1;
-	public final static short PLAYER = 2;
-	public final static short DECORS = 3;
-
-	int i = 0;
-
-	// separation vue affichage
-	public GamePhysics() throws IOException {
-		// on creer le moteur physique
-		// moteurPhys=new MoteurPhysique();
-		// on creer l'afficheur du monde
-		// affiche=new Afficheur(moteurPhys.monde);
-
-	}
-
+	/** Updates the physics engine */
 	public void update() {
 		physicsEngine.update();
 	}
-
+	/** Renders the display  */
 	public void render() {
 		display.render();
-
 	}
 }

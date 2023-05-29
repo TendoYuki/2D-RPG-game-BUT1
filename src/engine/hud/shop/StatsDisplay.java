@@ -4,18 +4,26 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import engine.hud.HudElement;
-
+/** StatsDisplay class */
 public abstract class StatsDisplay extends HudElement{
-
+    /** The max value */
     int maxValue;
-
+    /** The display string */
     protected String displayString = "";
-
+    /** Constructs a stats display hud 
+     * @param maxValue
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public StatsDisplay(int maxValue, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.maxValue = maxValue;
     }
-
+    /** Returns the current value 
+     * @return
+    */
     public abstract int getCurrentValue();
 
     @Override

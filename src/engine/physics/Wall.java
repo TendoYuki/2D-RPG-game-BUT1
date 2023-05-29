@@ -1,14 +1,3 @@
-/* ========================================================== */
-/*                  Bibliotheque MoteurDeJeu                  */
-/* --------------------------------------------               */
-/* Bibliotheque pour aider la création de jeu video comme :   */
-/* - Jeux de role                                             */
-/* - Jeux de plateforme                                       */
-/* - Jeux de combat                                           */
-/* - Jeux de course                                           */
-/* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
-/* ========================================================== */
-
 package engine.physics;
 
 import java.awt.Color;
@@ -16,18 +5,10 @@ import java.awt.Graphics;
 
 import engine.view.CoordinateSystem;
 
-//un objet de type mur
-
-/**
- *
- * @author Pierre-Frederic Villard
- */
+/** Wall class */
 public class Wall extends PhysicalObject {
-
-
-
 	/**
-	 *
+	 * Constructs a wall
 	 * @param x
 	 * @param y
 	 * @param w
@@ -42,7 +23,7 @@ public class Wall extends PhysicalObject {
 	}
 
 	/**
-	 *
+	 * Draws the wall
 	 * @param g
 	 */
 	public void draw(Graphics g) {

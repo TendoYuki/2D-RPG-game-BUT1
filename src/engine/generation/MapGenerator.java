@@ -12,36 +12,53 @@ import engine.tiles.Grid;
 import engine.tiles.GridCell;
 import engine.tiles.TileMap;
 
+/** Coords class */
 class Coords {
+    /** x value of the coordinates */
     private int x;
+    /** y value of the coordinates */
     private int y;
-
+    /** Returns the x value 
+     * @return
+    */
     public int getX() {
         return x;
     }
-
+    /** Updates the x value 
+     * @param x
+    */
     public void setX(int x) {
         this.x = x;
     }
-
+    /** Returns the y value 
+     * @return
+    */
     public int getY() {
         return y;
     }
-
+    /** Updates the y value 
+     * @param y
+    */
     public void setY(int y) {
         this.y = y;
     }
-
+    /** Contructs coordinates 
+     * @param x
+     * @param y
+    */
     Coords(int x, int y) {
         this.x = x;
         this.y = y;
     }
 }
-
+/** MapGenerator class */
 public class MapGenerator {
-
+    /** Constructs a MapGenerator */
     public MapGenerator() {}
-
+    /** Returns a tilemap 
+     * @param r
+     * @return
+    */
     private static TileMap generateTileMap(Room r) {
         Atlas atlas = new Atlas(
             "assets/tiles/tilemap.png",
@@ -121,7 +138,11 @@ public class MapGenerator {
         
         return tileMap;
     }
-
+    /** Populates the map 
+     * @param map
+     * @param minEnemyCount
+     * @param maxEnemyCount
+    */
     public static void populateMap(
         Map map,
         int minEnemyCount,
@@ -129,7 +150,12 @@ public class MapGenerator {
     ) { 
         populateMap(map, minEnemyCount, maxEnemyCount, new ArrayList<Integer>());
     }
-
+    /** Populates the rooms of the map that aren't in the exclusionIndexes 
+     * @param map
+     * @param minEnemyCount
+     * @param maxEnemyCount
+     * @param exclusionIndexes
+    */
     public static void populateMap(
         Map map,
         int minEnemyCount,
@@ -242,11 +268,13 @@ public class MapGenerator {
     }
 
     /** 
+     * Generates a map
      * @param startRoom
      * @param endRoom
      * @param totalRoomCount
      * @param countX
      * @param countY
+     * @return
     */
     public static Map GenerateMap(
         World w,
@@ -298,7 +326,12 @@ public class MapGenerator {
         map.setActiveRoom(rooms.get(0).getContent().getId());
         return map;
     }
-
+    /** Generates a map 
+     * @param rooms
+     * @param countX
+     * @param countY
+     * @return
+    */
     private static Map generateMap(ArrayList<GridCell<Room>> rooms, int countX, int countY) {
         Map map = new Map(0,0, countX, countY);
 
@@ -308,7 +341,10 @@ public class MapGenerator {
         });
         return map;
     }
-
+    /** Links randomly the newRoomSpot to neighboring rooms on the grid 
+     * @param roomsGrid
+     * @param newRoomSpot
+    */
     private static void linkRoom(Grid<Room> roomsGrid, Spot newRoomSpot) {
         for(Entry<Directions, GridCell<Room>> entry: newRoomSpot.getSpot().getAdjacentCells().entrySet()) {
             // Checks if the current adjacent cell isn't null
@@ -326,7 +362,10 @@ public class MapGenerator {
             }
         }
     }
-
+    /** Returns all the available spots for a given grid 
+     * @param grid
+     * @return
+    */
     private static ArrayList<Spot> getAvailableSpots(Grid<Room> grid) {
         ArrayList<Spot> availableSpots = new ArrayList<Spot>();
 
@@ -343,43 +382,40 @@ public class MapGenerator {
                     );
             });
         });
-
-
-        // grid.forEach(cell -> {
-        //     if(!cell.isEmpty()) {
-        //         HashMap<Directions, GridCell<Room>> adjacentCells = cell.getAdjacentCells();
-        //         cell.getContent().getAvailableDirections(grid).forEach(direction->{
-        //             if(
-        //                 adjacentCells.get(direction) != null && (
-        //                     (adjacentCells.get(direction).getContent() != null &&
-        //                     adjacentCells.get(direction).getContent().getAvailableDirections().contains(direction.opposite())) ||
-        //                     adjacentCells.get(direction).getContent() == null
-        //                 )
-        //             )
-        //                 availableSpots.add(
-        //                     new Spot(cell, adjacentCells.get(direction), direction)
-        //                 );
-        //         });
-        //     }
-        // });
         return availableSpots;
     }
 }
-
+/** Spot class */
 class Spot {
+    /** Origin of the spot */
     private GridCell<Room> origin;
+    /** Direction from the origin */
     private Directions direction;
+    /** Cell of the spot */
     private GridCell<Room> spot;
-    
+    /** Returns the origin of the spot 
+     * @return
+    */
     public GridCell<Room> getOrigin() {
         return origin;
     }
+    /** Returns the direction of the spot 
+     * @return
+    */
     public Directions getDirection() {
         return direction;
     }
+    /** Returns the spot 
+     * @return
+    */
     public GridCell<Room> getSpot() {
         return spot;
     }
+    /** Constructs a spot 
+     * @param origin
+     * @param dest
+     * @param direction
+    */
     public Spot(GridCell<Room> origin, GridCell<Room> dest, Directions direction) {
         this.origin = origin;
         this.direction = direction;

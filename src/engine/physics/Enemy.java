@@ -8,15 +8,19 @@ import engine.hud.player.HealthBar;
 import engine.view.CoordinateSystem;
 import engine.view.EnemySprites;
 
+/** Enemy class */
 public class Enemy extends Entity {
+	/** AI Script of the enemy */
 	EnemyAI ai;
 
+	/** Sprites of the enemy */
 	EnemySprites sprite;
 
+	/** HealthBar of the enemy */
 	public HealthBar healthBar;
 	
 	/**
-	 *
+	 * Constructs an enemy
 	 * @throws IOException
 	 */
 	public Enemy(World w, Room r, int level) throws IOException {
@@ -35,7 +39,7 @@ public class Enemy extends Entity {
 	}
 
 	/**
-	 *
+	 * Draws an enenmy
 	 * @param g
 	 */
 	public void draw(Graphics g) {
@@ -52,6 +56,7 @@ public class Enemy extends Entity {
 		world.huds.get("hud").removeElement(healthBar);
 	}
 
+	/** Update called every frame */
 	public void update() {
 		super.update();
 		ai.update();
@@ -60,6 +65,7 @@ public class Enemy extends Entity {
 		healthBar.setY(c[1]-20);
 	}
 
+	/** Checks if the given enemy is equal to the enemy */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Enemy)) return false;

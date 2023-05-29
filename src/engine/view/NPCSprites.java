@@ -5,17 +5,18 @@ import java.util.HashMap;
 
 import engine.physics.NPC;
 import engine.tiles.Atlas;
-
+/** NPCSSprites class */
 public class NPCSprites extends Sprites {
-
+	/** The npc */
 	NPC npc;
+	/** The sprite path */
 	String imageFile = "assets/char/February.png";
+	/** The atlas */
 	Atlas spriteAtlas;
 
-	// constructeur de table de sprites
-
 	/**
-	 *
+	 * Constructs a npc sprite
+	 * @param b
 	 * @throws IOException
 	 */
 	public NPCSprites(NPC b) throws IOException {

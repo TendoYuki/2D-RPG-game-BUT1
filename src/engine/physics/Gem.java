@@ -8,18 +8,27 @@ import javax.imageio.ImageIO;
 import engine.view.CoordinateSystem;
 import engine.view.Sprite;
 
+/** Gem class */
 public class Gem extends Item {
     
+    /**
+     * Creates a new gem item
+     * @param w
+     * @param px
+     * @param py
+     */
     public Gem(World w, int px, int py){
         super(w);
         this.px = px;
         this.py = py;
     }
+    /** Pickup logic of the item */
     public void pickup(){
         // faire disparaitre l'objet
         world.player.addgems(5);
         world.map.activeRoom.items.remove(this);
     }
+    
     @Override
 	public void draw(Graphics g) {
 		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());

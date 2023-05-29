@@ -5,23 +5,21 @@ import java.awt.Insets;
 import javax.swing.JFrame;
 
 import engine.controller.KeyboardController;
-
+/** BouclePrincipale class */
 public class BouclePrincipale {
-
+	/** Frames per secons */
 	public int fps = 60;
+	/** The game physics */
 	public GamePhysics jeuPhysique;
 	// creation du controleur
 	public KeyboardController cClavier;
-
+	/** Updates the fps 
+	 * @param fps
+	*/
 	public void setFPS(int fps) {
 		this.fps = fps;
 	}
-
-	public BouclePrincipale() throws Exception {
-		// creation du jeu
-		// jeuPhysique = new JeuPhysique();
-	}
-
+	/** Runs the game loop */
 	public void lanceBouclePrincipale() throws Exception {
 
 		// ControleurClavier cClavier=new ControleurClavier(true);

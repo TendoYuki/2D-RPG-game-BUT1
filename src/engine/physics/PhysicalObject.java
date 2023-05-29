@@ -1,14 +1,3 @@
-/* ========================================================== */
-/*                  Bibliotheque MoteurDeJeu                  */
-/* --------------------------------------------               */
-/* Bibliotheque pour aider la création de jeu video comme :   */
-/* - Jeux de role                                             */
-/* - Jeux de plateforme                                       */
-/* - Jeux de combat                                           */
-/* - Jeux de course                                           */
-/* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
-/* ========================================================== */
-
 package engine.physics;
 
 import java.awt.Color;
@@ -16,133 +5,90 @@ import java.awt.Graphics;
 
 import engine.view.CoordinateSystem;
 
-/**
- *
- * @author Pierre-Frederic Villard
- */
 public class PhysicalObject {
 
-    // modele de l'objet
-    // position
-
     /**
-     *
+     * Position of the object on the x axis
      */
     public double px = 0;
 
     /**
-     *
+     * Position of the object on the y axis
      */
     public double py = 0;
 
-    // vitesse
-
     /**
-     *
+     * Speed of the object on the x axis
      */
     public double vx = 0;
-    public double vy = 0;
-    // acceleration
-    public double ax = 0, ay = 0;
-
-    // positions precedentes (
-    // utile pour colision
-
+    
     /**
-     *
+     * Speed of the object on the y axis
      */
-    public double opx,
-
-            /**
-             *
-             */
-            opy,
-
-            /**
-             *
-             */
-            ovx,
-
-            /**
-             *
-             */
-            ovy,
-
-            /**
-             *
-             */
-            oax,
-
-            /**
-             *
-             */
-            oay;
-
-    // boundingbox
+    public double vy = 0;
 
     /**
-     *
+     * Acceleration of the object on the x axis
+     */
+    public double ax = 0;
+
+    /**
+     * Acceleration of the object on the x axis
+     */
+    public double ay = 0;
+
+    /**
+     * Width of the physical object
      */
     public double width = 0;
 
     /**
-     *
+     * Height of the physical object
      */
     public double height = 0;
 
-    /**
-     *
-     */
-    public int collision = 0;
-
-    // permet de sauver les positions anterieur
-
-    // Index de l'élément parmis son type (Monstre , Mur, etc...)
+    /** Index of the object within its type */
     public int index;
 
+    /** World in which the object is in */
     public World world;
 
+    /**
+     * Constructs a new physical object
+     * @param w
+     */
     public PhysicalObject(World w) {
         world = w;
     }
 
+    /**
+     * Returns the active world
+     * @return
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * Sets the world to the given one
+     * @param world
+     */
     public void setWorld(World world) {
         this.world = world;
     }
 
     /**
-     *
-     */
-    public void sauveAnterieur() {
-        opx = px;
-        opy = py;
-        ovx = vx;
-        ovy = vy;
-        oax = ax;
-        oay = ay;
-    }
-
-    // mise � jour avec des equations physiques
-
-    /**
-     *
+     * Run at each frame
      */
     public void update() {
-        sauveAnterieur();
         px = px + vx;
         py = py + vy;
         vx = vx + ax;
         vy = vy + ay;
     }
 
-    // permet de dessiner l'objet
-
     /**
-     *
+     * Draws the object
      * @param g
      */
     public void draw(Graphics g) {
@@ -152,7 +98,7 @@ public class PhysicalObject {
     }
 
     /**
-     *
+     * Returns the x position of the object
      * @return
      */
     public double getPx() {
@@ -160,12 +106,19 @@ public class PhysicalObject {
     }
 
     /**
-     *
+     * Returns the y position of the object
      * @return
      */
     public double getPy() {
         return py;
     }
+
+    /**
+     * Checks whether or not another physical object is within the given trigger zone
+     * @param po
+     * @param tz
+     * @return
+     */
     public boolean isInTriggerZone(PhysicalObject po, TriggerZone tz){
 		return (
 			px+width > po.px- tz.getWidth()/2 &&

@@ -8,11 +8,16 @@ import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
 import engine.view.Sprite;
-
+/** MenuBackground class */
 public class MenuBackground extends HudElement{
-
+    /** Splash of the background */
     Sprite sprite;
-
+    /** Constructs a menu background 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public MenuBackground(int x, int y, int width, int height) {
         super(x, y, width, height);
         try{

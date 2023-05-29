@@ -10,11 +10,17 @@ import java.util.Map.Entry;
 import java.awt.FontMetrics;
 import engine.tiles.Directions;
 import engine.tiles.GridCell;
-
+/** MapHudBackground class */
 public class MapHudBackground extends HudElement{
-
-	private Map map;
-
+    /** The map to draw */
+	private Map map;    
+    /** Constructs a map hud 
+     * @param map
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public MapHudBackground(Map map, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.map = map;

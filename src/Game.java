@@ -25,8 +25,11 @@ import engine.trigger.Trigger;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 import engine.view.Display;
-
+/** Game class */
 public class Game {
+    /** Runs the game 
+     * @param args
+    */
     public static void main(String[] args) throws Exception {
         // le moteur physique
         PhysicsEngine physicsEngine;
@@ -62,8 +65,7 @@ public class Game {
         MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(
             Arrays.asList(startRoom.getId(), endRoom.getId()))
         );
-
-        world.setPlayer(0, 0, 250,250, 100, 10);
+        world.setPlayer(0, 0, 256,20, 100, 10);
         display = new Display(physicsEngine.world, world.map);
 
         DialogHud doorHud = new DialogHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
@@ -170,14 +172,15 @@ public class Game {
             (int) (512 / 1.4),
             (int) (512 / 1.4)
         );
-        shop.setIsShown(false);
-        shop.setInteractable(false);
-        world.addHud("shop", shop);
 
         playerHud = new PlayerHud(display, world.player, shop);
         playerHud.setIsShown(false);
         playerHud.setInteractable(false);
         world.addHud("hud", playerHud);
+
+        shop.setIsShown(false);
+        shop.setInteractable(false);
+        world.addHud("shop", shop);
 
         menu = new Menu(display, playerHud,0, 0, display.getWidth(), display.getHeight());
         world.addHud("menu", menu);
@@ -204,19 +207,11 @@ public class Game {
             imgHeight
         ));
 
-        // Adding enemies
-        world.map.activeRoom.addEnemy(0, 0, 100, 100,1);
-
         // Adding NPCs + link dialogs
-        world.map.activeRoom.addNPC(0, 0, 200, 200);
+        world.map.activeRoom.addNPC(0, 0, 256, 256);
         world.map.activeRoom.npcs.get(0).addDialog("start", npc1);
         world.map.activeRoom.npcs.get(0).addDialog("end", npc1End);
         world.map.activeRoom.npcs.get(0).setActiveDialog("start");
-
-        world.map.activeRoom.addNPC(0,0,400,300);
-        world.map.activeRoom.npcs.get(1).addDialog("start", bossStart);
-        world.map.activeRoom.npcs.get(1).addDialog("end", bossMort);
-        world.map.activeRoom.npcs.get(1).setActiveDialog("end");
 
         // Gestion de la boucle principale
         BouclePrincipale maBoucle = new BouclePrincipale();

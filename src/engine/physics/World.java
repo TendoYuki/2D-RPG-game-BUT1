@@ -20,101 +20,121 @@ import engine.controller.KeyboardController;
 import engine.generation.Map;
 import engine.hud.Hud;
 import engine.hud.map.MapHud;
-import engine.hud.player.PlayerHud;
 import engine.tiles.TileMap;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
 
+/** World class */
 public class World {
 
-    /**
-     * le controleur
-     */
+    /** Controller */
     public Control c;
 
+    /** World border */
     private WorldBorder worldBorder;
 
-    /**
-     * les murs
-     */
-    public ArrayList<PhysicalObject> objects = new ArrayList<PhysicalObject>();
-
-    /**
-     * Triggers
-     */
+    /** World triggers */
     public ArrayList<TriggerMap> triggerMaps = new ArrayList<TriggerMap>();
     
+    /** Huds */
     public HashMap<String, Hud> huds = new HashMap<String, Hud>();
 
+    /** Actual trigger */
     public TriggerMap worldTrigger;
 
-    /**
-     * les heros
-     */
+    /** Player */
     public Player player;
 
+    /** Active map */
     public Map map;
 
+    /** Hud displaying the map */
     public MapHud mapHud;
 
     /**
-     * un monde par defaut
-     * 
-     * @throws java.io.IOException
+     * Creates a world
+     * @throws IOException
      */
     public World() throws IOException {
         player = new Player(this, null, 0, 0, 100);
     }
 
     /**
-     * Ajouter un mur
-     * 
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
+     * Adds a hud
+     * @param hudName
+     * @param hud
      */
-    public void addWall(int x, int y, int dx, int dy) {
-        objects.add(new Wall(this, x, y, dx, dy));
-        objects.get(objects.size()).index = objects.size();
-    }
-
     public void addHud(String hudName, Hud hud) {
         huds.put(hudName, hud);
     }
 
+    /**
+     * Adds a trigger map
+     * @param triggerMap
+     */
     public void addTriggerMap(TriggerMap triggerMap) {
         this.triggerMaps.add(triggerMap);
     }
 
-    
+    /**
+     * Sets the active map to a new one
+     * @param map
+     */
     public void setMap(Map map) {
         this.map = map;
     }
+
+    /**
+     * Sets the active trigger map to a new one
+     * @param tm
+     */
     public void setTriggerMap(TriggerMap tm) {
         worldTrigger = tm;
     }
+
+    /**
+     * Changes the tile map binded to the active trigger map
+     * @param map
+     */
     public void setTriggerMapTileMap(TileMap map) {
         worldTrigger.setTileMap(map);
     }
+
+    /**
+     * Changes the active world border
+     * @param worldBorder
+     */
     public void setWorldBorder(WorldBorder worldBorder) {
         this.worldBorder = worldBorder;
     }
+
+    /**
+     * Returns the world border
+     * @return
+     */
     public WorldBorder getWorldBorder() {
         return this.worldBorder;
     }
 
-    private boolean hasDefeatedAllEnemies = false;
+    /** Whether or not the boss is defeated */
+    public boolean bossDefeated = false;
 
+    /** Updates the world */
     public void update() {
         mapHud.setIsShown(KeyboardController.map);
-        if(!hasDefeatedAllEnemies && map.enemiesCount() == 0) {
+        if(map.enemiesCount() == 0) {
+            map.endRoom.unlockRoom();
+        }
+        if(map.activeRoom.getId()==1 && !bossDefeated){
+            map.endRoom.lockRoom();
+        }
+        else if (bossDefeated){
             map.endRoom.unlockRoom();
         }
     }
 
     /**
-     * Set player
+     * Set the player to a new one
      * 
      * @param vx
      * @param vy

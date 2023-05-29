@@ -8,11 +8,16 @@ import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
 import engine.view.Sprite;
-
+/** HealLabel class */
 public class HealLabel extends HudElement{
-
+    /** Splash of the background */
     Sprite coin;
-
+    /** Constructs the heal label 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public HealLabel(int x, int y, int width, int height) {
         super(x, y, width, height);
         try {

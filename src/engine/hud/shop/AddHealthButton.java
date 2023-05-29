@@ -8,11 +8,17 @@ import javax.imageio.ImageIO;
 import engine.hud.Button;
 import engine.physics.Player;
 import engine.view.Sprite;
-
+/** AddHealthButton class */
 public class AddHealthButton extends Button {
-
+    /** The player */
     Player player;
-
+    /** Constructs the button to buy health stats 
+     * @param player
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public AddHealthButton(Player player, int x, int y, int width, int height) throws IOException{
         super(
             new Sprite(

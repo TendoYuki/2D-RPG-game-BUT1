@@ -26,6 +26,8 @@ public class Sprite {
      * Creates a sprite
      * @param scaleFactor Scaling factor of the sprite
      * @param image Image
+     * @param sizeX
+     * @param sizeY
      */
     public Sprite(int sizeX, int sizeY, double scaleFactor, BufferedImage image) {
         this.sizeX = (int)(sizeX *scaleFactor);
@@ -46,19 +48,27 @@ public class Sprite {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(image, at, null);
     }
-
+    /** Returns the buffered image 
+     * @return
+    */
     public BufferedImage getImage() {
         return image;
     }
-
+    /** Returns the scale factor 
+     * @return
+    */
     public double getScaleFactor() {
         return scaleFactor;
     }
-
+    /** Returns the x size  
+     * @return
+    */
     public int getSizeX() {
         return sizeX;
     }
-
+    /** Returns the y size 
+     * @return
+    */
     public int getSizeY() {
         return sizeY;
     }

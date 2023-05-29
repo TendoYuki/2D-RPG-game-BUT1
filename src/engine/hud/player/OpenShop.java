@@ -10,12 +10,19 @@ import engine.controller.KeyboardController;
 import engine.hud.HudElement;
 import engine.hud.shop.Shop;
 import engine.view.Sprite;
-
+/** OpenShop class */
 public class OpenShop extends HudElement{
-
+    /** Splash of the background */
     Sprite shopSprite;
+    /** The shop */
     Shop shop;
-
+    /** Constructs the shop button 
+     * @param shop
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public OpenShop(Shop shop, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.shop = shop;

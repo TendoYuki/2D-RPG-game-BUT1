@@ -13,38 +13,49 @@ import engine.hud.Hud;
 import engine.view.CoordinateSystem;
 import engine.view.PlayerSprites;
 
+/** Player class */
 public class Player extends Entity{
 
-	// distributeur de sprite
+	/** Sprites of the player */
 	public PlayerSprites sprites;
 
-	// lien vers son controleur
+	/** Controller of the player */
 	Control c;
 
+	/** Unit of the multiplicator of the health */
 	public final int HEALTH_MUL_UNIT = 25;
+	/** Unit of the multiplicator of the attack */
 	public final int ATTACK_MUL_UNIT = 5;
+	/** Unit of the multiplicator of the defence */
 	public final int DEFENCE_MUL_UNIT = 1;
 
+	/** Default health */
 	private final int START_HEALTH;
+	/** Default defence */
 	private final int START_DEFENCE = 2;
+	/** Default attack */
 	private final int START_ATTACK = 5;
-	/** Multiplicator de la vie */
+
+	/** Health multiplicator */
 	private int healthMultiplicator = 0;
 
-	/** Multiplicator de la defense */
+	/** Defence multiplicator */
 	private int defenceMultiplicator = 0;
 
-	/** Multiplicator de l'attaque */
+	/** Attack multiplicator */
 	private int attackMultiplicator = 0;
 
-	// gems du heros
+	/** Gems count of the player */
 	private int gems;
 
+	/** Whether or not the player can attack */
 	private boolean canAttack = true;
+
+	/** Zone in which the player can attack other entities */
 	private TriggerZone attackZone = new TriggerZone(25, 25);
 
 	/**
-	 *
+	 * Creates a new player
 	 * @throws IOException
 	 */
 	public Player(World world, Room r, int x, int y, int gems) throws IOException {
@@ -66,6 +77,7 @@ public class Player extends Entity{
 		ay = 0;
 	}
 
+	/** Updates the player */
 	public void update() {
 		super.update();
 
@@ -90,28 +102,28 @@ public class Player extends Entity{
 	}
 
 
-	/**  ajoute des gems au heros
-	 * @param gems les gems a ajouter
+	/**  Adds gems to the player
+	 * @param gems 
 	 */
 	public void addgems(int gems){
 		this.gems += gems;
 	}
 
-	/** change les gems du heros
-	 * @param gems nouvelles gems du heros
+	/** Changes player's gems count
+	 * @param gems 
 	 */
 	public void setgems(int gems){
 		this.gems = gems;
 	}
 
-	/** Retourne les gems du heros
-	 * @return les gems du heros
+	/** Returns actual gem count of the player
+	 * @return
 	 */
 	public int getgems(){
 		return gems;
 	}
 
-	/** Mort du heros */
+	/** Player's death logic */
 	public void handleDeath() {
 		world.huds.values().forEach(hud -> {
 			hud.setInteractable(false);
@@ -126,45 +138,80 @@ public class Player extends Entity{
 	}
 
 
-	
+	/**
+	 * Returns the health multiplicator
+	 * @return
+	 */
 	public int getHealthMultiplicator() {
 		return healthMultiplicator;
 	}
 
-	public void setHealthMultiplicator(int multiplicatorVie) {
-		this.healthMultiplicator = multiplicatorVie;
+	/**
+	 * Sets the health multiplicator
+	 * @param healthMultiplicator
+	 */
+	public void setHealthMultiplicator(int healthMultiplicator) {
+		this.healthMultiplicator = healthMultiplicator;
 	}
 
+	/**
+	 * Returns the defence multiplicator
+	 * @return
+	 */
 	public int getDefenceMultiplicator() {
 		return defenceMultiplicator;
 	}
 
-	public void setDefenceMultiplicator(int multiplicatorDef) {
-		this.defenceMultiplicator = multiplicatorDef;
+	/**
+	 * Sets the defence multiplicator
+	 * @param defenceMultiplicator
+	 */
+	public void setDefenceMultiplicator(int defenceMultiplicator) {
+		this.defenceMultiplicator = defenceMultiplicator;
 	}
 
+	/**
+	 * Returns the attack multiplicator
+	 * @return
+	 */
 	public int getAttackMultiplicator() {
 		return attackMultiplicator;
 	}
 
-	public void setAttackMultiplicator(int multiplicatorAtt) {
-		this.attackMultiplicator = multiplicatorAtt;
+	/**
+	 * Sets the attack multiplicator
+	 * @param attackMultiplicator
+	 */
+	public void setAttackMultiplicator(int attackMultiplicator) {
+		this.attackMultiplicator = attackMultiplicator;
 	}
+
+	/**
+	 * Return the maximum health
+	 */
 	@Override
 	public int getMaxHealth() {
 		return START_HEALTH + HEALTH_MUL_UNIT * getHealthMultiplicator();
 	}
+
+	/**
+	 * Return the maximum defence
+	 */
 	@Override
 	public int getDefence() {
 		return START_DEFENCE + DEFENCE_MUL_UNIT * getDefenceMultiplicator();
 	}
+
+	/**
+	 * Return the maximum attack
+	 */
 	@Override
 	public int getAttack() {
 		return START_ATTACK + ATTACK_MUL_UNIT * getAttackMultiplicator();
 	}
 	
 	/**
-	 *
+	 * Draws the player on the screen
 	 * @param g
 	 */
 	@Override

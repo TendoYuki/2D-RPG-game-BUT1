@@ -12,23 +12,31 @@ import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
 import engine.physics.Entity;
-
+/** HealthBar class */
 public class HealthBar extends HudElement{
-
+    /** The entity */
     private Entity entity; 
-
+    /** Splash of the background */
     private BufferedImage leftPart;
-
+    /** Splash of the background */
     private BufferedImage centerPart;
-
+    /** Splash of the background */
     private BufferedImage rightPart;
-
+    /** Wether or not it has decoration */
     private boolean hasDecoration;
-
+    /** Wether or not it displays the level */
     private boolean displayLevel;
-
+    /** The offset */
     private int offset;
-
+    /** Constructs a health bar 
+     * @param entity
+     * @param x
+     * @param y 
+     * @param width
+     * @param height
+     * @param hasDecoration
+     * @param displayLevel
+    */
     public HealthBar(Entity entity, int x, int y, int width, int height, boolean hasDecoration, boolean displayLevel) {
         super(x, y, width, height);
         this.entity = entity;
@@ -60,6 +68,7 @@ public class HealthBar extends HudElement{
     /**
      * Calculates the fill of the healthbar in px according to the entity's
      * actual health
+     * @param offset
      * @return
      */
     private int calcFillOffseted(int offset) {

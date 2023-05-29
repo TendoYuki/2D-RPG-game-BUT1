@@ -8,11 +8,16 @@ import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
 import engine.view.Sprite;
-
+/** GameOverBackground class */
 public class GameOverBackground extends HudElement{
-
+    /** Splash image of the background */
     Sprite sprite;
-
+    /** Constructs the background 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public GameOverBackground(int x, int y, int width, int height) {
         super(x, y, width, height);
         try{

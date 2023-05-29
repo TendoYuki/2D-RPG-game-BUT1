@@ -1,76 +1,29 @@
-/* ========================================================== */
-/*                  Bibliotheque MoteurDeJeu                  */
-/* --------------------------------------------               */
-/* Bibliotheque pour aider la création de jeu video comme :   */
-/* - Jeux de role                                             */
-/* - Jeux de plateforme                                       */
-/* - Jeux de combat                                           */
-/* - Jeux de course                                           */
-/* - Ancien jeu d'arcade (Pac-Man, Space Invider, Snake, ...) */
-/* ========================================================== */
-
 package engine.physics;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import engine.tiles.Directions;
 import engine.trigger.TriggerMap;
 
-//permet de g�rer la physique
-
-/**
- *
- * @author Pierre-Frederic Villard
- */
 public class PhysicsEngine {
 
-	// la liste des objets dans le monde
-
-	/**
-	 *
-	 */
+	/** Active world */
 	public World world;
+
+	/** Whether or not the game has ended */
 	public static boolean endGame = false;
 
-	public boolean gravity = false;
-
-	public float gravityValue = -0.04f;
-
-	public int current_monster_index = 0;
-	public int current_wall_index = 0;
-
+	/** Speed of the entities */
 	public static double SPEED = 2;
 
 	/**
-	 * Construit un moteur par defaut
-	 * 
-	 * @throws IOException
-	 */
-	public PhysicsEngine() {
-	}
-
-	// met a jour le monde
-
-	/**
-	 *
+	 * Updates each object and calculates physics
 	 */
 	public void update() {
 		if(!endGame) {
 			world.update();
-			world.player.collision = 0;
-			// mise a jour des objets
-			for (PhysicalObject o : world.objects) {
-				o.update();
-				o.collision = 0;
-			}
-	
-			for (Entry<Directions, Wall> wall : world.getWorldBorder().getBorderWalls().entrySet()) {
-				wall.getValue().update();
-				wall.getValue().collision = 0;
-			}
-	
+			
 			// mise a jour des monstres
 			for (Enemy enemy : world.map.activeRoom.enemies) {
 				enemy.update();
@@ -78,15 +31,11 @@ public class PhysicsEngine {
 	
 			// gestion du controleur
 			if (world.c.droite) {
-				if (world.player.ovx == 0) {
-				}
 				world.player.ax = 0.1;
 				if (world.player.vx > SPEED)
 					world.player.vx = SPEED;
 	
 			} else if (world.c.gauche) {
-				if (world.player.ovx == 0) {
-				}
 				world.player.ax = -0.1;
 				if (world.player.vx < -SPEED)
 					world.player.vx = -SPEED;
@@ -151,51 +100,44 @@ public class PhysicsEngine {
 			// mise a jour de la balle
 			world.player.update();
 	
-			// test de collision pour chaque mur
-			for (Entry<Directions, Wall> wall : world.getWorldBorder().getBorderWalls().entrySet()) {
-				Collision col = Collision.collision(world.player, wall.getValue());
-				if (col != null) {
-					if(world.player.px+world.player.width > world.getWorldBorder().width) {
-						world.player.px = world.getWorldBorder().width-world.player.width-2;
-						world.player.vx = world.player.vx * -0.9;
-					}
-					if(world.player.px <= 0) {
-						world.player.px = 2;
-						world.player.vx = world.player.vx * -0.9;
-					}
-					if(world.player.py+world.player.height > world.getWorldBorder().height) {
-						world.player.py = world.getWorldBorder().height-world.player.height-2;
-						world.player.vy = world.player.vy * -0.9;
-					}
-					if(world.player.py <= 0) {
-						world.player.py = 2;
-						world.player.vy = world.player.vy * -0.9;
-					}
-				}
-	
-				for (Enemy enemy : world.map.activeRoom.enemies) {
-					Collision col1 = Collision.collision(enemy, wall.getValue());
-					if (col1 != null) {
-						if(enemy.px+enemy.width > world.getWorldBorder().width) {
-							enemy.px = world.getWorldBorder().width-enemy.width-2;
-							enemy.vx = enemy.vx * -0.9;
-						}
-						if(enemy.px <= 0) {
-							enemy.px = 2;
-							enemy.vx = enemy.vx * -0.9;
-						}
-						if(enemy.py+enemy.height > world.getWorldBorder().height) {
-							enemy.py = world.getWorldBorder().height-enemy.height-2;
-							enemy.vy = enemy.vy * -0.9;
-						}
-						if(enemy.py <= 0) {
-							enemy.py = 2;
-							enemy.vy = enemy.vy * -0.9;
-						}
-					}
-				}
-	
+			/** Checks for collision with the world border */
+			if(world.player.px+world.player.width > world.getWorldBorder().width) {
+				world.player.px = world.getWorldBorder().width-world.player.width-2;
+				world.player.vx = world.player.vx * -0.9;
 			}
+			if(world.player.px <= 0) {
+				world.player.px = 2;
+				world.player.vx = world.player.vx * -0.9;
+			}
+			if(world.player.py+world.player.height > world.getWorldBorder().height) {
+				world.player.py = world.getWorldBorder().height-world.player.height-2;
+				world.player.vy = world.player.vy * -0.9;
+			}
+			if(world.player.py <= 0) {
+				world.player.py = 2;
+				world.player.vy = world.player.vy * -0.9;
+			}
+	
+			/** Checks for collision with the enemies and the world border */
+			for (Enemy enemy : world.map.activeRoom.enemies) {
+				if(enemy.px+enemy.width > world.getWorldBorder().width) {
+					enemy.px = world.getWorldBorder().width-enemy.width-2;
+					enemy.vx = enemy.vx * -0.9;
+				}
+				if(enemy.px <= 0) {
+					enemy.px = 2;
+					enemy.vx = enemy.vx * -0.9;
+				}
+				if(enemy.py+enemy.height > world.getWorldBorder().height) {
+					enemy.py = world.getWorldBorder().height-enemy.height-2;
+					enemy.vy = enemy.vy * -0.9;
+				}
+				if(enemy.py <= 0) {
+					enemy.py = 2;
+					enemy.vy = enemy.vy * -0.9;
+				}
+			}
+
 			for (Enemy enemy : world.map.activeRoom.enemies) {
 				Collision col = Collision.collision(enemy, world.player);
 				if (Collision.collision(enemy, world.player) != null) {

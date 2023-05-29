@@ -6,12 +6,17 @@ import engine.hud.Hud;
 import engine.hud.shop.Shop;
 import engine.physics.Player;
 import engine.view.Display;
-
+/** PlayerHud class */
 public class PlayerHud extends Hud{
-    
+    /** The shop button */
     OpenShop openShop;
+    /** The players gems */
     GemsCount gemsCount;
-
+    /** Constructs the player hud 
+     * @param display 
+     * @param player
+     * @param shop
+    */
     public PlayerHud(Display display, Player player, Shop shop) {
         super(display, 0, 0, display.getWidth(), display.getHeight());
         int topInset = getTopInset();
@@ -23,7 +28,9 @@ public class PlayerHud extends Hud{
         addElement(openShop);
         addElement(gemsCount);
     }
-
+    /** Draws the player hud 
+     * @param g
+    */
     public void draw(Graphics g) {
         int topInset = getTopInset();
         this.setOffsetY(topInset);

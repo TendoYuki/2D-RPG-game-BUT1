@@ -9,12 +9,19 @@ import javax.imageio.ImageIO;
 import engine.hud.HudElement;
 import engine.physics.Player;
 import engine.view.Sprite;
-
+/** GemsCount class */
 public class GemsCount extends HudElement{
-
+    /** Splash of the background */
     Sprite coin;
+    /** The player */
     Player player;
-
+    /** Constructs the gems count hud
+     * @param player
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public GemsCount(Player player, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.player = player;

@@ -1,20 +1,27 @@
 package engine.physics;
 
-import static engine.main.GamePhysics.*;
-
+/** Collison class */
 public class Collision {
 
-    public int typeOfCollision = 0;
-
+    /** Objects involved in the collison */
     public PhysicalObject o, o2;
 
+    /** Angle of the collsion */
     public double collisionAngle;
 
+    /** Value necessary for exiting a colliding state */
     public double correctionValue;
     
-    private Collision(int typeOfCollision, PhysicalObject o, PhysicalObject o2,
+    /**
+     * Constructs a collision
+     * @param typeOfCollision
+     * @param o
+     * @param o2
+     * @param collisionAngle
+     * @param correctionValue
+     */
+    private Collision(PhysicalObject o, PhysicalObject o2,
             double collisionAngle, double correctionValue) {
-        this.typeOfCollision = typeOfCollision;
         this.o = o;
         this.o2 = o2;
         this.collisionAngle = collisionAngle;
@@ -22,7 +29,7 @@ public class Collision {
     }
 
     /**
-     *
+     * Constructs a collision
      * @param o
      * @param o2
      * @return
@@ -32,18 +39,6 @@ public class Collision {
         if ((o.px >= o2.px + o2.width) || (o.px + o.width <= o2.px)
                 || (o.py >= o2.py + o2.height) || (o.py + o.height <= o2.py)) {
             return null;
-        }
-
-        int typeOfCollision = 0;
-
-        if (o2 instanceof Enemy) {
-            typeOfCollision = ENEMY;
-        }
-        if (o2 instanceof Player) {
-            typeOfCollision = PLAYER;
-        }
-        if (o2 instanceof Wall) {
-            typeOfCollision = DECORS;
         }
 
         double posX = o.px + o.width/2;
@@ -64,7 +59,6 @@ public class Collision {
 		double correctionValue = overlap / 25;
 
         return new Collision(
-            typeOfCollision,
             o,
             o2,
             colAngle,

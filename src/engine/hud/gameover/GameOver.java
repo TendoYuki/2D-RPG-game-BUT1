@@ -4,12 +4,19 @@ import java.awt.Graphics;
 
 import engine.hud.Hud;
 import engine.view.Display;
-
+/** GameOver class */
 public class GameOver extends Hud{
-
+    /** Background of the hud */
     GameOverBackground gameOverBackground;
+    /** Quit button */
     GOQuitButton goQuitButton;
-
+    /** Constructs a GameOver hud 
+     * @param display
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+    */
     public GameOver(Display display, int x, int y, int width, int height) {
         super(display, x, y, width, height);
         try{
@@ -20,7 +27,9 @@ public class GameOver extends Hud{
         }
         catch(Exception e) {}
     }
-
+    /** Draws the hud 
+     * @param g
+    */
     public void draw(Graphics g) {
         super.draw(g);
         int topInset = getTopInset();

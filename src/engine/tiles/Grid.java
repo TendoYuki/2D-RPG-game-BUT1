@@ -11,11 +11,16 @@ import java.util.Iterator;
  */
 public class Grid<T> implements Iterable<GridCell<T>>{
     
+    /** All cells of the grid */
     private HashMap<Integer, GridCell<T>> cells;
 
+    /** Index of all the cells that are non empty */
     private ArrayList<Integer> nonEmptyCellsIndexes = new ArrayList<Integer>();
 
+    /** Count of cells on the x axis */
     private int xCount;
+
+    /** Count of cells on the y axis */
     private int yCount;
 
     /**
@@ -186,9 +191,8 @@ public class Grid<T> implements Iterable<GridCell<T>>{
 
     /**
      * Changes the value of a cell
-     * @param x X coord
-     * @param y Y coord
-     * @param cell New value
+     * @param index index
+     * @param cell
      */
     public void setCell(int index, T cell) {
         if(!isIndexValid(index))
@@ -198,10 +202,18 @@ public class Grid<T> implements Iterable<GridCell<T>>{
             nonEmptyCellsIndexes.add(index);
     }
 
+    /**
+     * Returns the number of cell on the x axis
+     * @return
+     */
     public int getxCount() {
         return xCount;
     }
 
+    /**
+     * Returns the number of cell on the y axis
+     * @return
+     */
     public int getyCount() {
         return yCount;
     }    

@@ -3,27 +3,39 @@ package engine.physics;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/** State that the enemy can have */
 enum State {
     ROAMING, IDLE, CHASING;
 }
 
+/** AI script of the enemy */
 public class EnemyAI {
+    /** Enemy controlled */
     Enemy enemy;
 
+    /** State of the enemy */
     State state;
 
+    /** Zone in which the enemy can attack */
     private TriggerZone attackZone = new TriggerZone(20, 20);
+
+    /** Whether or not the enemy can attack */
     boolean canAttack = true;
 
+    /**
+     * Creates an AI Script for a given enemy
+     * @param enemy
+     */
     public EnemyAI(Enemy enemy) {
         this.enemy = enemy;
         state = State.ROAMING;
     }
 
+    /** Update called every frame */
     public void update() {
         if(enemy.room != enemy.world.map.activeRoom) return;
-        enemy.vx = lerp(enemy.px, enemy.world.player.px, 0.01);
-        enemy.vy = lerp(enemy.py, enemy.world.player.py, 0.01);
+        enemy.vx = move(enemy.px, enemy.world.player.px, 0.01);
+        enemy.vy = move(enemy.py, enemy.world.player.py, 0.01);
         if(enemy.isInTriggerZone(enemy.world.player,attackZone) && canAttack) {
             canAttack = false;
             enemy.attack(enemy.world.player);
@@ -42,13 +54,13 @@ public class EnemyAI {
    
 
     /**
-     * Linear interpolation between a and b 
+     * Move logic between two points
      * @param v1
      * @param v2
      * @param speed
      * @return
      */
-    public double lerp(double v1, double v2, double speed) {
+    public double move(double v1, double v2, double speed) {
         return (speed * (v2 - v1)) % PhysicsEngine.SPEED;
     }
 
