@@ -25,6 +25,11 @@ public class PhysicsEngine {
 			for (Enemy enemy : world.map.activeRoom.enemies) {
 				enemy.update();
 			}
+
+			// mise a jour des boss
+			for (Boss boss : world.map.activeRoom.bosses) {
+				boss.update();
+			}
 	
 			// gestion du controleur
 			if (world.c.droite) {

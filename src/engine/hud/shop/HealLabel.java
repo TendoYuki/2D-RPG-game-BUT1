@@ -26,7 +26,7 @@ public class HealLabel extends HudElement{
                 y,
                 2,
                 ImageIO.read(
-                    new File("assets/misc/coin.png")
+                    new File("assets/misc/gem.png")
                 )
                 
             );

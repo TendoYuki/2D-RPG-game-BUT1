@@ -69,22 +69,22 @@ public class MapGenerator {
         );
 
         int[][] tm = new int[][] {
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5},
-            {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}
+            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6},
+            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6}
         };
         
         for(Entry<Directions, Room> entry: r.getNeighbors().entrySet()) {
@@ -92,37 +92,74 @@ public class MapGenerator {
             switch(entry.getKey()) {
                 case UP:
                     if(tm[0].length%2 == 0) {
+                        // For door triggers
+                        tm[1][tm[0].length/2] = 1;
+                        tm[1][tm[0].length/2-1] =1;
+
+                        // For door texture
                         tm[0][tm[0].length/2] = 1;
                         tm[0][tm[0].length/2-1] =1;
                     }
                     else{
+                        // For door triggers
+                        tm[1][tm[0].length/2] = 1;
+
+                        // For door texture
                         tm[0][tm[0].length/2] = 1;
                     }
                     break;
                 case DOWN:
                     if(tm[0].length%2 == 0) {
+                        // For door triggers
+                        tm[tm.length-2][tm[0].length/2] = 3;
+                        tm[tm.length-2][tm[0].length/2-1] =3;
+
+                        // For door texture
                         tm[tm.length-1][tm[0].length/2] = 3;
                         tm[tm.length-1][tm[0].length/2-1] =3;
                     }
                     else{
+                        // For door triggers
+                        tm[tm.length-2][tm[0].length/2] = 3;
+
+                        // For door texture
                         tm[tm.length-1][tm[0].length/2] = 3;
                     }
                     break;
                 case LEFT:
                     if(tm.length%2 == 0) {
+                        // For door triggers
+                        tm[tm.length/2][1] = 2;
+                        tm[tm.length/2 -1][1] =2;
+
+                        // For door texture
                         tm[tm.length/2][0] = 2;
                         tm[tm.length/2 -1][0] =2;
+
                     }
                     else{
+                        // For door triggers
+                        tm[tm.length/2][1] = 2;
+
+                        // For door texture
                         tm[tm.length/2][0] = 2;
                     }
                     break;
                 case RIGHT:
                     if(tm.length%2 == 0) {
+                        // For door triggers
+                        tm[tm.length/2][tm[0].length-2] = 4;
+                        tm[tm.length/2-1][tm[0].length-2] =4;
+
+                        // For door texture
                         tm[tm.length/2][tm[0].length-1] = 4;
                         tm[tm.length/2-1][tm[0].length-1] =4;
                     }
                     else{
+                        // For door triggers
+                        tm[tm.length/2][tm[0].length-2] = 4;
+
+                        // For door texture
                         tm[tm.length/2][tm[0].length-1] = 4;
                     }
                     break;
@@ -165,7 +202,20 @@ public class MapGenerator {
         
         int minOffset = 2;
         for(GridCell<Room> roomCell : map.rooms){
-            if(
+            if(!roomCell.isEmpty() && roomCell.getContent().getId() == map.endRoom.getId()){
+                // populates the room
+                try{ 
+                    map.endRoom.addBoss(
+                        0,
+                        0,
+                        map.endRoom.getTileMap().size()/2,
+                        map.endRoom.getTileMap().size()/2,
+                        20
+                    );
+                }
+                catch(Exception e){}
+            }
+            else if(
                 !roomCell.isEmpty() &&
                 !exclusionIndexes.contains(roomCell.getContent().getId())
             ) {
@@ -300,7 +350,7 @@ public class MapGenerator {
 
             if(i == totalRoomCount-1) {
                 roomsGrid.setCell(newRoomSpot.getSpot(), endRoom);
-
+                
                 // Links the last room
                 newRoomSpot.getOrigin().getContent().linkRoom(
                     newRoomSpot.getSpot().getContent(), newRoomSpot.getDirection()
@@ -324,6 +374,7 @@ public class MapGenerator {
         map.endRoom = endRoom;
         
         map.setActiveRoom(rooms.get(0).getContent().getId());
+        System.out.println(endRoom.size());
         return map;
     }
     /** Generates a map 

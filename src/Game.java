@@ -240,7 +240,7 @@ public class Game {
                             playerHud.removeElement(enemy.healthBar);
                         }
                         world.map.setActiveRoom(up.getId());
-                        world.player.py = 50;
+                        world.player.py = 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: up.enemies) {
                             playerHud.addElement(enemy.healthBar);
@@ -272,7 +272,7 @@ public class Game {
                             playerHud.removeElement(enemy.healthBar);
                         }
                         world.map.setActiveRoom(left.getId());
-                        world.player.px = world.map.getActiveRoom().getTileMap().size() - 50;
+                        world.player.px = world.map.getActiveRoom().getTileMap().size() - 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: left.enemies) {
                             playerHud.addElement(enemy.healthBar);
@@ -304,7 +304,7 @@ public class Game {
                             playerHud.removeElement(enemy.healthBar);
                         }
                         world.map.setActiveRoom(down.getId());
-                        world.player.py = world.map.getActiveRoom().getTileMap().size() - 50;
+                        world.player.py = world.map.getActiveRoom().getTileMap().size() - 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: down.enemies) {
                             playerHud.addElement(enemy.healthBar);
@@ -336,7 +336,7 @@ public class Game {
                             playerHud.removeElement(enemy.healthBar);
                         }
                         world.map.setActiveRoom(right.getId());
-                        world.player.px = 50;
+                        world.player.px = 90;
                         world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
                         for(Enemy enemy: right.enemies) {
                             playerHud.addElement(enemy.healthBar);

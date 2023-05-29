@@ -28,7 +28,7 @@ public class GemsCount extends HudElement{
         try{
             coin = new Sprite(16, 16, 2, ImageIO.read(
                 new File(
-                    "assets/misc/coin.png" 
+                    "assets/misc/gem.png" 
                 )
             ));
         }

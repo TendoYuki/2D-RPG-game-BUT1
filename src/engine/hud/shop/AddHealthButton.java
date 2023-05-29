@@ -26,7 +26,7 @@ public class AddHealthButton extends Button {
                 y,
                 2,
                 ImageIO.read(
-                    new File("assets/misc/coin.png")
+                    new File("assets/misc/gem.png")
                 )
                 
             ),
@@ -35,7 +35,7 @@ public class AddHealthButton extends Button {
                 y,
                 2,
                 ImageIO.read(
-                    new File("assets/misc/coin.png")
+                    new File("assets/misc/gem.png")
                 )
                 
             ), x, y, width, height

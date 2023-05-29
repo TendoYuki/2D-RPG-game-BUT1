@@ -14,7 +14,7 @@ package engine.view;
 import java.io.IOException;
 import java.util.HashMap;
 
-import engine.physics.Enemy;
+import engine.physics.Entity;
 import engine.tiles.Atlas;
 //distributeur de sprites
 
@@ -23,8 +23,8 @@ import engine.tiles.Atlas;
  * @author Pierre-Frederic Villard
  */
 public class EnemySprites extends Sprites {
-	/** The enemy */
-	Enemy enemy;
+	/** The entity */
+	Entity entity;
 	/** The sprite path */
 	String imageFile = "assets/char/February.png";
 	/** The atlas */
@@ -35,8 +35,8 @@ public class EnemySprites extends Sprites {
 	 * @param b
 	 * @throws IOException
 	 */
-	public EnemySprites(Enemy b) throws IOException {
-		this.enemy = b;
+	public EnemySprites(Entity b) throws IOException {
+		this.entity = b;
 		spriteAtlas = new Atlas(imageFile, 16, 8, 15, 2);
 		activity = "down";
 		sprites = new HashMap<String, Sprite>();
@@ -83,7 +83,7 @@ public class EnemySprites extends Sprites {
 		iteration++;
 
 		int itCount = 2;
-		if(enemy.vx != 0 || enemy.vy !=0) {
+		if(entity.vx != 0 || entity.vy !=0) {
 			if (iteration > itCount) {
 				num++;
 				iteration = 0;

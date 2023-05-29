@@ -11,7 +11,7 @@ enum State {
 /** AI script of the enemy */
 public class EnemyAI {
     /** Enemy controlled */
-    Enemy enemy;
+    Entity enemy;
 
     /** State of the enemy */
     State state;
@@ -26,7 +26,7 @@ public class EnemyAI {
      * Creates an AI Script for a given enemy
      * @param enemy
      */
-    public EnemyAI(Enemy enemy) {
+    public EnemyAI(Entity enemy) {
         this.enemy = enemy;
         state = State.ROAMING;
     }

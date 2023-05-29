@@ -79,6 +79,11 @@ public class Display extends JPanel {
 			enemy.draw(g);
 		}
 
+		// affiche les boss
+		for (Boss boss : m.map.activeRoom.bosses) {
+			boss.draw(g);
+		}
+
 		// affiche les monstres
 		for (Item item : m.map.activeRoom.items) {
 			item.draw(g);

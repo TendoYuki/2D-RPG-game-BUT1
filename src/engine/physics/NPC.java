@@ -96,7 +96,6 @@ public class NPC extends Entity {
 
 	@Override
 	public void handleDeath() {
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'handleDeath'");
 	}
 

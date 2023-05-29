@@ -34,7 +34,7 @@ public class Gem extends Item {
 		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
         try {
             Sprite s = new Sprite(16, 16, 2, ImageIO.read(
-                new File("assets/misc/coin.png")
+                new File("assets/misc/gem.png")
             ));
             s.draw(g, tab[0], tab[1]);
         } catch (Exception e) { }

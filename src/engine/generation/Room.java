@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import engine.physics.Boss;
 import engine.physics.Enemy;
 import engine.physics.Item;
 import engine.physics.NPC;
@@ -56,6 +57,11 @@ public class Room extends Scene{
     * Objects
     */
     public ArrayList<PhysicalObject> objects = new ArrayList<PhysicalObject>();
+    
+    /**
+     * Enemies
+     */
+    public ArrayList<Boss> bosses = new ArrayList<Boss>();
 
     /**
      * Enemies
@@ -92,6 +98,26 @@ public class Room extends Scene{
         enemy.index = enemies.size();
 
         enemies.add(enemy);
+    }
+
+    /**
+     * Add boss
+     * 
+     * @param vx
+     * @param vy
+     * @param px
+     * @param py
+     * @throws java.io.IOException
+     */
+    public void addBoss(double vx, double vy, int px, int py, int level) throws IOException {
+        Boss boss = new Boss(world, this, level);
+        boss.vx = vx;
+        boss.vy = vy;
+        boss.px = px;
+        boss.py = py;
+        boss.index = bosses.size();
+
+        bosses.add(boss);
     }
     /**
      * Add NPC
