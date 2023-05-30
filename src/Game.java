@@ -118,7 +118,7 @@ public class Game {
                 (world.map.size()/2)
             );
 
-            MapGenerator.populateMap(world.map, 0, 1, new ArrayList<Integer>(
+            MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(
                 Arrays.asList(startRoom.getId(), endRoom.getId()))
             );
         }
