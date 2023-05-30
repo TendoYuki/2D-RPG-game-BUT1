@@ -109,6 +109,7 @@ public class NPC extends Entity {
 			PhysicsEngine.endGame = true;
 		}
 		else if(dialogName == "end" && !activeDialog.hasNextLine()){
+			room.lockRoom();
 			TimerTask task = new TimerTask() {
 					@Override
 					public void run() {	

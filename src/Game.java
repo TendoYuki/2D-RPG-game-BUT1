@@ -132,14 +132,14 @@ public class Game {
         // dialogue des portes
         Dialog doorClosed = new Dialog();
         doorClosed.addLine(new String[]{
-            "La porte est fermée",
-            "Tuez tous les monstres de la pièce afin qu'elle s'ouvre"
+            "Hop pas si vite !", 
+            "la porte est fermée"
         });
 
         Dialog bossDoorClosed = new Dialog();
         bossDoorClosed.addLine(new String[]{
             "La porte est fermée",
-            "Tuez tous les monstres du donjon afin qu'elle s'ouvre"
+            "Tuez tous les monstres de la pièce afin qu'elle s'ouvre"
         });
 
         

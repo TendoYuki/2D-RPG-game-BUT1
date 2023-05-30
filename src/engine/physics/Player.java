@@ -132,7 +132,7 @@ public class Player extends Entity{
 	public void update() {
 		super.update();
 		if(world.map.enemiesCount()==0 && !endRewarded) {
-			addgems(30);
+			addgems(15);
 			endRewarded = true;
 		}
 		ArrayList<Enemy> cpyEnemies = new ArrayList<Enemy>(world.map.activeRoom.enemies);
