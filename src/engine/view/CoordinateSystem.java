@@ -49,8 +49,7 @@ public class CoordinateSystem {
     /**
      * Changes the corordinate system from y top -> bottom to y bottom -> top
      * @param o
-     * @param x0
-     * @param y0
+     * @param origin
      * @return
      */
     public static Coords changeCS(PhysicalObject o, Coords origin) {
@@ -58,9 +57,11 @@ public class CoordinateSystem {
     }
     /**
      * Changes the corordinate system from y top -> bottom to y bottom -> top
-     * @param o
-     * @param x0
-     * @param y0
+     * @param x
+     * @param y
+     * @param height
+     * @param width
+     * @param origin
      * @return
      */
     public static Coords changeCS(int x, int y, int height, int width, Coords origin) {
@@ -68,7 +69,10 @@ public class CoordinateSystem {
     }
     /**
      * Changes the corordinate system from y top -> bottom to y bottom -> top
-     * @param o
+     * @param x
+     * @param y
+     * @param height
+     * @param width
      * @param x0
      * @param y0
      * @return

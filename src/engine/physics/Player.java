@@ -171,8 +171,8 @@ public class Player extends Entity{
 		this.gems += gems;
 	}
 
-	/**  Adds gems to the player
-	 * @param gems 
+	/**  Adds item to the player
+	 * @param item 
 	 */
 	public void addToInventory(Item item){
 		inventory.add(item);

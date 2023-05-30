@@ -15,14 +15,13 @@ public class AttackCooldown extends HudElement{
     /** Atlas */
     private Atlas boxingGloveAtlas;
 
-    /** Constructs a health bar 
-     * @param entity
+    /** Constructs an attack cooldown 
+     * @param origin
+     * @param player
      * @param x
      * @param y 
      * @param width
      * @param height
-     * @param hasDecoration
-     * @param displayLevel
     */
     public AttackCooldown(Coords origin, Player player, int x, int y, int width, int height) {
         super(origin, x, y, width, height);

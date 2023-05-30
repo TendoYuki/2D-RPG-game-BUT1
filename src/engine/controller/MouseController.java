@@ -75,6 +75,10 @@ public class MouseController extends MouseAdapter{
             });
     }
 
+    
+    /** 
+     * @param e
+     */
     @Override
     public void mouseReleased(MouseEvent e) {
         if(isListening)

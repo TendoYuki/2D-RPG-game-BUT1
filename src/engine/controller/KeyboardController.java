@@ -67,6 +67,10 @@ public class KeyboardController implements KeyListener {
 	}
 	
 	
+	
+	/** 
+	 * @param e
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(canMove){
