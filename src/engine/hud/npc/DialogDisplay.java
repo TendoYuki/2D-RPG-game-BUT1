@@ -1,6 +1,5 @@
 package engine.hud.npc;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
 

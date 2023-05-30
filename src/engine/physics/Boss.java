@@ -8,7 +8,6 @@ import engine.hud.player.HealthBar;
 import engine.view.BossSprites;
 import engine.view.CoordinateSystem;
 import engine.view.Coords;
-import engine.view.EnemySprites;
 
 /** Boss class */
 public class Boss extends Entity {

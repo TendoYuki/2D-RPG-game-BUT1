@@ -78,7 +78,11 @@ public class HealthBar extends HudElement{
 
             int emptyHeartCount = heartCount - fullHeartCount - halfHeartCount;
 
-            if(fullHeartCount==0 && halfHeartCount ==0) halfHeartCount++;
+            if(fullHeartCount==0 && halfHeartCount ==0) {
+                halfHeartCount++;
+                emptyHeartCount--;
+            }
+
             for(int i = 0; i < fullHeartCount; i++) {
                 fullHeart.draw(g2d, getX() + offset, getY());
                 offset+=32;
