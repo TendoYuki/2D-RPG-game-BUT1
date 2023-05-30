@@ -3,6 +3,7 @@ package engine.physics;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 /** State that the enemy can have */
 enum State {
     ROAMING, IDLE, CHASING;
@@ -21,6 +22,8 @@ public class EnemyAI {
 
     /** Whether or not the enemy can attack */
     boolean canAttack = true;
+
+    
 
     /**
      * Creates an AI Script for a given enemy

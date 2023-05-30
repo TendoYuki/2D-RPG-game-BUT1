@@ -85,7 +85,7 @@ public class PhysicsEngine {
 					world.player.vy = -SPEED;
 				}
 			}
-	
+			// gestion de l'activite du player
 			if (world.player.vx > 0) {
 				if (world.player.vy > 0) {
 					world.player.sprites.changeActivity("up-right");
@@ -107,7 +107,7 @@ public class PhysicsEngine {
 			} else if (world.player.vy < 0) {
 				world.player.sprites.changeActivity("down");
 			}
-			// mise a jour de la balle
+			// mise a jour du balle
 			world.player.update();
 	
 			/** Checks for collision with the world border */
@@ -146,8 +146,32 @@ public class PhysicsEngine {
 					enemy.py = 2;
 					enemy.vy = enemy.vy * -0.9;
 				}
+	
+				// gestion de l'activite de l'enemy
+				if (enemy.vx > 0) {
+					System.out.println(enemy.vy);
+					if (enemy.vy > 0.5) {
+						enemy.sprite.changeActivity("up-right");
+					} else if (enemy.vy < -0.5) {
+						System.out.println(enemy.vy);
+						enemy.sprite.changeActivity("down-right");
+					} else {
+						enemy.sprite.changeActivity("right");
+					}
+				} else if (enemy.vx < 0) {
+					if (enemy.vy > 0.5) {
+						enemy.sprite.changeActivity("up-left");
+					} else if (enemy.vy < -0.5) {
+						enemy.sprite.changeActivity("down-left");
+					} else {
+						enemy.sprite.changeActivity("left");
+					}
+				} else if (enemy.vy > 0) {
+					enemy.sprite.changeActivity("up");
+				} else if (enemy.vy < 0) {
+					enemy.sprite.changeActivity("down");
+				}
 			}
-
 			/** Checks for collision with the bosses and the world border */
 			for (Boss boss : world.map.activeRoom.bosses) {
 				if(boss.px+boss.width > world.getWorldBorder().width) {
