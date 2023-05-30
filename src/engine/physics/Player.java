@@ -61,6 +61,27 @@ public class Player extends Entity{
 	/** Zone in which the player can attack other entities */
 	private TriggerZone attackZone = new TriggerZone(25, 25);
 
+	/** Whether or not the player recieved the end reward */
+	private boolean endRewarded = false; 
+
+	/** Time left before the next attack */
+	private int cooldownLeft = 0;
+
+	/** Attack tim betwwen two attack in ms*/
+	private int attackCooldown = 2500;
+
+	public int getAttackCooldown() {
+		return attackCooldown;
+	}
+
+	public void setAttackCooldown(int attackCooldown) {
+		this.attackCooldown = attackCooldown;
+	}
+
+	public int getCooldownLeft() {
+		return cooldownLeft;
+	}
+
 	/**
 	 * Creates a new player
 	 * @throws IOException
@@ -84,26 +105,43 @@ public class Player extends Entity{
 		ay = 0;
 	}
 
+	private TimerTask task;
+
+	private void startTimer() {
+		if(cooldownLeft <= 0) {
+			canAttack = true;
+		} else {
+			Timer timer = new Timer("Timer");
+			int delay = 1;
+			task = new TimerTask() {
+				@Override
+				public void run() {
+					if(cooldownLeft <= 0) {
+						canAttack = true;
+					} else {
+						cooldownLeft -= 1;
+						startTimer();
+					}
+				}
+			};
+			timer.schedule(task, delay);
+		}
+	}
+
 	/** Updates the player */
 	public void update() {
 		super.update();
-		System.out.println(getHealth());
-		if(world.map.enemiesCount()==0) addgems(30);
+		if(world.map.enemiesCount()==0 && !endRewarded) {
+			addgems(30);
+			endRewarded = true;
+		}
 		ArrayList<Enemy> cpyEnemies = new ArrayList<Enemy>(world.map.activeRoom.enemies);
-
 		for(Enemy enemy: cpyEnemies) {
 			if(isInTriggerZone(enemy,attackZone) && canAttack) {
 				canAttack = false;
 				attack(enemy);
-				TimerTask task = new TimerTask() {
-					@Override
-					public void run() {
-						canAttack = true;
-					}
-				};
-				Timer timer = new Timer("Timer");
-				long delay = 2500L;
-				timer.schedule(task, delay);
+				cooldownLeft = attackCooldown;
+				startTimer();
 			}
 		}
 
@@ -113,15 +151,8 @@ public class Player extends Entity{
 			if(isInTriggerZone(boss,attackZone) && canAttack) {
 				canAttack = false;
 				attack(boss);
-				TimerTask task = new TimerTask() {
-					@Override
-					public void run() {
-						canAttack = true;
-					}
-				};
-				Timer timer = new Timer("Timer");
-				long delay = 2500L;
-				timer.schedule(task, delay);
+				cooldownLeft = attackCooldown;
+				startTimer();
 			}
 		}
 	}

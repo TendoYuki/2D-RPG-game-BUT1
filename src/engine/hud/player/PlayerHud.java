@@ -15,6 +15,8 @@ public class PlayerHud extends Hud{
     GemsCount gemsCount;
     /** The enemy count */
     EnemyCount enemyCount;
+    /** The attack cooldown */
+    AttackCooldown attackCooldown;
     /** Constructs the player hud 
      * @param display 
      * @param player
@@ -29,10 +31,12 @@ public class PlayerHud extends Hud{
         openShop = new OpenShop(origin, shop, getWidth()-42, 10, 50, 32);
         gemsCount = new GemsCount(origin, player, getWidth()-42, 50, 50, 32);
         enemyCount = new EnemyCount(origin, player, getWidth()-42, getHeight()-70, 50, 32);
+        attackCooldown = new AttackCooldown(origin, player, 10, 10, 50, 64);
 
         addElement(openShop);
         addElement(gemsCount);
         addElement(enemyCount);
+        addElement(attackCooldown);
     }
     /** Draws the player hud 
      * @param g

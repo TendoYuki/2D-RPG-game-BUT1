@@ -56,7 +56,6 @@ public class HealthBar extends HudElement{
         }
         catch(Exception e){}
     }
-    private int exception = 0;
     /**
      * Calculates the fill of the healthbar in px according to the entity's
      * actual health

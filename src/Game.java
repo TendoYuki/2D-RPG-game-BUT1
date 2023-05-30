@@ -26,9 +26,49 @@ import engine.tiles.Directions;
 import engine.trigger.Trigger;
 import engine.trigger.TriggerMap;
 import engine.view.CoordinateSystem;
+import engine.view.Coords;
 import engine.view.Display;
 /** Game class */
 public class Game {
+
+    /**
+     * Loads a room
+     * @param world
+     * @param room
+     * @param doorHud
+     * @param playerHud
+     * @param bossDoorClosed
+     * @param doorClosed
+     */
+    public static void loadRoom(Coords playerCoords, World world, Room room, DialogHud doorHud, PlayerHud playerHud, Dialog bossDoorClosed, Dialog doorClosed) {
+        if(!world.map.activeRoom.isLocked()) {
+            if(!room.isLocked()) {
+                for(Enemy enemy: world.map.activeRoom.enemies) {
+                    playerHud.removeElement(enemy.healthBar);
+                }
+                for(Boss boss: world.map.activeRoom.bosses) {
+                    playerHud.removeElement(boss.healthBar);
+                }
+                world.map.setActiveRoom(room.getId());
+                world.player.px = playerCoords.getX();
+                world.player.py = playerCoords.getY();
+                world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
+                for(Enemy enemy: room.enemies) {
+                    playerHud.addElement(enemy.healthBar);
+                }
+                for(Boss boss: room.bosses) {
+                    playerHud.addElement(boss.healthBar);
+                }
+            } else {
+                DialogController.setCurrentDialog(bossDoorClosed);
+                doorHud.setIsShown(true);
+            }
+        } else {
+            DialogController.setCurrentDialog(doorClosed);
+            doorHud.setIsShown(true);
+        }
+    }
+
     /** Runs the game 
      * @param args
     */
@@ -78,12 +118,12 @@ public class Game {
                 (world.map.size()/2)
             );
 
-            MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(
+            MapGenerator.populateMap(world.map, 0, 1, new ArrayList<Integer>(
                 Arrays.asList(startRoom.getId(), endRoom.getId()))
             );
         }
         // END OF WARNING
-        world.setPlayer(0, 0, 256,20, 100, 1000);
+        world.setPlayer(0, 0, 256,20, 100, 10);
 
         DialogHud doorHud = new DialogHud(display, 0,0, display.getWidth(),display.getHeight()/5);
         doorHud.setInteractable(false);
@@ -239,31 +279,7 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room up = world.map.getAdjacentRoom(Directions.UP);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!up.isLocked()) {
-                        for(Enemy enemy: world.map.activeRoom.enemies) {
-                            playerHud.removeElement(enemy.healthBar);
-                        }
-                        for(Boss boss: world.map.activeRoom.bosses) {
-                            playerHud.removeElement(boss.healthBar);
-                        }
-                        world.map.setActiveRoom(up.getId());
-                        world.player.py = 90;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                        for(Enemy enemy: up.enemies) {
-                            playerHud.addElement(enemy.healthBar);
-                        }
-                        for(Boss boss: up.bosses) {
-                            playerHud.addElement(boss.healthBar);
-                        }
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
+                loadRoom(new Coords((int)world.player.px, 90), world, up, doorHud, playerHud, bossDoorClosed, doorClosed);
             }
 
             @Override
@@ -277,31 +293,7 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room left = world.map.getAdjacentRoom(Directions.LEFT);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!left.isLocked()) {
-                        for(Enemy enemy: world.map.activeRoom.enemies) {
-                            playerHud.removeElement(enemy.healthBar);
-                        }
-                        for(Boss boss: world.map.activeRoom.bosses) {
-                            playerHud.removeElement(boss.healthBar);
-                        }
-                        world.map.setActiveRoom(left.getId());
-                        world.player.px = world.map.getActiveRoom().getTileMap().size() - 90;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                        for(Enemy enemy: left.enemies) {
-                            playerHud.addElement(enemy.healthBar);
-                        }
-                        for(Boss boss: left.bosses) {
-                            playerHud.addElement(boss.healthBar);
-                        }
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
+                loadRoom(new Coords(world.map.getActiveRoom().size() - 90, (int)world.player.py), world, left, doorHud, playerHud, bossDoorClosed, doorClosed);
             }
 
             @Override
@@ -315,31 +307,7 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room down = world.map.getAdjacentRoom(Directions.DOWN);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!down.isLocked()) {
-                        for(Enemy enemy: world.map.activeRoom.enemies) {
-                            playerHud.removeElement(enemy.healthBar);
-                        }
-                        for(Boss boss: world.map.activeRoom.bosses) {
-                            playerHud.removeElement(boss.healthBar);
-                        }
-                        world.map.setActiveRoom(down.getId());
-                        world.player.py = world.map.getActiveRoom().getTileMap().size() - 90;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                        for(Enemy enemy: down.enemies) {
-                            playerHud.addElement(enemy.healthBar);
-                        }
-                        for(Boss boss: down.bosses) {
-                            playerHud.addElement(boss.healthBar);
-                        }
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
+                loadRoom(new Coords((int)world.player.px, world.map.getActiveRoom().size() - 90), world, down, doorHud, playerHud, bossDoorClosed, doorClosed);
             }
             
             @Override
@@ -353,31 +321,7 @@ public class Game {
             @Override
             public void onTriggered() {
                 Room right = world.map.getAdjacentRoom(Directions.RIGHT);
-                if(!world.map.activeRoom.isLocked()) {
-                    if(!right.isLocked()) {
-                        for(Enemy enemy: world.map.activeRoom.enemies) {
-                            playerHud.removeElement(enemy.healthBar);
-                        }
-                        for(Boss boss: world.map.activeRoom.bosses) {
-                            playerHud.removeElement(boss.healthBar);
-                        }
-                        world.map.setActiveRoom(right.getId());
-                        world.player.px = 90;
-                        world.setTriggerMapTileMap(world.map.getActiveRoom().getTileMap());
-                        for(Enemy enemy: right.enemies) {
-                            playerHud.addElement(enemy.healthBar);
-                        }
-                        for(Boss boss: right.bosses) {
-                            playerHud.addElement(boss.healthBar);
-                        }
-                    } else {
-                        DialogController.setCurrentDialog(bossDoorClosed);
-                        doorHud.setIsShown(true);
-                    }
-                } else {
-                    DialogController.setCurrentDialog(doorClosed);
-                    doorHud.setIsShown(true);
-                }
+                loadRoom(new Coords(90, (int)world.player.py),world, right, doorHud, playerHud, bossDoorClosed, doorClosed);
             }
             
             @Override
@@ -391,4 +335,6 @@ public class Game {
 
         maBoucle.lanceBouclePrincipale();
     }
+    
 }
+

@@ -100,6 +100,12 @@ public class Display extends JPanel {
 			hud.draw(g);
 		}
 		m.huds.get("shop").draw(g);
+		m.huds.get("doorClosed").draw(g);
+		m.huds.get("npc").draw(g);
+		m.huds.get("mapHud").draw(g);
+		m.huds.get("menu").draw(g);
+		m.huds.get("gameOver").draw(g);
+		m.huds.get("endMenu").draw(g);
 
 		bs.show();
 		Toolkit.getDefaultToolkit().sync();
