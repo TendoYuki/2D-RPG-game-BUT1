@@ -2,10 +2,14 @@ package engine.hud.npc;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 import engine.dialog.DialogController;
 import engine.hud.HudElement;
 import engine.view.Coords;
+import engine.view.Sprite;
 /** DialogDisplay class */
 public class DialogDisplay extends HudElement{
     /** Constructs a dialog display 
@@ -20,10 +24,16 @@ public class DialogDisplay extends HudElement{
 
     @Override
     public void draw(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.lightGray);
-        g.fillRect(getX(), getY(), getWidth(), getHeight());
-        g.setColor(c);
+        try{
+            new Sprite(
+                getX(),
+                getY(),
+                1,
+                ImageIO.read(
+                    new File("assets/misc/text_bg.png")
+                )
+            ).draw(g, getX(), getY());
+        } catch (Exception e) { }
         DialogController.getCurrentDialog().draw(g, getX(), getY());
     }
 

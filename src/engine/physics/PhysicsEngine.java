@@ -130,30 +130,28 @@ public class PhysicsEngine {
 	
 			/** Checks for collision with the enemies and the world border */
 			for (Enemy enemy : world.map.activeRoom.enemies) {
-				if(enemy.px+enemy.width > world.getWorldBorder().width) {
-					enemy.px = world.getWorldBorder().width-enemy.width-2;
+				if(enemy.px+enemy.width+32  > world.getWorldBorder().width+64) {
+					enemy.px = world.getWorldBorder().width-enemy.width-2+32;
 					enemy.vx = enemy.vx * -0.9;
 				}
-				if(enemy.px <= 0) {
-					enemy.px = 2;
+				if(enemy.px <= 32) {
+					enemy.px = 32+2;
 					enemy.vx = enemy.vx * -0.9;
 				}
-				if(enemy.py+enemy.height > world.getWorldBorder().height) {
-					enemy.py = world.getWorldBorder().height-enemy.height-2;
+				if(enemy.py+enemy.height > world.getWorldBorder().height+64) {
+					enemy.py = world.getWorldBorder().height-enemy.height-2+32;
 					enemy.vy = enemy.vy * -0.9;
 				}
-				if(enemy.py <= 0) {
-					enemy.py = 2;
+				if(enemy.py <= 32) {
+					enemy.py = 32+2;
 					enemy.vy = enemy.vy * -0.9;
 				}
 	
 				// gestion de l'activite de l'enemy
 				if (enemy.vx > 0) {
-					System.out.println(enemy.vy);
 					if (enemy.vy > 0.5) {
 						enemy.sprite.changeActivity("up-right");
 					} else if (enemy.vy < -0.5) {
-						System.out.println(enemy.vy);
 						enemy.sprite.changeActivity("down-right");
 					} else {
 						enemy.sprite.changeActivity("right");
@@ -174,21 +172,44 @@ public class PhysicsEngine {
 			}
 			/** Checks for collision with the bosses and the world border */
 			for (Boss boss : world.map.activeRoom.bosses) {
-				if(boss.px+boss.width > world.getWorldBorder().width) {
-					boss.px = world.getWorldBorder().width-boss.width-2;
+				if(boss.px+boss.width+32 > world.getWorldBorder().width+64) {
+					boss.px = world.getWorldBorder().width-boss.width-2+32;
 					boss.vx = boss.vx * -0.9;
 				}
-				if(boss.px <= 0) {
-					boss.px = 2;
+				if(boss.px <= 32) {
+					boss.px = 32+2;
 					boss.vx = boss.vx * -0.9;
 				}
-				if(boss.py+boss.height > world.getWorldBorder().height) {
-					boss.py = world.getWorldBorder().height-boss.height-2;
+				if(boss.py+boss.height > world.getWorldBorder().height+32) {
+					boss.py = world.getWorldBorder().height-boss.height-2+32;
 					boss.vy = boss.vy * -0.9;
 				}
-				if(boss.py <= 0) {
-					boss.py = 2;
+				if(boss.py <= 32) {
+					boss.py = 32+2;
 					boss.vy = boss.vy * -0.9;
+				}
+	
+				// Boss activity
+				if (boss.vx > 0) {
+					if (boss.vy > 0.5) {
+						boss.sprite.changeActivity("up-right");
+					} else if (boss.vy < -0.5) {
+						boss.sprite.changeActivity("down-right");
+					} else {
+						boss.sprite.changeActivity("right");
+					}
+				} else if (boss.vx < 0) {
+					if (boss.vy > 0.5) {
+						boss.sprite.changeActivity("up-left");
+					} else if (boss.vy < -0.5) {
+						boss.sprite.changeActivity("down-left");
+					} else {
+						boss.sprite.changeActivity("left");
+					}
+				} else if (boss.vy > 0) {
+					boss.sprite.changeActivity("up");
+				} else if (boss.vy < 0) {
+					boss.sprite.changeActivity("down");
 				}
 			}
 			

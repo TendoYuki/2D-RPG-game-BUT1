@@ -22,11 +22,11 @@ import engine.tiles.Atlas;
  *
  * @author Pierre-Frederic Villard
  */
-public class EnemySprites extends Sprites {
+public class BossSprites extends Sprites {
 	/** The entity */
 	Entity entity;
 	/** The sprite path */
-	String imageFile = "assets/char/slime.png";
+	String imageFile = "assets/char/red_slime.png";
 	/** The atlas */
 	Atlas spriteAtlas;
 
@@ -35,9 +35,9 @@ public class EnemySprites extends Sprites {
 	 * @param b
 	 * @throws IOException
 	 */
-	public EnemySprites(Entity b) throws IOException {
+	public BossSprites(Entity b) throws IOException {
 		this.entity = b;
-		spriteAtlas = new Atlas(imageFile, 16, 4, 2, 2);
+		spriteAtlas = new Atlas(imageFile, 16, 4, 2, 4);
 		activity = "down";
 		sprites = new HashMap<String, Sprite>();
 		sprites.put("fixe", spriteAtlas.get(0));

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import engine.generation.Room;
 import engine.hud.player.HealthBar;
+import engine.view.BossSprites;
 import engine.view.CoordinateSystem;
 import engine.view.Coords;
 import engine.view.EnemySprites;
@@ -15,7 +16,7 @@ public class Boss extends Entity {
 	EnemyAI ai;
 
 	/** Sprites of the enemy */
-	EnemySprites sprite;
+	BossSprites sprite;
 
 
 	/** HealthBar of the enemy */
@@ -36,9 +37,9 @@ public class Boss extends Entity {
 		vx = 0;
 		vy = 0;
 		healthBar = new HealthBar(new Coords(w.map.getPosX(), w.map.getPosY()), this, (int)px, (int)py, 40, 3, false, true);
-		height = 30;
-		width = 20;
-		sprite = new EnemySprites(this);
+		height = 64;
+		width = 64;
+		sprite = new BossSprites(this);
 		ai = new EnemyAI(this);
     }
    
@@ -66,7 +67,7 @@ public class Boss extends Entity {
 		super.update();
 		ai.update();
 		healthBar.setX((int)px);
-		healthBar.setY((int)py+30);
+		healthBar.setY((int)py+62);
 	}
 
 
