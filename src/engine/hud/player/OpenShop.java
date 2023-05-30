@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import engine.controller.KeyboardController;
 import engine.hud.HudElement;
 import engine.hud.shop.Shop;
+import engine.view.Coords;
 import engine.view.Sprite;
 /** OpenShop class */
 public class OpenShop extends HudElement{
@@ -23,8 +24,8 @@ public class OpenShop extends HudElement{
      * @param width
      * @param height
     */
-    public OpenShop(Shop shop, int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public OpenShop(Coords origin, Shop shop, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
         this.shop = shop;
         try{
             shopSprite = new Sprite(16, 16, 2, ImageIO.read(
@@ -51,7 +52,7 @@ public class OpenShop extends HudElement{
         KeyboardController.closeShop = !KeyboardController.closeShop;
         shop.setIsShown(true);
         shop.setInteractable(true);
-        KeyboardController.canMove = false;
+        KeyboardController.canMove = !KeyboardController.canMove;
     }
     
 }

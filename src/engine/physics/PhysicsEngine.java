@@ -1,6 +1,9 @@
 package engine.physics;
 
 import java.util.ArrayList;
+
+import engine.generation.Room;
+import engine.tiles.GridCell;
 import engine.trigger.TriggerMap;
 
 public class PhysicsEngine {
@@ -24,6 +27,11 @@ public class PhysicsEngine {
 			// mise a jour des monstres
 			for (Enemy enemy : world.map.activeRoom.enemies) {
 				enemy.update();
+			}
+				
+			// mise a jour des npcs
+			for (NPC npc : world.map.activeRoom.npcs) {
+				npc.update();
 			}
 
 			// mise a jour des boss
@@ -103,20 +111,20 @@ public class PhysicsEngine {
 			world.player.update();
 	
 			/** Checks for collision with the world border */
-			if(world.player.px+world.player.width > world.getWorldBorder().width) {
-				world.player.px = world.getWorldBorder().width-world.player.width-2;
+			if(world.player.px+world.player.width+32 > world.getWorldBorder().width+64) {
+				world.player.px = world.getWorldBorder().width-world.player.width-2+32 ;
 				world.player.vx = world.player.vx * -0.9;
 			}
-			if(world.player.px <= 0) {
-				world.player.px = 2;
+			if(world.player.px <= 32) {
+				world.player.px = 32+2;
 				world.player.vx = world.player.vx * -0.9;
 			}
-			if(world.player.py+world.player.height > world.getWorldBorder().height) {
-				world.player.py = world.getWorldBorder().height-world.player.height-2;
+			if(world.player.py+world.player.height > world.getWorldBorder().height+32) {
+				world.player.py = world.getWorldBorder().height-world.player.height-2+32 ;
 				world.player.vy = world.player.vy * -0.9;
 			}
-			if(world.player.py <= 0) {
-				world.player.py = 2;
+			if(world.player.py <= 32) {
+				world.player.py = 32+2;
 				world.player.vy = world.player.vy * -0.9;
 			}
 	
@@ -204,9 +212,14 @@ public class PhysicsEngine {
 				}
 	
 			}
+			for (GridCell<Room> roomCell : world.map.rooms) {
+				if(!roomCell.isEmpty())
+					roomCell.getContent().update();
+			}
 			for (TriggerMap triggerMap : world.triggerMaps) {
 				triggerMap.update();
 			}
+
 
 			ArrayList<Item> cpy = new ArrayList<Item>(world.map.activeRoom.items);
 			for (Item item : cpy) {

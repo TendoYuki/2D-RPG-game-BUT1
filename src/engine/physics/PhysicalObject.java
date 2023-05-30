@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import engine.view.CoordinateSystem;
+import engine.view.Coords;
 
 public class PhysicalObject {
 
@@ -93,8 +94,8 @@ public class PhysicalObject {
      */
     public void draw(Graphics g) {
         g.setColor(Color.green);
-        int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
-        g.fillRect(tab[0], tab[1], tab[2], tab[3]);
+        Coords coords = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+        g.fillRect(coords.getX(), coords.getY(), (int)width, (int)height);
     }
 
     /**

@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import engine.hud.HudElement;
+import engine.view.Coords;
 /** StatsDisplay class */
 public abstract class StatsDisplay extends HudElement{
     /** The max value */
@@ -17,8 +18,8 @@ public abstract class StatsDisplay extends HudElement{
      * @param width
      * @param height
     */
-    public StatsDisplay(int maxValue, int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public StatsDisplay(Coords origin, int maxValue, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
         this.maxValue = maxValue;
     }
     /** Returns the current value 

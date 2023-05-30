@@ -6,6 +6,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import engine.view.CoordinateSystem;
+import engine.view.Coords;
 import engine.view.Sprite;
 
 /** Gem class */
@@ -31,12 +32,12 @@ public class Key extends Item {
     
     @Override
 	public void draw(Graphics g) {
-		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+		Coords coords = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
         try {
             Sprite s = new Sprite(16, 16, 2, ImageIO.read(
                 new File("assets/misc/key.png")
             ));
-            s.draw(g, tab[0], tab[1]);
+            s.draw(g, coords.getX(), coords.getY());
         } catch (Exception e) { }
 	}
 }

@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import engine.hud.Button;
 import engine.physics.Player;
+import engine.view.Coords;
 import engine.view.Sprite;
 /** AddAttackButton class */
 public class AddAttackButton extends Button {
@@ -19,8 +20,9 @@ public class AddAttackButton extends Button {
      * @param width
      * @param height
     */
-    public AddAttackButton(Player player, int x, int y, int width, int height) throws IOException{
+    public AddAttackButton(Coords origin, Player player, int x, int y, int width, int height) throws IOException{
         super(
+            origin,
             new Sprite(
                 x,
                 y,
@@ -46,7 +48,7 @@ public class AddAttackButton extends Button {
     @Override
     public void onClick() {
         int curr = (int)(player.getAttackMultiplicator()+1.5);
-        if(curr <= 10 && player.getgems() >= 5) {
+        if(curr <= 10 && player.getGems() >= 5) {
             player.setAttackMultiplicator(curr);
             player.addgems(-5);
         }

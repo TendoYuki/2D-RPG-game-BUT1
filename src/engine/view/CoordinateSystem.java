@@ -19,8 +19,11 @@ import engine.physics.Player;
  * @author Pierre-Frederic Villard
  */
 public class CoordinateSystem {
+
+
+
     /** The window height */
-    private static int windowHeight;
+    public static int windowHeight;
     /** Updates the window height 
      * @param windowHeight
     */
@@ -40,13 +43,41 @@ public class CoordinateSystem {
      * @param y0
      * @return
      */
-    public static int[] changeCS(PhysicalObject o, int x0, int y0) {
-        int res[] = new int[4];
-        res[0] = (int) o.px + x0;
-        res[1] = (windowHeight - (int) o.py - (int) (o.height)) + y0;
-        res[2] = (int) o.width;
-        res[3] = (int) o.height;
-        return (res);
+    public static Coords changeCS(PhysicalObject o, int x0, int y0) {
+        return changeCS((int)o.px, (int)o.py, (int)o.width, (int)o.height, x0, y0);
+    }
+    /**
+     * Changes the corordinate system from y top -> bottom to y bottom -> top
+     * @param o
+     * @param x0
+     * @param y0
+     * @return
+     */
+    public static Coords changeCS(PhysicalObject o, Coords origin) {
+        return changeCS((int)o.px, (int)o.py, (int)o.height, (int)o.width, origin.getX(), origin.getY());
+    }
+    /**
+     * Changes the corordinate system from y top -> bottom to y bottom -> top
+     * @param o
+     * @param x0
+     * @param y0
+     * @return
+     */
+    public static Coords changeCS(int x, int y, int height, int width, Coords origin) {
+        return changeCS(x, y, height, width, origin.getX(), origin.getY());
+    }
+    /**
+     * Changes the corordinate system from y top -> bottom to y bottom -> top
+     * @param o
+     * @param x0
+     * @param y0
+     * @return
+     */
+    public static Coords changeCS(int x, int y, int height, int width, int x0, int y0) {
+        int xAbs = (int) x + x0;
+        int yAbs = ((windowHeight - (int) y - ((int) (height)+ y0)) );
+        Coords absC = new Coords(xAbs, yAbs);
+        return (absC);
     }
 
 }

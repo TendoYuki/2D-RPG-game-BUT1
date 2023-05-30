@@ -1,4 +1,8 @@
 package engine.hud;
+
+import engine.view.CoordinateSystem;
+import engine.view.Coords;
+
 /** Clickable class */
 public abstract class Clickable {
     /** Position x of the element*/
@@ -11,30 +15,50 @@ public abstract class Clickable {
     private int height;
     /** Wether or not the element is pressed */
     private boolean isPressed = false;
+    /** Origin of the x and y coordinates */
+    private Coords origin;
     /** Constructs a clickable 
      * @param x
      * @param y
      * @param width
      * @param height
     */
-    public Clickable(int x, int y, int width, int height) {
+    public Clickable(Coords origin, int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
+        this.origin = origin;
         this.width = width;
         this.height = height;
     }
-    /** Returns the position x 
+
+    /** Returns the absolute x position
      * @return
     */
     public int getX() {
+        return CoordinateSystem.changeCS(x, y, height, width, origin).getX();
+    }
+
+    /** Returns the relative x position
+     * @return
+    */
+    public int getRelX() {
         return x;
     }
-    /** Returns the position y 
+
+    /** Returns the absolute y position
      * @return
     */
     public int getY() {
+        return CoordinateSystem.changeCS(x, y, height, width, origin).getY();
+    }
+
+    /** Returns the relative y position
+     * @return
+    */
+    public int getRelY() {
         return y;
     }
+
     /** Updates the position x 
      * @param x
     */
@@ -74,5 +98,10 @@ public abstract class Clickable {
     /** Do something when clicked */
     public abstract void onClick();
     /** Do something when pressed */
-    public void onPressed() {};
+    public void onPressed() {}
+
+
+    public Coords getOrigin() {
+        return origin;
+    };
 }

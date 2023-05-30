@@ -9,6 +9,9 @@ import java.io.File;
 import engine.generation.Map;
 import engine.hud.HudElement;
 import engine.generation.Room;
+import engine.view.CoordinateSystem;
+import engine.view.Coords;
+
 import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
@@ -28,8 +31,8 @@ public class MapHudBackground extends HudElement{
      * @param width
      * @param height
     */
-    public MapHudBackground(Map map, int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public MapHudBackground(Coords origin, Map map, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
         this.map = map;
     }
 
@@ -37,8 +40,6 @@ public class MapHudBackground extends HudElement{
     public void draw(Graphics g) {
         Color c = g.getColor();
         g.setColor(new Color(100, 100, 100, 0));
-        
-        g.fillRect(getY()  , getX() , getWidth(), getHeight());
         try{
             new Sprite(
                 getX(),
@@ -48,7 +49,7 @@ public class MapHudBackground extends HudElement{
                     new File("assets/misc/MenuBackground.png")
                 )
                 
-            ).draw(g, getX(), getY());;
+            ).draw(g, getX(), getY());
         } catch (Exception e) { }
         g.setColor(c);
 
@@ -57,8 +58,8 @@ public class MapHudBackground extends HudElement{
         int interRoomOffset = roomsize;
         for(GridCell<Room> roomCell: map.rooms) {
             if(roomCell.getContent() != null) {
-                int x = getX() +10 + roomCell.getCoords()[0]*(roomsize + interRoomOffset) + 10;
-                int y = getY() +10 + roomCell.getCoords()[1]*(roomsize + interRoomOffset) + 10;
+                int x = getX() + 10 + roomCell.getCoords()[0]*(roomsize + interRoomOffset) + 10;
+                int y = getY() + 10 + roomCell.getCoords()[1]*(roomsize + interRoomOffset) + 10;
                 if(map.activeRoom.equals(roomCell.getContent()))
                     g.fillOval(x+roomsize/4,y+roomsize/4,roomsize/2,roomsize/2);
 

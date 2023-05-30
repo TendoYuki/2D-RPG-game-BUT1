@@ -1,9 +1,14 @@
 package engine.hud.shop;
 
 import java.awt.Graphics;
+import java.awt.Insets;
 
+import javax.swing.JFrame;
+
+import engine.generation.Map;
 import engine.hud.Hud;
 import engine.physics.Player;
+import engine.view.Coords;
 import engine.view.Display;
 /** Shop class */
 public class Shop extends Hud{
@@ -15,19 +20,20 @@ public class Shop extends Hud{
      * @param width
      * @param height
 	*/
-	public Shop(Display display, Player player, int x, int y, int width, int height) {
+	public Shop(Display display, Player player, int x, int y, int width, int height, Map map) {
 		super(display, 0,x, y, width, height);
+		Coords origin = new Coords(x,y);
 		try{
-			addElement(new ShopBackground(x, y, width, height));
-			addElement(new AttackDisplay(player, x + 10, y + 50, width - 50, 50));
-			addElement(new AddAttackButton(player, x + 50 + 10 * (10+ (((width - 50)/2) / 10)), y + 55,  50, 50));
-			addElement(new DefenceDisplay(player, x + 10, y + 120, width - 50, 50));
-			addElement(new AddDefenceButton(player, x + 50 + 10 * (10+ (((width - 50)/2) / 10)), y + 125,  50, 50));
-			addElement(new HealthDisplay(player, x + 10, y + 190, width - 50, 50));
-			addElement(new AddHealthButton(player, x + 50 + 10* (10+ (((width - 50)/2) / 10)), y + 195,  50, 50));
-			addElement(new HealButton(player, x + 25, y + height-110,  64, 64));
-			addElement(new HealLabel(x + 30, y + height-20,  64, 50));
-			addElement(new CloseButton(this, x + width/2-32, y + height-60,  64, 50));
+			addElement(new ShopBackground(origin, 0, 0, width, height,map));
+			addElement(new AttackDisplay(origin, player, 10, 260, width - 50, 50));
+			addElement(new AddAttackButton(origin, player, 50 + 10 * (10+ (((width - 50)/2) / 10)), 255,  50, 50));
+			addElement(new DefenceDisplay(origin, player, 10, 200, width - 50, 50));
+			addElement(new AddDefenceButton(origin, player, 50 + 10 * (10+ (((width - 50)/2) / 10)), 195,  50, 50));
+			addElement(new HealthDisplay(origin, player, 10, 140, width - 50, 50));
+			addElement(new AddHealthButton(origin, player, 50 + 10* (10+ (((width - 50)/2) / 10)), 135,  50, 50));
+			addElement(new HealButton(origin, player, 25, 50,  64, 64));
+			addElement(new HealLabel(origin,player, 30, 10,  64, 32));
+			addElement(new CloseButton(origin, this, width/2-32, 30,  64, 50));
 		}
 		catch(Exception e) {}
 	}

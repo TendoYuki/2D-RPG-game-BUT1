@@ -141,6 +141,7 @@ public class World {
         else if (bossDefeated){
             map.endRoom.unlockRoom();
         }
+        
     }
 
     /**

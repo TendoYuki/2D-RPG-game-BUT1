@@ -47,6 +47,11 @@ public class Dialog {
         }
         return lines.get(currentLine);
     }
+    /** Whether or not the dialog has a next line */
+    public boolean hasNextLine(){
+        return currentLine+1 < lines.size();
+    }
+
     /** Returns the line by the given index 
      * @param lineIndex
      * @return
@@ -54,6 +59,14 @@ public class Dialog {
     public ArrayList<String> getLine(int lineIndex) {
         return lines.get(lineIndex);
     }
+
+    /** Returns the lines
+     * @return
+    */
+    public ArrayList<ArrayList<String>> getLines() {
+        return lines;
+    }
+
     /** Draws the dialog on the given graphical context 
      * @param g
      * @param x

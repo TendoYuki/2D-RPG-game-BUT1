@@ -59,8 +59,7 @@ public abstract class Sprites {
      * @param g
      */
     public void draw(int x, int y, Graphics g) {
-        // Sprite s=sprites.get(chaine());
-        Sprite s = sprites.get("fixe");
+        Sprite s=sprites.get(chain());
         if (s == null)
             s = sprites.get("erreur");
         s.draw(g, x, y);

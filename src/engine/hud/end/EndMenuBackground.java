@@ -1,4 +1,4 @@
-package engine.hud.gameover;
+package engine.hud.end;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,7 +10,7 @@ import engine.hud.HudElement;
 import engine.view.Coords;
 import engine.view.Sprite;
 /** GameOverBackground class */
-public class GameOverBackground extends HudElement{
+public class EndMenuBackground extends HudElement{
     /** Splash image of the background */
     Sprite sprite;
     /** Constructs the background 
@@ -19,7 +19,7 @@ public class GameOverBackground extends HudElement{
      * @param width
      * @param height
     */
-    public GameOverBackground(Coords origin,int x, int y, int width, int height) {
+    public EndMenuBackground(Coords origin,int x, int y, int width, int height) {
         super(origin,x, y, width, height);
         try{
             sprite = new Sprite(500, 250, 1, ImageIO.read(

@@ -11,6 +11,7 @@ import engine.controller.Control;
 import engine.generation.Room;
 import engine.hud.Hud;
 import engine.view.CoordinateSystem;
+import engine.view.Coords;
 import engine.view.PlayerSprites;
 
 /** Player class */
@@ -51,6 +52,9 @@ public class Player extends Entity{
 	/** Whether or not the player can attack */
 	private boolean canAttack = true;
 
+	/** Wheter or not the player has the boss loot */
+	public boolean hasBossLoot = false;
+
     /** Items */
     public ArrayList<Item> inventory = new ArrayList<Item>();
 
@@ -83,12 +87,12 @@ public class Player extends Entity{
 	/** Updates the player */
 	public void update() {
 		super.update();
-
+		System.out.println(getHealth());
+		if(world.map.enemiesCount()==0) addgems(30);
 		ArrayList<Enemy> cpyEnemies = new ArrayList<Enemy>(world.map.activeRoom.enemies);
 
 		for(Enemy enemy: cpyEnemies) {
 			if(isInTriggerZone(enemy,attackZone) && canAttack) {
-				System.out.println(enemy.getHealth());
 				canAttack = false;
 				attack(enemy);
 				TimerTask task = new TimerTask() {
@@ -107,7 +111,6 @@ public class Player extends Entity{
 
 		for(Boss boss: cpyBosses) {
 			if(isInTriggerZone(boss,attackZone) && canAttack) {
-				System.out.println(boss.getHealth());
 				canAttack = false;
 				attack(boss);
 				TimerTask task = new TimerTask() {
@@ -123,6 +126,12 @@ public class Player extends Entity{
 		}
 	}
 
+	/**
+	 * The player has the loot
+	 */
+	public void hasLoot(){
+		hasBossLoot = true;
+	}
 
 	/**  Adds gems to the player
 	 * @param gems 
@@ -148,7 +157,7 @@ public class Player extends Entity{
 	/** Returns actual gem count of the player
 	 * @return
 	 */
-	public int getgems(){
+	public int getGems(){
 		return gems;
 	}
 
@@ -248,8 +257,8 @@ public class Player extends Entity{
 		g.setColor(Color.black);
 
 		// change de repere
-		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
-		sprites.draw(tab[0], tab[1], g);
+		Coords coords = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+		sprites.draw(coords.getX(), coords.getY(), g);
 		sprites.animate();
 	}
 }

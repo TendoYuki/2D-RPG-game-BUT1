@@ -3,18 +3,12 @@ package engine.hud.player;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
 import engine.physics.Player;
 import engine.view.Coords;
-import engine.view.Sprite;
 /** GemsCount class */
-public class GemsCount extends HudElement{
-    /** Splash of the background */
-    Sprite gem;
+public class EnemyCount extends HudElement{
     /** The player */
     Player player;
     /** Constructs the gems count hud
@@ -24,17 +18,9 @@ public class GemsCount extends HudElement{
      * @param width
      * @param height
     */
-    public GemsCount(Coords origin, Player player, int x, int y, int width, int height) {
+    public EnemyCount(Coords origin, Player player, int x, int y, int width, int height) {
         super(origin, x, y, width, height);
         this.player = player;
-        try{
-            gem = new Sprite(16, 16, 2, ImageIO.read(
-                new File(
-                    "assets/misc/gem.png" 
-                )
-            ));
-        }
-        catch(Exception e) {}
     }
 
     @Override
@@ -42,13 +28,11 @@ public class GemsCount extends HudElement{
         Font temp = g.getFont();
         g.setFont(temp.deriveFont(Font.BOLD).deriveFont(20F));
 
-        gem.draw(g, getX(), getY());
-
-        String str = "" + player.getGems();
+        String str = "Enemy count : " + player.world.map.enemiesCount();
         FontMetrics metrics = g.getFontMetrics(g.getFont());
         int xStr = getX() - metrics.stringWidth(str);
 
-        g.drawString(str, xStr - 5, getY() + (int)(gem.getSizeY()/1.3));
+        g.drawString(str, xStr - 5, getY() );
         g.setFont(temp);
     }
 

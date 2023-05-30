@@ -12,22 +12,22 @@ import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
 import engine.physics.Entity;
+import engine.view.Coords;
+import engine.view.Sprite;
 /** HealthBar class */
 public class HealthBar extends HudElement{
     /** The entity */
     private Entity entity; 
     /** Splash of the background */
-    private BufferedImage leftPart;
+    private Sprite fullHeart;
     /** Splash of the background */
-    private BufferedImage centerPart;
+    private Sprite halfHeart;
     /** Splash of the background */
-    private BufferedImage rightPart;
+    private Sprite emptyHeart;
     /** Wether or not it has decoration */
     private boolean hasDecoration;
     /** Wether or not it displays the level */
     private boolean displayLevel;
-    /** The offset */
-    private int offset;
     /** Constructs a health bar 
      * @param entity
      * @param x
@@ -37,25 +37,26 @@ public class HealthBar extends HudElement{
      * @param hasDecoration
      * @param displayLevel
     */
-    public HealthBar(Entity entity, int x, int y, int width, int height, boolean hasDecoration, boolean displayLevel) {
-        super(x, y, width, height);
+    public HealthBar(Coords origin, Entity entity, int x, int y, int width, int height, boolean hasDecoration, boolean displayLevel) {
+        super(origin, x, y, width, height);
         this.entity = entity;
         this.hasDecoration = hasDecoration;
         this.displayLevel = displayLevel;
         try{
-            leftPart = ImageIO.read(new File(
-                "assets/misc/HealthContainerLeft.png"
-            ));
-            centerPart = ImageIO.read(new File(
-                "assets/misc/HealthContainerTile.png"
-            ));
-            rightPart = ImageIO.read(new File(
-                "assets/misc/HealthContainerRight.png"
-            ));
+            
+            fullHeart = new Sprite(x, y, 2, ImageIO.read(new File(
+                "assets/misc/heart_full.png"
+            )));
+            halfHeart = new Sprite(x, y, 2, ImageIO.read(new File(
+                "assets/misc/heart_half.png"
+            )));
+            emptyHeart = new Sprite(x, y, 2, ImageIO.read(new File(
+                "assets/misc/heart_empty.png"
+            )));
         }
         catch(Exception e){}
     }
-
+    private int exception = 0;
     /**
      * Calculates the fill of the healthbar in px according to the entity's
      * actual health
@@ -65,59 +66,36 @@ public class HealthBar extends HudElement{
         return entity.getHealth() * getWidth() / entity.getMaxHealth();
     }
 
-    /**
-     * Calculates the fill of the healthbar in px according to the entity's
-     * actual health
-     * @param offset
-     * @return
-     */
-    private int calcFillOffseted(int offset) {
-        return entity.getHealth() * (getWidth() + offset) / entity.getMaxHealth();
-    }
-
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D)g;
         Color temp = g.getColor();
-        g.setColor(Color.GRAY);
+        g.setColor(Color.black);
 
         if(hasDecoration) {
-            offset = getX();
-            AffineTransform at = AffineTransform.getTranslateInstance(offset, getY());
-            at.scale(2, 2);
-            g2d.drawImage(leftPart, at, null);
-            offset += leftPart.getWidth();
+            int offset = getX();
+            int heartCount = (int)Math.floor(entity.getMaxHealth() / 30);
 
-            int totalCenterSize = 0;
-            for(int i = 1; totalCenterSize < getWidth() - rightPart.getWidth()*2 ; i++) {
-                at = AffineTransform.getTranslateInstance(
-                    getX() + totalCenterSize + leftPart.getWidth(),
-                    getY()
-                );
-                at.scale(2, 2);
-                g2d.drawImage(
-                    centerPart,
-                    at,
-                    null
-                );
-                totalCenterSize = i*centerPart.getWidth()*2;
+            int fullHeartCount = (int)Math.floor(entity.getHealth() / 30);
+
+            int halfHeartCount = (int)Math.floor((entity.getHealth() / 15 - fullHeartCount * 2));
+
+            int emptyHeartCount = heartCount - fullHeartCount - halfHeartCount;
+
+            if(fullHeartCount==0 && halfHeartCount ==0) halfHeartCount++;
+            for(int i = 0; i < fullHeartCount; i++) {
+                fullHeart.draw(g2d, getX() + offset, getY());
+                offset+=32;
+            }
+            for(int i = 0; i < halfHeartCount && Math.ceil((fullHeartCount * 2 + halfHeartCount) / 2) < heartCount; i++) {
+                halfHeart.draw(g2d, getX() + offset, getY());
+                offset+=32;
+            }
+            for(int i = 0; i < emptyHeartCount; i++) {
+                emptyHeart.draw(g2d, getX() + offset, getY());
+                offset+=32;
             }
 
-            offset += totalCenterSize;
-
-            at = AffineTransform.getTranslateInstance(offset, getY());
-            at.scale(2, 2);
-            g2d.drawImage(rightPart, at, null);
-            offset += rightPart.getWidth();
-
-            g.setColor(Color.RED);
-            g.fillRect(getX()+4, getY()+6, calcFillOffseted(30), getHeight());
-            g.setColor(temp);
-
-            Font tempFont = g.getFont();
-            g.setFont(tempFont.deriveFont(Font.BOLD).deriveFont(14F));
-            g.drawString("" + entity.getHealth() + " / " + entity.getMaxHealth(), getX() + leftPart.getWidth(), getY() + (int)(leftPart.getHeight()*1.3));
-            g.setFont(tempFont);
         } else {
             if(displayLevel)
                 g.drawString("" + entity.getLevel(), getX()+4, getY()+4);
@@ -128,8 +106,6 @@ public class HealthBar extends HudElement{
     }
     
     @Override
-    public void onClick() { 
-        entity.setHealth(entity.getHealth() - 10/entity.getDefence());
-    }
+    public void onClick() {  }
     
 }

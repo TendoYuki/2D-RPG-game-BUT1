@@ -64,7 +64,6 @@ public class BouclePrincipale {
 
 
 			JFrame frame = jeuPhysique.display.getFrame();
-			Insets is = frame.getInsets();
 
 			// Changes the world's map's position according to the window height
 			jeuPhysique.physicsEngine.world.map.setPosX(
@@ -73,7 +72,7 @@ public class BouclePrincipale {
 			);
 			jeuPhysique.physicsEngine.world.map.setPosY(
 				(jeuPhysique.display.getHeight()/2) -
-				(jeuPhysique.physicsEngine.world.map.size()/2) + is.top
+				(jeuPhysique.physicsEngine.world.map.size()/2)
 			);
 		}
 		long l2 = System.currentTimeMillis();

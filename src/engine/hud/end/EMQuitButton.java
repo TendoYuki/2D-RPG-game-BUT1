@@ -1,4 +1,4 @@
-package engine.hud.menu;
+package engine.hud.end;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,16 +9,16 @@ import engine.controller.KeyboardController;
 import engine.hud.Button;
 import engine.view.Coords;
 import engine.view.Sprite;
-/** QuitButton class */
-public class QuitButton extends Button {
+/** GOQuitButton class */
+public class EMQuitButton extends Button {
 
-    /** Constructs a quit button 
-     * @param x 
+    /** Constructs a game over exit button 
+     * @param x
      * @param y
      * @param width
      * @param height
     */
-    public QuitButton(Coords origin, int x, int y, int width, int height) throws IOException{
+    public EMQuitButton(Coords origin, int x, int y, int width, int height) throws IOException{
         super(
             origin,
             new Sprite(

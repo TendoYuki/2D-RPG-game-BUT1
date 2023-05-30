@@ -58,6 +58,25 @@ public class TileMap {
     }
 
     /**
+     * Changes the tile at the given x and y coordinate
+     * @param x
+     * @param y
+     * @param tileId
+     */
+    public void setTile(int x, int y, int tileId) {
+        tilesAtlasKey[y][x] = tileId;
+        for(int y1 = 0; y1 < tilesAtlasKey.length; y1++) {
+            for(int x1 = 0; x1 < tilesAtlasKey[0].length; x1++) {
+                int key = tilesAtlasKey[y1][x1];
+                tileGrid.setCell(x1, y1, new Tile(
+                    tileAtlas.get(key),
+                    key, posX+x1*scale, posY+y1*scale, scaleFactor
+                ));
+            }
+        }
+    }   
+
+    /**
      * Creates a tilemap of a given scale(ex 16 -> 16x16px) 
      * with an array of keys that maps to the provided tileAtlas
      * @param tileSize Scale of the TileMap

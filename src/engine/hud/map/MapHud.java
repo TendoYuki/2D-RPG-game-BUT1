@@ -3,6 +3,7 @@ package engine.hud.map;
 import java.awt.Graphics;
 import engine.generation.Map;
 import engine.hud.Hud;
+import engine.view.Coords;
 import engine.view.Display;
 /** MapHud class */
 public class MapHud extends Hud{
@@ -17,8 +18,9 @@ public class MapHud extends Hud{
 	*/
 	public MapHud(Display display, Map map, int x, int y, int width, int height) {
 		super(display, 0,x, y, width, height);
+		Coords origin = new Coords(0, 0);
 		try{
-			addElement(new MapHudBackground(map, x, y, width, height));
+			addElement(new MapHudBackground(origin,map, x, y, width, height));
 		}
 		catch(Exception e) {}
 	}

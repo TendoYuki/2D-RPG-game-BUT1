@@ -9,6 +9,7 @@ import engine.dialog.DialogController;
 import engine.generation.Room;
 import engine.generation.MapGenerator;
 import engine.hud.Hud;
+import engine.hud.end.EndMenu;
 import engine.hud.gameover.GameOver;
 import engine.hud.map.MapHud;
 import engine.hud.menu.Menu;
@@ -45,6 +46,7 @@ public class Game {
         PlayerHud playerHud;
         Menu menu;
         GameOver gameOver;
+        EndMenu endMenu;
         DialogHud npcHud;
         
 
@@ -61,14 +63,29 @@ public class Game {
         Room endRoom = new Room(world, Directions.values()); 
         endRoom.lockRoom();
 
-        world.setMap(MapGenerator.GenerateMap(world, startRoom, endRoom, 10, 5, 5));
-        MapGenerator.populateMap(world.map, 0, 1, new ArrayList<Integer>(
-            Arrays.asList(startRoom.getId(), endRoom.getId()))
-        );
-        world.setPlayer(0, 0, 256,20, 100, 1000);
-        display = new Display(physicsEngine.world, world.map);
 
-        DialogHud doorHud = new DialogHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
+        // WARNING : DO NOT MOVE OR REMOVE
+        {
+            world.setMap(MapGenerator.GenerateMap(world, startRoom, endRoom, 10, 5, 5));
+            display = new Display(physicsEngine.world, world.map);
+
+            world.map.setPosX(
+                (display.getWidth()/2) -
+                (world.map.size()/2)
+            );
+            world.map.setPosY(
+                (display.getHeight()/2) -
+                (world.map.size()/2)
+            );
+
+            MapGenerator.populateMap(world.map, 0, 5, new ArrayList<Integer>(
+                Arrays.asList(startRoom.getId(), endRoom.getId()))
+            );
+        }
+        // END OF WARNING
+        world.setPlayer(0, 0, 256,20, 100, 1000);
+
+        DialogHud doorHud = new DialogHud(display, 0,0, display.getWidth(),display.getHeight()/5);
         doorHud.setInteractable(false);
         doorHud.setIsShown(false);
         world.addHud("doorClosed", doorHud);
@@ -89,22 +106,23 @@ public class Game {
         world.mapHud = new MapHud(
             display,
             world.map,
-            (display.getWidth() / 2 - (int) (world.map.size()/1.4)/2) ,
-            (display.getHeight() / 2 - (int) (world.map.size()/1.4)/2) + 27 ,
-            (int) (world.map.size()/1.4),
-            (int) (world.map.size()/1.4)
+            display.getWidth()  / 2 - (int) (world.map.size() / 1.4 / 2 ),
+            display.getHeight() / 2 - (int) (world.map.size() / 1.4 / 2 ),
+            (int) (world.map.size() / 1.4),
+            (int) (world.map.size() / 1.4)
         );
         world.addHud("mapHud", world.mapHud);
 
         int imgWidth = display.getMap().size();
         int imgHeight = display.getMap().size();
-        CoordinateSystem.setWindowHeight(imgHeight);
+
+        CoordinateSystem.setWindowHeight(display.getFrame().getHeight());
 
         // Dialogue du gardien
         Dialog npc1 = new Dialog();
         npc1.addLine(new String[] {
             "Bienvenue aventurier ! ",
-            "J'espère que tu n'as pas eu de problème sur le chemin jusque ici",
+            "J'espère que tu n'as pas eu de problème sur le chemin jusqu'ici",
             "Appuie sur «F» pour parler au gardien afin qu'il te donne ta première quête."
         });
         npc1.addLine(new String[] {
@@ -116,7 +134,7 @@ public class Game {
         });
         npc1.addLine(new String[] {
             "Pas si vite! ",
-            "Tu n’as encore appris à te battre, tu ne peux donc pas rentrer pour le moment.",
+            "Tu n’as pas encore appris à te battre, tu ne peux donc pas rentrer pour le moment.",
             "Vient ici que je t’apprennes toutes mes techniques."
         });
         npc1.addLine(new String[] {
@@ -126,6 +144,9 @@ public class Game {
             "Si tu as des gems d'or sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
             "bien entendu tu n'es pas oblige de m'ecouter mais tu seras le seul responsable",
             "s'il t'arrive quelque chose.",
+        });
+        npc1.addLine(new String[] {
+            "Bonne chance à vous aventurier, je vous attend ici"
         });
         Dialog npc1End = new Dialog();
         npc1End.addLine(new String[]{
@@ -137,40 +158,19 @@ public class Game {
         });
         npc1End.addLine(new String[]{
             "Vous avez recu la competence DIEU DU DEV !!",
-            "Plus aucun programme ne vous sera impossible a faire !"
-        });
-
-       
-        
-        Dialog porteOuverte = new Dialog();
-        porteOuverte.addLine(new String[] {
-            "Vous avez tue tous les monstres de cette zone",
-            "Les portes s'ouvrent"
-        });
-
-        // Dialogue du boss
-        Dialog bossStart = new Dialog();
-        bossStart.addLine(new String[]{
-            "Oh tient tient... Un nouvel aventurier qui pense pouvoir me battre",
-            "MUAHAHAHAHAHHAHAHAHAHA"
-        });
-
-        Dialog bossMort = new Dialog();
-        bossMort.addLine(new String[]{
-            "AAAAAAAAAARRrrrrrrrrrrrrrghhhhhhhhhh"
-        });
-        bossMort.addLine(new String[] {
-            "Vous avez recupere le baton magique du gardien"
+            "Plus aucun programme ne vous sera impossible a faire !",
+            "Bonne continuation dans votre carriere !"
         });
 
         // Adding huds
         world.shop = new Shop(
             display,
             world.player,
-            (display.getWidth() / 2 - (int) (512 / 1.4) / 2),
-            (display.getHeight() / 2 - (int) (512 / 1.4) / 2)  + 27 ,
-            (int) (512 / 1.4),
-            (int) (512 / 1.4)
+            display.getWidth() / 2 - (int) (world.map.size() / 1.4 / 2),
+            display.getHeight() / 2 - (int) (world.map.size() / 1.4 / 2 ),
+            (int) (world.map.size() / 1.4),
+            (int) (world.map.size() / 1.4),
+            world.map
         );
 
         playerHud = new PlayerHud(display, world.player, world.shop);
@@ -191,7 +191,12 @@ public class Game {
         gameOver.setInteractable(false);
         world.addHud("gameOver", gameOver);
 
-        npcHud = new DialogHud(display, 0,display.getHeight() - display.getHeight()/5, display.getWidth(),display.getHeight()/5);
+        endMenu = new EndMenu(display, 0, 0, display.getWidth(), display.getHeight());
+        endMenu.setIsShown(false);
+        endMenu.setInteractable(false);
+        world.addHud("endMenu", endMenu);
+
+        npcHud = new DialogHud(display, 0,0, display.getWidth(),display.getHeight()/5);
         npcHud.setInteractable(false);
         npcHud.setIsShown(false);
         world.addHud("npc", npcHud);
@@ -203,12 +208,12 @@ public class Game {
 
         world.setWorldBorder(new WorldBorder(
             world,
-            imgWidth,
-            imgHeight
+            imgWidth-64,
+            imgHeight-64
         ));
 
         // Adding NPCs + link dialogs
-        world.map.activeRoom.addNPC(0, 0, 256, 256);
+        world.map.activeRoom.addNPC(0, 0, 240, 240);
         world.map.activeRoom.npcs.get(0).addDialog("start", npc1);
         world.map.activeRoom.npcs.get(0).addDialog("end", npc1End);
         world.map.activeRoom.npcs.get(0).setActiveDialog("start");

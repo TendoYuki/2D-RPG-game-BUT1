@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 import engine.dialog.DialogController;
 import engine.hud.HudElement;
+import engine.view.Coords;
 /** DialogDisplay class */
 public class DialogDisplay extends HudElement{
     /** Constructs a dialog display 
@@ -13,8 +14,8 @@ public class DialogDisplay extends HudElement{
      * @param width
      * @param height
     */
-    public DialogDisplay(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public DialogDisplay(Coords origin, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
     }
 
     @Override

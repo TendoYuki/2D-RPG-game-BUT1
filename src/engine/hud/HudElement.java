@@ -1,6 +1,8 @@
 package engine.hud;
 
 import java.awt.Graphics;
+
+import engine.view.Coords;
 /** HudElement class */
 public abstract class HudElement extends Clickable{
     /** Constructs a hud element 
@@ -9,8 +11,8 @@ public abstract class HudElement extends Clickable{
      * @param width
      * @param height
     */
-    public HudElement(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public HudElement(Coords origin, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
     }
     /** Draws the hud element 
      * @param g

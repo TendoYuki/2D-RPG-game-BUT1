@@ -7,6 +7,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import engine.hud.HudElement;
+import engine.view.Coords;
 import engine.view.Sprite;
 /** MenuBackground class */
 public class MenuBackground extends HudElement{
@@ -18,8 +19,8 @@ public class MenuBackground extends HudElement{
      * @param width
      * @param height
     */
-    public MenuBackground(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public MenuBackground(Coords origin, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
         try{
             sprite = new Sprite(500, 250, 1, ImageIO.read(
                 new File(

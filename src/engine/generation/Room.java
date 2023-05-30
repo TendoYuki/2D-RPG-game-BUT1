@@ -16,6 +16,7 @@ import engine.physics.World;
 import engine.tiles.Directions;
 import engine.tiles.Grid;
 import engine.tiles.GridCell;
+import engine.tiles.TileMap;
 import engine.trigger.TriggerMap;
 import engine.view.Scene;
 /** Room class */
@@ -249,6 +250,59 @@ public class Room extends Scene{
         }
         ret += " ]";
         return ret;
+    }
+
+    /** Updates the room */
+    public void update(){
+        for(Entry<Directions, Room> entry: neighboringRooms.entrySet()){
+            if(entry.getValue()!=null) {
+                updateTileMap(entry.getKey(), entry.getValue(), getTileMap());
+            }
+        }
+    }
+    private void updateTileMap(Directions dir, Room room, TileMap tm) {
+        switch(dir){
+            case UP:
+                if(room.isLocked() || isLocked()){
+                    tm.setTile(tm.getCountX()/2, 0, 15);
+                    tm.setTile(tm.getCountX()/2-1, 0, 14);
+                }
+                else{
+                    tm.setTile(tm.getCountX()/2, 0, 27);
+                    tm.setTile(tm.getCountX()/2-1, 0, 26);
+                }
+                break;
+            case DOWN:
+                if(room.isLocked() || isLocked()){
+                    tm.setTile(tm.getCountX()/2, tm.getCountY()-1, 19);
+                    tm.setTile(tm.getCountX()/2-1, tm.getCountY()-1, 18);
+                }
+                else{
+                    tm.setTile(tm.getCountX()/2, tm.getCountY()-1, 29);
+                    tm.setTile(tm.getCountX()/2-1, tm.getCountY()-1, 28);
+                }
+                break;
+            case LEFT:
+                if(room.isLocked() || isLocked()){
+                    tm.setTile(0, tm.getCountY()/2, 21);
+                    tm.setTile(0, tm.getCountY()/2-1, 20);
+                }
+                else{
+                    tm.setTile(0, tm.getCountY()/2, 33);
+                    tm.setTile(0, tm.getCountY()/2-1, 32);
+                }
+                break;    
+            case RIGHT:
+                if(room.isLocked() || isLocked()){
+                    tm.setTile(tm.getCountX()-1, tm.getCountY()/2, 17);
+                    tm.setTile(tm.getCountX()-1, tm.getCountY()/2-1, 16);
+                }
+                else{
+                    tm.setTile(tm.getCountX()-1, tm.getCountY()/2, 31);
+                    tm.setTile(tm.getCountX()-1, tm.getCountY()/2-1, 30);
+                }
+                break;   
+        }
     }
 
     /**

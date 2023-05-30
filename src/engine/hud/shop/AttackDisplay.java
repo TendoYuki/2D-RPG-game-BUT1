@@ -1,6 +1,7 @@
 package engine.hud.shop;
 
 import engine.physics.Player;
+import engine.view.Coords;
 /** AttackDisplay class */
 public class AttackDisplay extends StatsDisplay {
     /** The player */
@@ -12,8 +13,8 @@ public class AttackDisplay extends StatsDisplay {
      * @param width
      * @param height
     */
-    public AttackDisplay(Player player, int x, int y, int width, int height) {
-        super(10, x, y, width, height);
+    public AttackDisplay(Coords origin, Player player, int x, int y, int width, int height) {
+        super(origin, 10, x, y, width, height);
         this.player = player;
         displayString = "Attack";
     }

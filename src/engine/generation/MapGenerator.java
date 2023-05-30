@@ -13,48 +13,11 @@ import engine.tiles.Directions;
 import engine.tiles.Grid;
 import engine.tiles.GridCell;
 import engine.tiles.TileMap;
+import engine.view.Coords;
 
-/** Coords class */
-class Coords {
-    /** x value of the coordinates */
-    private int x;
-    /** y value of the coordinates */
-    private int y;
-    /** Returns the x value 
-     * @return
-    */
-    public int getX() {
-        return x;
-    }
-    /** Updates the x value 
-     * @param x
-    */
-    public void setX(int x) {
-        this.x = x;
-    }
-    /** Returns the y value 
-     * @return
-    */
-    public int getY() {
-        return y;
-    }
-    /** Updates the y value 
-     * @param y
-    */
-    public void setY(int y) {
-        this.y = y;
-    }
-    /** Contructs coordinates 
-     * @param x
-     * @param y
-    */
-    Coords(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}
 /** MapGenerator class */
 public class MapGenerator {
+    public static int[][] tm;
     /** Constructs a MapGenerator */
     public MapGenerator() {}
     /** Returns a tilemap 
@@ -70,102 +33,86 @@ public class MapGenerator {
 			2
         );
 
-        int[][] tm = new int[][] {
-            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,13,13,13,13,13,13,13,13,13,13,13,13,13,13,6},
-            {6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6}
+        tm = new int[][] {
+            {22,23,23,23,23,23,23,23,23,23,23,23,23,23,23,24},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {25,9,9,9,9,9,9,9,9,9,9,9,9,9,9,5},
+            {6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,8}
         };
         
         for(Entry<Directions, Room> entry: r.getNeighbors().entrySet()) {
-            if(entry.getValue() != null)
+            if(entry.getValue() != null) {
+                int cX = tm.length;
+                int cY = tm[0].length;
+                for(int x = 1; x < tm.length-1; x++)
+                    for(int y = 1; y < tm[0].length-1; y++) {
+                        if(!(
+                            //Down
+                            (
+                                y < 3 &&
+                                x > cX/2-4 && x < cX/2+3
+                            ) ||
+                            // Up
+                            (
+                                y > cY-4 &&
+                                x > cX/2-4 && x < cX/2+3
+                            ) ||
+                            // Left
+                            (
+                                x < 4 &&
+                                y > cY/2-4 && y < cY/2+3
+                            ) ||
+                            // Right
+                            (
+                                x > cX-4 &&
+                                y > cY/2-4 && y < cY/2+3
+                            ) 
+                        )) {
+                            Random rand = new Random();
+                            if(rand.nextInt(30) == 1) {
+                                Random rand1 = new Random();
+                                tm[y][x] = rand1.nextInt(5)+9;
+                            }
+                        }
+                    }
+                
             switch(entry.getKey()) {
                 case UP:
-                    if(tm[0].length%2 == 0) {
-                        // For door triggers
-                        tm[1][tm[0].length/2] = 1;
-                        tm[1][tm[0].length/2-1] =1;
-
-                        // For door texture
-                        tm[0][tm[0].length/2] = 1;
-                        tm[0][tm[0].length/2-1] =1;
-                    }
-                    else{
-                        // For door triggers
-                        tm[1][tm[0].length/2] = 1;
-
-                        // For door texture
-                        tm[0][tm[0].length/2] = 1;
-                    }
+                    // For door triggers
+                    tm[1][tm[0].length/2] = 1;
+                    tm[1][tm[0].length/2-1] =1;
                     break;
                 case DOWN:
-                    if(tm[0].length%2 == 0) {
-                        // For door triggers
-                        tm[tm.length-2][tm[0].length/2] = 3;
-                        tm[tm.length-2][tm[0].length/2-1] =3;
-
-                        // For door texture
-                        tm[tm.length-1][tm[0].length/2] = 3;
-                        tm[tm.length-1][tm[0].length/2-1] =3;
-                    }
-                    else{
-                        // For door triggers
-                        tm[tm.length-2][tm[0].length/2] = 3;
-
-                        // For door texture
-                        tm[tm.length-1][tm[0].length/2] = 3;
-                    }
+                    // For door triggers
+                    tm[tm.length-2][tm[0].length/2] = 3;
+                    tm[tm.length-2][tm[0].length/2-1] =3;
                     break;
                 case LEFT:
-                    if(tm.length%2 == 0) {
-                        // For door triggers
-                        tm[tm.length/2][1] = 2;
-                        tm[tm.length/2 -1][1] =2;
-
-                        // For door texture
-                        tm[tm.length/2][0] = 2;
-                        tm[tm.length/2 -1][0] =2;
-
-                    }
-                    else{
-                        // For door triggers
-                        tm[tm.length/2][1] = 2;
-
-                        // For door texture
-                        tm[tm.length/2][0] = 2;
-                    }
+                    // For door triggers
+                    tm[tm.length/2][1] = 2;
+                    tm[tm.length/2 -1][1] =2;
                     break;
                 case RIGHT:
-                    if(tm.length%2 == 0) {
-                        // For door triggers
-                        tm[tm.length/2][tm[0].length-2] = 4;
-                        tm[tm.length/2-1][tm[0].length-2] =4;
-
-                        // For door texture
-                        tm[tm.length/2][tm[0].length-1] = 4;
-                        tm[tm.length/2-1][tm[0].length-1] =4;
-                    }
-                    else{
-                        // For door triggers
-                        tm[tm.length/2][tm[0].length-2] = 4;
-
-                        // For door texture
-                        tm[tm.length/2][tm[0].length-1] = 4;
-                    }
+                    // For door triggers
+                    tm[tm.length/2][tm[0].length-2] = 4;
+                    tm[tm.length/2-1][tm[0].length-2] =4;
                     break;
             }
+
+            }
+
         }
 
         TileMap tileMap = new TileMap(
@@ -233,8 +180,8 @@ public class MapGenerator {
                 int cY = roomCell.getContent().getTileMap().getCountY();
 
                 // Inits all from zero to max coords
-                for(int y = 1; y < cY-1; y++) {
-                    for(int x = 1; x < cX-1; x++) {
+                for(int y = 2; y < cY-2; y++) {
+                    for(int x = 2; x < cX-2; x++) {
                         if(!(
                             //Down
                             (
@@ -290,7 +237,7 @@ public class MapGenerator {
                 }  
                 Room room = roomCell.getContent();
                 if(room.enemies.size() == 0){
-                    // Place gems in the middle of the room :D 
+                    // Place gems in the middle of the room 
                     for(int i = 0; i < rand.nextInt(5)+5 ; i++) {
                         try{
                             Coords coords = possiblePositions.get(rand.nextInt(possiblePositions.size()));  
@@ -375,7 +322,6 @@ public class MapGenerator {
         map.endRoom = endRoom;
         
         map.setActiveRoom(rooms.get(0).getContent().getId());
-        System.out.println(endRoom.size());
         return map;
     }
     /** Generates a map 

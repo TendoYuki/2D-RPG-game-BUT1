@@ -2,6 +2,7 @@ package engine.hud;
 
 import java.awt.Graphics;
 
+import engine.view.Coords;
 import engine.view.Sprite;
 /** Button class */
 public abstract class Button extends HudElement{
@@ -17,8 +18,8 @@ public abstract class Button extends HudElement{
      * @param width
      * @param height
     */
-    public Button(Sprite sprite, Sprite activeSprite, int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Button(Coords origin, Sprite sprite, Sprite activeSprite, int x, int y, int width, int height) {
+        super(origin, x, y, width, height);
         buttonSprite = sprite;
         buttonActiveSprite = activeSprite;
     }

@@ -19,7 +19,7 @@ public class Display extends JPanel {
 	/** The buffer strategy */
 	public BufferStrategy bs;
 	/** The jframe */
-	private JFrame frame;
+	public static JFrame frame;
 
 
 	/**
@@ -37,11 +37,13 @@ public class Display extends JPanel {
 		
 		// setPreferredSize(new Dimension(800, 800));
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setResizable(false);
+		f.setUndecorated(true);
 		this.setPreferredSize(new Dimension(map.size() + 200,map.size() + 200));
 		f.getContentPane().add(this);
-		f.setResizable(false);
 
 		f.pack();
+		f.setLocationRelativeTo(null);
 		f.setVisible(true);
 		
 		// ajouter pour eviter les repaint
@@ -63,38 +65,34 @@ public class Display extends JPanel {
 	public void render() {
 		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 
+		g.setColor(new Color(46, 38, 90, 255));
+		g.fillRect(0, 0, 100000, 100000);
 		g.setColor(Color.black);
 
-		// Affiche le decor
-		// decor.draw(g);
 		map.draw(g);
 
-		// affiche les objets
-		// for (PhysicalObject obj : m.objects) {
-		// 	obj.draw(g);
-		// }
 		
-		// affiche les monstres
+		// Draws the monsters
 		for (Enemy enemy : m.map.activeRoom.enemies) {
 			enemy.draw(g);
 		}
 
-		// affiche les boss
+		// Draws the boss
 		for (Boss boss : m.map.activeRoom.bosses) {
 			boss.draw(g);
 		}
 
-		// affiche les monstres
+		// Draws the items
 		for (Item item : m.map.activeRoom.items) {
 			item.draw(g);
 		}
 
-		// draws npcs
+		// Draws the npcs
 		for (NPC npc : m.map.activeRoom.npcs) {
 			npc.draw(g);
 		}
 
-		// affiche la balle
+		// Draws the player
 		Player b = m.player;
 		b.draw(g);
 

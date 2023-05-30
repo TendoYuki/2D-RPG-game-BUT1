@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import engine.hud.Button;
 import engine.physics.Player;
+import engine.view.Coords;
 import engine.view.Sprite;
 /** AddHealthButton class */
 public class AddHealthButton extends Button {
@@ -19,8 +20,9 @@ public class AddHealthButton extends Button {
      * @param width
      * @param height
     */
-    public AddHealthButton(Player player, int x, int y, int width, int height) throws IOException{
+    public AddHealthButton(Coords origin, Player player, int x, int y, int width, int height) throws IOException{
         super(
+            origin,
             new Sprite(
                 x,
                 y,
@@ -46,7 +48,7 @@ public class AddHealthButton extends Button {
     @Override
     public void onClick() {
         int curr = player.getHealthMultiplicator()+1;
-        if(curr <= 10 && player.getgems() >= 5) {
+        if(curr <= 10 && player.getGems() >= 5) {
             player.setHealthMultiplicator(curr);
             player.setHealth(player.getHealth() + player.HEALTH_MUL_UNIT);
             player.addgems(-5);

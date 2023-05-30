@@ -8,8 +8,12 @@ import java.util.HashMap;
 import engine.dialog.Dialog;
 import engine.dialog.DialogController;
 import engine.generation.Room;
+import engine.hud.Hud;
 import engine.view.CoordinateSystem;
+import engine.view.Coords;
 import engine.view.NPCSprites;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /** NPC Class */
 public class NPC extends Entity {
@@ -28,6 +32,11 @@ public class NPC extends Entity {
 
 	/** Active dialog of the npc */
 	private Dialog activeDialog;
+	/** Active dialog name */
+	private String dialogName;
+
+	/** Whether or not the end menu is displayed */
+	public boolean displayEndMenu = false;
 
 	/**
 	 * Creates a new npc
@@ -38,8 +47,9 @@ public class NPC extends Entity {
 		activeDialog = new Dialog();
 		activeDialog.addLine("");
 		sprite = new NPCSprites(this);
-		height = sprite.sprites.get("fixe").getSizeY();
-		width  = sprite.sprites.get("fixe").getSizeX();
+		height = sprite.sprites.get("fixe0").getSizeY();
+		width  = sprite.sprites.get("fixe0").getSizeX();
+		sprite.changeActivity("fixe");
 	}
 
 	/**
@@ -56,6 +66,7 @@ public class NPC extends Entity {
 	 * @param dialogName
 	 */
 	public void setActiveDialog(String dialogName) {
+		this.dialogName = dialogName;
 		activeDialog = dialogs.get(dialogName);
 	}
 
@@ -67,9 +78,9 @@ public class NPC extends Entity {
 
 		// change de repere
 		g.setColor(Color.black);
-		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+		Coords coords = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
 
-		sprite.draw(tab[0], tab[1], g);
+		sprite.draw(coords.getX(), coords.getY(), g);
 		sprite.animate();
 	}
 
@@ -84,10 +95,39 @@ public class NPC extends Entity {
 			world.player.py < this.py + height + interactZone.getHeight()/2
 		);
 	}
+
+	/** Update */
+	public void update(){
+		if(displayEndMenu){
+			world.huds.values().forEach(hud -> {
+				hud.setInteractable(false);
+				hud.setIsShown(false);
+			});
+			Hud gO = world.huds.get("endMenu");
+			gO.setInteractable(true);
+			gO.setIsShown(true);
+			PhysicsEngine.endGame = true;
+		}
+		else if(dialogName == "end" && !activeDialog.hasNextLine()){
+			TimerTask task = new TimerTask() {
+					@Override
+					public void run() {	
+						displayEndMenu = true;
+					}
+				};
+				Timer timer = new Timer("Timer");
+				long delay = 5000L;
+				timer.schedule(task, delay);
+		}
+	}
 	/**
 	 * Interaction logic
 	 */
 	public void interact() {
+		if(world.player.hasBossLoot)
+			setActiveDialog("end");
+		else
+			setActiveDialog("start");
 		world.huds.get("npc").setIsShown(true);
 		world.huds.get("npc").setInteractable(true);
 		interacting = true;

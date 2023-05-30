@@ -6,6 +6,7 @@ import java.io.IOException;
 import engine.generation.Room;
 import engine.hud.player.HealthBar;
 import engine.view.CoordinateSystem;
+import engine.view.Coords;
 import engine.view.EnemySprites;
 
 /** Enemy class */
@@ -19,6 +20,8 @@ public class Enemy extends Entity {
 	/** HealthBar of the enemy */
 	public HealthBar healthBar;
 	
+	private Coords mapCoords;
+
 	/**
 	 * Constructs an enemy
 	 * @throws IOException
@@ -31,7 +34,8 @@ public class Enemy extends Entity {
 		py = 0;
 		vx = 0;
 		vy = 0;
-		healthBar = new HealthBar(this, (int)px, (int)py, 25, 3, false, true);
+		mapCoords = new Coords(w.map.getPosX(), w.map.getPosY());
+		healthBar = new HealthBar(mapCoords, this, (int)px, (int)py, 25, 3, false, true);
 		height = 30;
 		width = 20;
 		sprite = new EnemySprites(this);
@@ -43,9 +47,10 @@ public class Enemy extends Entity {
 	 * @param g
 	 */
 	public void draw(Graphics g) {
-		int[] tab = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+		Coords coords = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
+		mapCoords = new Coords(getWorld().map.getPosX(), getWorld().map.getPosY());
 
-		sprite.draw(tab[0], tab[1], g);
+		sprite.draw(coords.getX(), coords.getY(), g);
 		sprite.animate();
 	}
 
@@ -60,9 +65,8 @@ public class Enemy extends Entity {
 	public void update() {
 		super.update();
 		ai.update();
-		int[] c = CoordinateSystem.changeCS(this, world.map.getPosX(), world.map.getPosY());
-		healthBar.setX(c[0]);
-		healthBar.setY(c[1]-20);
+		healthBar.setX((int)px);
+		healthBar.setY((int)py+30);
 	}
 
 	/** Checks if the given enemy is equal to the enemy */
