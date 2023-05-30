@@ -55,7 +55,7 @@ public class Display extends JPanel {
 		this.setIgnoreRepaint(true);
 
 		this.m = monde;
-		this.frame = f;
+		Display.frame = f;
 	}
 
 

@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import engine.view.CoordinateSystem;
 import engine.view.Coords;
-import engine.view.Display;
 
 /** Wall class */
 public class Wall extends PhysicalObject {

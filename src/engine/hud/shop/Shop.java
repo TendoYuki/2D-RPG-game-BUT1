@@ -1,9 +1,6 @@
 package engine.hud.shop;
 
 import java.awt.Graphics;
-import java.awt.Insets;
-
-import javax.swing.JFrame;
 
 import engine.generation.Map;
 import engine.hud.Hud;

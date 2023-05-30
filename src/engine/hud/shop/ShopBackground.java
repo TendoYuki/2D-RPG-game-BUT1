@@ -1,6 +1,5 @@
 package engine.hud.shop;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
 
@@ -8,9 +7,9 @@ import javax.imageio.ImageIO;
 
 import engine.generation.Map;
 import engine.hud.HudElement;
-import engine.view.CoordinateSystem;
 import engine.view.Coords;
 import engine.view.Sprite;
+
 /** ShopBackground class */
 public class ShopBackground extends HudElement{
     /** The map */

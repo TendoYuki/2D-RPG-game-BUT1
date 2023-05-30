@@ -1,7 +1,5 @@
 package engine.hud.menu;
 
-import java.awt.Graphics;
-
 import engine.hud.Hud;
 import engine.hud.player.PlayerHud;
 import engine.view.Coords;

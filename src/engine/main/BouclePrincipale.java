@@ -1,9 +1,5 @@
 package engine.main;
 
-import java.awt.Insets;
-
-import javax.swing.JFrame;
-
 import engine.controller.KeyboardController;
 /** BouclePrincipale class */
 public class BouclePrincipale {
@@ -61,9 +57,6 @@ public class BouclePrincipale {
 			}
 
 			beforeTime = System.nanoTime();
-
-
-			JFrame frame = jeuPhysique.display.getFrame();
 
 			// Changes the world's map's position according to the window height
 			jeuPhysique.physicsEngine.world.map.setPosX(

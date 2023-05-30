@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.Map.Entry;
 
 import engine.physics.Gem;
-import engine.physics.Item;
-import engine.physics.Stick;
 import engine.physics.World;
 import engine.tiles.Atlas;
 import engine.tiles.Directions;

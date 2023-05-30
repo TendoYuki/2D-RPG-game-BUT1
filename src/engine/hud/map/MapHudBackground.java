@@ -2,14 +2,11 @@ package engine.hud.map;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 import engine.generation.Map;
 import engine.hud.HudElement;
 import engine.generation.Room;
-import engine.view.CoordinateSystem;
 import engine.view.Coords;
 
 import java.util.Map.Entry;
@@ -20,6 +17,7 @@ import java.awt.FontMetrics;
 import engine.tiles.Directions;
 import engine.tiles.GridCell;
 import engine.view.Sprite;
+
 /** MapHudBackground class */
 public class MapHudBackground extends HudElement{
     /** The map to draw */
