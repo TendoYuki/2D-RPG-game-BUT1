@@ -139,7 +139,7 @@ public class Game {
         Dialog bossDoorClosed = new Dialog();
         bossDoorClosed.addLine(new String[]{
             "La porte est fermée",
-            "Tuez tous les monstres de la pièce afin qu'elle s'ouvre"
+            "Tuez tous les monstres afin qu'elle s'ouvre"
         });
 
         
