@@ -138,7 +138,7 @@ public class PhysicsEngine {
 					enemy.px = 32+2;
 					enemy.vx = enemy.vx * -0.9;
 				}
-				if(enemy.py+enemy.height > world.getWorldBorder().height+64) {
+				if(enemy.py+enemy.height > world.getWorldBorder().height+32) {
 					enemy.py = world.getWorldBorder().height-enemy.height-2+32;
 					enemy.vy = enemy.vy * -0.9;
 				}

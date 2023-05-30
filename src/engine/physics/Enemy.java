@@ -36,8 +36,8 @@ public class Enemy extends Entity {
 		vy = 0;
 		mapCoords = new Coords(w.map.getPosX(), w.map.getPosY());
 		healthBar = new HealthBar(mapCoords, this, (int)px, (int)py, 25, 3, false, true);
-		height = 30;
-		width = 20;
+		height = 32;
+		width = 32;
 		sprite = new EnemySprites(this);
 		ai = new EnemyAI(this);
 	}

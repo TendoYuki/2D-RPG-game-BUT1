@@ -13,6 +13,8 @@ import engine.view.Sprite;
 public class EndMenuBackground extends HudElement{
     /** Splash image of the background */
     Sprite sprite;
+    /** Label */
+    Sprite label;
     /** Constructs the background 
      * @param x
      * @param y
@@ -27,6 +29,11 @@ public class EndMenuBackground extends HudElement{
                     "assets/misc/GameOver.png"
                 )
             ));
+            label = new Sprite(112, 16, 4, ImageIO.read(
+                new File(
+                    "assets/misc/the_end.png"
+                )
+            ));
         }
         catch(Exception e) {};
     }
@@ -38,6 +45,7 @@ public class EndMenuBackground extends HudElement{
         g.fillRect(getX(), getY(), getWidth(), getHeight());
         g.setColor(c);
         sprite.draw(g, getWidth()/2 - sprite.getSizeX()/2, getHeight()/8);
+        label.draw(g, getWidth()/2 - label.getSizeX()/2, getHeight()/2);
     }
 
     @Override

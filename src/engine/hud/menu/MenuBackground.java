@@ -13,6 +13,9 @@ import engine.view.Sprite;
 public class MenuBackground extends HudElement{
     /** Splash of the background */
     Sprite sprite;
+
+    /** Label */
+    Sprite label;
     /** Constructs a menu background 
      * @param x
      * @param y
@@ -22,9 +25,9 @@ public class MenuBackground extends HudElement{
     public MenuBackground(Coords origin, int x, int y, int width, int height) {
         super(origin, x, y, width, height);
         try{
-            sprite = new Sprite(500, 250, 1, ImageIO.read(
+            label = new Sprite(144, 64, 4, ImageIO.read(
                 new File(
-                    "assets/misc/GameOver.png"
+                    "assets/misc/menu_sprite.png"
                 )
             ));
         }
@@ -37,7 +40,7 @@ public class MenuBackground extends HudElement{
         g.setColor(Color.gray);
         g.fillRect(getX(), getY(), getWidth(), getHeight());
         g.setColor(c);
-        sprite.draw(g, getWidth()/2 - sprite.getSizeX()/2, getHeight()/8);
+        label.draw(g, getWidth()/2 - label.getSizeX()/2, getHeight()/3 - label.getSizeY()/2);
     }
 
     @Override
