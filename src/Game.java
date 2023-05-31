@@ -162,30 +162,39 @@ public class Game {
         Dialog npc1 = new Dialog();
         npc1.addLine(new String[] {
             "Bienvenue aventurier ! ",
-            "Appuie sur «F» pour parler au gardien afin qu'il te donne ta première quête."
+            "Appuiez sur «F» pour parler au gardien afin qu'il vous donne votre première quête."
         });
         npc1.addLine(new String[] {
             "C’est donc toi le redoutable aventurier dont on m’a parlé.",
             "Ça fait plaisir de rencontrer quelqu’un qui pourrait m’aider.",
-            "Voilà, j’ai  un problème depuis quelques semaines maintenant.",
+            "Voilà, j’ai un problème depuis quelques semaines maintenant.",
             "Un objet qui m’est très chère est perdu dans ce donjon.",
             "Ramène le moi et je te promets une récompense. "
         });
         npc1.addLine(new String[] {
-            "Pas si vite! ",
-            "Tu n’as pas encore appris à te battre, tu ne peux donc pas rentrer pour le moment.",
-            "Vient ici que je t’apprennes toutes mes techniques."
+            "Tu n’as pas encore appris à te battre, je vais donc t'apprendre les bases",
         });
         npc1.addLine(new String[] {
             "Tu peux appuyer sur l'icone $ en bas a droite de ton ecran afin d'ameliorer",
             "tes competences a tout moment",
             "Tu peux augmenter ta vie, ta defense et ton attaque",
-            "Si tu as des gemmes sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
-            "bien entendu tu n'es pas oblige de m'ecouter mais tu seras le seul responsable",
+            "Si tu as des gemmes sur toi, je te conseille d'ameliorer ton attaque dans un premier temps"
+        });
+        npc1.addLine(new String[] {
+            "Pour attaquer les redoutables ennemis que tu va devoir affronter",
+            "Il te suffira de t'en approcher et ton aura meurtrière leur infligera des dégats.",
+            "En bas a droite de ton écran tu peut observer la charge de ton aura,",
+            "si elle est pleine tu pourra attaquer, sinon il te faudra attendre qu'elle se recharge."
+        });
+        npc1.addLine(new String[] {
+            "Pour savoir ou tu te trouve en temps réel, tu peut ouvrir ta carte",
+            "en appuyant sur la touche \"M\" de ton clavier",
+            "les numéros des pièces correspondent à la puissance des ennemis s'y trouvant",
+            "bien entendu tu n'es pas obligé de m'ecouter mais tu seras le seul responsable",
             "s'il t'arrive quelque chose.",
         });
         npc1.addLine(new String[] {
-            "Bonne chance à vous aventurier, je vous attend ici"
+            "Sur ce, bonne chance à toi aventurier, je t'attends ici"
         });
         Dialog npc1End = new Dialog();
         npc1End.addLine(new String[]{
