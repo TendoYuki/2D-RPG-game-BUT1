@@ -183,11 +183,11 @@ public class Game {
         npc1.addLine(new String[] {
             "Pour attaquer les redoutables ennemis que tu va devoir affronter",
             "Il te suffira de t'en approcher et ton aura meurtrière leur infligera des dégats.",
-            "En bas a droite de ton écran tu peut observer la charge de ton aura,",
+            "En bas a droite de ton écran tu peux observer la charge de ton aura,",
             "si elle est pleine tu pourra attaquer, sinon il te faudra attendre qu'elle se recharge."
         });
         npc1.addLine(new String[] {
-            "Pour savoir ou tu te trouve en temps réel, tu peut ouvrir ta carte",
+            "Pour savoir ou tu te trouve en temps réel, tu peux ouvrir ta carte",
             "en appuyant sur la touche \"M\" de ton clavier",
             "les numéros des pièces correspondent à la puissance des ennemis s'y trouvant",
             "bien entendu tu n'es pas obligé de m'ecouter mais tu seras le seul responsable",
