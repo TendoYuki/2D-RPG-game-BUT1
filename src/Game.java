@@ -162,7 +162,6 @@ public class Game {
         Dialog npc1 = new Dialog();
         npc1.addLine(new String[] {
             "Bienvenue aventurier ! ",
-            "J'espère que tu n'as pas eu de problème sur le chemin jusqu'ici",
             "Appuie sur «F» pour parler au gardien afin qu'il te donne ta première quête."
         });
         npc1.addLine(new String[] {
@@ -181,7 +180,7 @@ public class Game {
             "Tu peux appuyer sur l'icone $ en bas a droite de ton ecran afin d'ameliorer",
             "tes competences a tout moment",
             "Tu peux augmenter ta vie, ta defense et ton attaque",
-            "Si tu as des gems d'or sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
+            "Si tu as des gemmes sur toi, je te conseille d'ameliorer ton attaque dans un premier temps,",
             "bien entendu tu n'es pas oblige de m'ecouter mais tu seras le seul responsable",
             "s'il t'arrive quelque chose.",
         });
@@ -197,8 +196,8 @@ public class Game {
             "Tiens donc la recompense que je t'ai promis"
         });
         npc1End.addLine(new String[]{
-            "Vous avez recu la competence DIEU DU DEV !!",
-            "Plus aucun programme ne vous sera impossible a faire !",
+            "Vous avez recu la competence \"DIEU DU DEV\" !",
+            "Plus aucun programme ne vous sera impossible a réaliser !",
             "Bonne continuation dans votre carriere !"
         });
 
