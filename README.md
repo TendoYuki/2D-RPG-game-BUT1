@@ -21,6 +21,6 @@ Une fois l'objet rendu au npc, le jeu est fini.
 ## Lancement du jeu
 Afin de lancer le jeu, il est possible de le lancer via la commande suivante :
 ```bash
-    java -jar --enable-preview sae2-1-tp-4-rigard-riviere-plateau.jar
+java -jar --enable-preview sae2-1-tp-4-rigard-riviere-plateau.jar
 ```
 Sinon, vscode permettra de compiler et lancer le jeu.
