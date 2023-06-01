@@ -17,3 +17,10 @@ Au début du jeu, un npc nous attend afin de nous demander d'aller récupérer u
 Dans ce jeu, le but est de tuer tous les monstres présents dans le donjon afin d'ouvrir la salle du boss.
 Ensuite, une fois la salle ouverte, il faut aller tuer le boss du donjon afin de récupérer l'objet du npc.
 Une fois l'objet rendu au npc, le jeu est fini.
+
+## Lancement du jeu
+Afin de lancer le jeu, il est possible de le lancer via la commande suivante :
+```bash
+    java -jar --enable-preview sae2-1-tp-4-rigard-riviere-plateau.jar
+```
+Sinon, vscode permettra de compiler et lancer le jeu.
